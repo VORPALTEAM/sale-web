@@ -260,6 +260,7 @@ input:checked + .checker:before {
 .number--key {
   width: 32.2%;
   border: 1px solid #2E2E2E;
+  cursor: pointer;
   text-align: center;
   color: #F1F6F9;
   font-size: 14px;
@@ -267,6 +268,15 @@ input:checked + .checker:before {
   text-transform: uppercase;
   height: 29px;
   padding-top: 12px;
+  transition-property: all;
+  transition-duration: 0.4s;
+  transition-timing-function: ease-in-out;
+}
+
+.number--key:hover,
+.number--key:focus {
+  color: #000;
+  background: #F1F6F9;
 }
 
 .stage--stats {

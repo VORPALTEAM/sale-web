@@ -104,5 +104,5 @@ export const RootReducer = combineReducers ({
     account: UserAccount,
     connected: ConnectedState,
     amountUSDVRP: AmountUSDVRP,
-    amountUSDVDAP: AmountUSDVDAO
+    amountUSDVDAO: AmountUSDVDAO
 })
