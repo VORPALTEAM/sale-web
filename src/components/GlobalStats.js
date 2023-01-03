@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux'
 
 const GlobalStats = () => {
+
+    const State = useSelector(state => state)
+    
     return(
       <div className="stage--stats">
         <p><b>price:</b> 0.0025$</p>

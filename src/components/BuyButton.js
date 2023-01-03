@@ -4,13 +4,21 @@ import { defaultToken } from '../config'
 
 const BuyButton = () => {
 
+    const [investOpened, openInvest] = useState(false)
     const State = useSelector(state => state)
+    const btnAddClass = State.token === defaultToken ? "vrp" : "vdao"
+    const btnClassName = `value--subsection confirm--button ${btnAddClass}${investOpened ? " invest--opened" : ""}`
+
+    const StartInvest = () => {
+        console.log("ok")
+        const newState = investOpened ? false : true
+        openInvest(newState)
+    }
 
     return(
-       <div className={State.token === defaultToken ? 
-       "value--subsection confirm--button vrp" :
-   "value--subsection confirm--button vdao"}>
+       <div className={btnClassName} onClick={StartInvest}>
           INVEST
+          <div className={`opened--arrow ${investOpened ? " active" : ""} ${btnAddClass}`} />
        </div>
     )
 }

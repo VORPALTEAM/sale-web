@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-import { Provider } from 'react-redux';
 import Web3 from 'web3'
 import './App.css';
-import store from './state/store'
 import * as config from './config' 
+import { updateContractData } from './state/reducer'
 import Header from './components/header'
 import TokenSelector from './components/TokenSelector'
 import StarDiagram from './components/StarDiagram'
@@ -17,8 +16,10 @@ import ModalContainer from './components/modals'
 
 function App() {
 
+  const web3 = new Web3(config.rpcUrl, config.connectOptions)
+  console.log(web3)
+
   return (
-  <Provider store={store}>
     <div className="App">
       <Header />
       <div className="presale--body">
@@ -51,7 +52,6 @@ function App() {
       </div>
       <ModalContainer />
     </div>
-   </Provider>
   );
 }
 

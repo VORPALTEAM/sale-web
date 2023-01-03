@@ -3,7 +3,13 @@ export const chainHexID = '0x61'
 export const rpcUrl = "https://data-seed-prebsc-1-s1.binance.org:8545/"
 export const VRPToken = "0xCcD635c53f1F9205aA2B29D63BA4B17B03c5b0E2" // VRP
 export const VDAOToken = "0xCcD635c53f1F9205aA2B29D63BA4B17B03c5b0E2" // VDAO
-export const usdToken = "0x04C9483Ef256cFEb1dAc080f90DEfB7B3aBB6006"  // USDC or USDT
+export const usdTokens = [{
+	name: "USDT",
+	address: "0x04C9483Ef256cFEb1dAc080f90DEfB7B3aBB6006"
+   },{
+	name: "BUSD",
+	address: "0xa4cD3cBB12709115d400b11b29AbFd6072d465Be"
+   }]  // USDC or USDT && BUSD - list of tokens available for using for payment
 export const saleContractAddr = "0x059EF2701520c35286E3605f1C6b51e5a7fA338f" // Vorpal sale contract
 export const decimal = 1000000000000000000
 export const decimalZeros = "000000000000000000"
@@ -20,6 +26,20 @@ export const connectOptions = {
         }
     ]
   }
+
+export const contractDefaultGlobalData = {
+	owner: "0x0f2d11eb3b6d4e220360bce6f7253282ccc6d12e",
+	price: "250000000000000000",
+	saleAmount: "4200000000000000000000000",
+	saleEnd: "1674329899",
+	saleLength: "2629743",
+	status: 0,
+	totalTokensLeft: "4200000000000000000000000",
+	usdc: "0x04c9483ef256cfeb1dac080f90defb7b3abb6006",
+	vestingPeriod: 360,
+    vorpal: "0xccd635c53f1f9205aa2b29d63ba4b17b03c5b0e2"
+}
+
 export const erc20ABI = [
 	{
 		"anonymous": false,

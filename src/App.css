@@ -337,9 +337,11 @@ input:checked + .checker:before {
 .confirm--button {
   margin-top: 15px;
   display: flex;
+  border: none;
   flex-direction: column;
   align-items: center;
   height: 57px;
+  cursor: pointer;
   padding-top: 18px;
   font-size: 32px;
   font-weight: 300;
@@ -353,6 +355,30 @@ input:checked + .checker:before {
 .confirm--button.vdao {
   background: linear-gradient(180deg, #667EEA 0%, #764BA2 100%);
 }
+
+.opened--arrow {
+  position: absolute;
+   width: 20px;
+   height: 20px;
+   margin-top: 48px;
+   z-index: -1;
+   transform: matrix(-0.7,1,0.8,1,0,0);
+   border-radius: 2px;
+   display: none;
+}
+
+.opened--arrow.active {
+  display: block;
+}
+
+.opened--arrow.active.vrp {
+  background: linear-gradient(97.85deg, #D4FC79 3.64%, #96E6A1 94.38%);;
+}
+
+.opened--arrow.active.vdao {
+  background: linear-gradient(180deg, #667EEA 0%, #764BA2 100%);
+}
+
 
 .timer--vdao {
   color: #6574F7;

@@ -9,10 +9,7 @@ const openedModal = 'none' // none || connectWallet || noWallet
 const isWalletConnected = false
 const investAmountUSDVRP  = 0 // user's buying amount in USDT
 const investAmountUSDVDAO  = 0 
-const contractGlobalData = {
-  vrp: {},
-  vdao: {}
-}
+const contractGlobalData = config.contractDefaultGlobalData
 const contractUserData = {
   vrp: {},
   vdao: {}
@@ -25,7 +22,8 @@ export const actionNames = {
     updateEnv: "UPDATE_WEB3",
     updateUSDVRP: "UPDATE_USDVRP",
     updateUSDVDAO: "UPDATE_USDVDAO",
-    connectedState: "CONNECTED_STATE_CHANGE"
+    connectedState: "CONNECTED_STATE_CHANGE",
+    updateContractData: "UPDATE_CONTRACT_DATA"
 }
 
 export const switchToken = createAction(actionNames.switchToken)
@@ -35,6 +33,7 @@ export const updateUSDVRP = createAction(actionNames.updateUSDVRP)
 export const updateUSDVDAO = createAction(actionNames.updateUSDVDAO)
 export const seitchToConnected = createAction(actionNames.connectedState)
 export const updateEnv = createAction(actionNames.updateEnv)
+export const updateContractData = createAction(actionNames.updateContractData)
 
 const SwitchToken = (state = config.defaultToken, action) => {
 
@@ -96,6 +95,16 @@ const ConnectedState = (state = isWalletConnected, action) => {
   }
 }
 
+const ContractDataState = (state = contractGlobalData, action) => {
+
+  switch(action.type) {
+    case actionNames.updateContractData : 
+      return action.payload ? action.payload : state
+    default :
+      return state
+  }
+}
+
 
 
 export const RootReducer = combineReducers ({
@@ -104,5 +113,6 @@ export const RootReducer = combineReducers ({
     account: UserAccount,
     connected: ConnectedState,
     amountUSDVRP: AmountUSDVRP,
-    amountUSDVDAO: AmountUSDVDAO
+    amountUSDVDAO: AmountUSDVDAO,
+    contractData: ContractDataState
 })
