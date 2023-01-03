@@ -17,12 +17,45 @@ import ModalContainer from './components/modals'
 function App() {
 
   const web3 = new Web3(config.rpcUrl, config.connectOptions)
-  console.log(web3)
+  const State = useSelector(state => state)
+  const dispatch = useDispatch()
+  
+
+  const ContractDataSetup = async () => {
+    const tokenContract = new web3.eth.Contract(config.saleABI, State.token === config.defaultToken ? 
+      config.saleContractAddrVRP : config.saleContractAddrVDAO)
+
+    const tokenPrice = await tokenContract.methods.price().call()
+    const contractOwner = await tokenContract.methods.owner().call()
+    const saleAmount = await tokenContract.methods.saleAmount().call()
+    const saleEnd = await tokenContract.methods.saleEnd().call()
+    const saleLength = await tokenContract.methods.saleLength().call()
+    const status = await tokenContract.methods.status().call()
+    const totalTokensLeft = await tokenContract.methods.totalTokensLeft().call()
+    const usdc = await tokenContract.methods.usdc().call()
+    const vestingPeriod = await tokenContract.methods.vestingPeriod().call()
+    const lockPeriod = await tokenContract.methods.lockPeriod().call()
+    const vorpal = await tokenContract.methods.vorpal().call()
+
+    dispatch(updateContractData({
+      owner: contractOwner,
+      price: tokenPrice,
+      saleAmount: saleAmount,
+      saleEnd: saleEnd,
+      saleLength: saleLength,
+      status: status,
+      totalTokensLeft: totalTokensLeft,
+      lockPeriod: lockPeriod,
+      usdc: usdc,
+      vestingPeriod: vestingPeriod,
+        vorpal: vorpal
+    }))
+  }
 
   return (
     <div className="App">
       <Header />
-      <div className="presale--body">
+      <div className="presale--body" onLoad={ContractDataSetup}>
         <div className="star--section">
           <TokenSelector />
           <StarDiagram />

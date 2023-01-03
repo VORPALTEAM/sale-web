@@ -7,7 +7,6 @@ const AmountInput = () => {
 
     const State = useSelector(state => state)
     const dispatch = useDispatch()
-    const activeToken = State.token
     const activeBalance = State.token === defaultToken ? State.amountUSDVRP : State.amountUSDVDAO
 
     function DispatchValue (newValue) {
@@ -25,18 +24,19 @@ const AmountInput = () => {
       const dt = event.target.getAttribute("data")
       switch (dt) {
         case "backspace" :
-          const newValue = `${activeBalance}`.slice(0, -1)
+          const stringValue = `${activeBalance}`
+          const newValue = stringValue.length > 1 ? stringValue.slice(0, -1) : "0"
           DispatchValue (newValue)
           break;
         case "." :
           let lastValue = `${activeBalance}`
           if (lastValue.indexOf(".") < 0) {
-            lastValue += ".0"
+            lastValue += "."
           }
           DispatchValue (lastValue)
           break;
         default:
-          const dgValue = `${activeBalance}` + `${dt}`
+          const dgValue = activeBalance === "0" ? `${dt}` : `${activeBalance}` + `${dt}`
           DispatchValue (dgValue)
           break;
       }

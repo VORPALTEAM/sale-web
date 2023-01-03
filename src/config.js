@@ -10,7 +10,8 @@ export const usdTokens = [{
 	name: "BUSD",
 	address: "0xa4cD3cBB12709115d400b11b29AbFd6072d465Be"
    }]  // USDC or USDT && BUSD - list of tokens available for using for payment
-export const saleContractAddr = "0x059EF2701520c35286E3605f1C6b51e5a7fA338f" // Vorpal sale contract
+export const saleContractAddrVRP = "0x059EF2701520c35286E3605f1C6b51e5a7fA338f" // Vorpal sale contract
+export const saleContractAddrVDAO = "0x059EF2701520c35286E3605f1C6b51e5a7fA338f"
 export const decimal = 1000000000000000000
 export const decimalZeros = "000000000000000000"
 export const defaultToken = 'VRP'
@@ -26,13 +27,20 @@ export const connectOptions = {
         }
     ]
   }
-
+export const handContractData = {
+	saleStart: 1673298000, // Sale start 10.01.2023 00:00
+	available: "4200000000000000000000000",
+	forCurrentRound: "4200000000000000000000000",
+	maxSupply: "21000000000000000000000000000",
+	burned: "0"
+}
 export const contractDefaultGlobalData = {
 	owner: "0x0f2d11eb3b6d4e220360bce6f7253282ccc6d12e",
 	price: "250000000000000000",
 	saleAmount: "4200000000000000000000000",
 	saleEnd: "1674329899",
 	saleLength: "2629743",
+	lockPeriod: 1800,
 	status: 0,
 	totalTokensLeft: "4200000000000000000000000",
 	usdc: "0x04c9483ef256cfeb1dac080f90defb7b3abb6006",

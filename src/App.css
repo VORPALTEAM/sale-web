@@ -353,7 +353,7 @@ input:checked + .checker:before {
 }
 
 .confirm--button.vdao {
-  background: linear-gradient(180deg, #667EEA 0%, #764BA2 100%);
+  background: #764BA2;
 }
 
 .opened--arrow {
