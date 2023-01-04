@@ -47,6 +47,65 @@ input::-webkit-input-placeholder{
   margin: 10px;
 }
 
+
+.menu--item a {
+  color: #FFF;
+  text-decoration: none;
+}
+
+.main--submenu {
+  position: absolute;
+  width: 200px;
+  margin-left: -16px;
+  background: #000;
+  border-radius: 6px;
+  display: none;
+}
+
+.main--submenu a {
+  width: 100%;
+  margin-left: 16px;
+}
+
+.submenu--item {
+  padding-top: 16px;
+  width: 100%;
+  min-height: 32px;
+  cursor: pointer;
+  background: #352F44;
+}
+
+.submenu--item--first {
+  margin-top: 8px;
+  border-radius: 6px 6px 0 0;
+}
+
+.submenu--item--last {
+  border-radius: 0 0 6px 6px;
+}
+
+.submenu--item:hover,
+.submenu--item:focus,
+.submenu--item:hover a,
+.submenu--item:focus a {
+  background: #AAF765;
+  color: #000;
+}
+
+.menu--item:hover .main--submenu,
+.menu--item:focus .main--submenu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.green--btn a {
+  border: 1px solid #AAF765;
+  border-radius: 4px;
+  padding: 4px 12px;
+  color: #AAF765;
+}
+
 .connectWallet--btn {
   width: 160px;
   border-radius: 40px;

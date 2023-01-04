@@ -10,16 +10,37 @@ const LocalStats = () => {
     const tokenPrice = State.contractData.price / config.decimal
     const activeBalance = State.token === config.defaultToken ? 
     State.amountUSDVRP : State.amountUSDVDAO
-    const tokenAmount = parseFloat(activeBalance / tokenPrice).toLocaleString('ua')
+    const tokenAmountNumber = parseFloat(activeBalance / tokenPrice)
+    const tokenAmount = tokenAmountNumber.toLocaleString('ua')
 
-    const partOfAvailable = (parseFloat((activeBalance * config.decimal) / 
-    State.contractData.saleAmount) * 100).toLocaleString('ua')
+    const partOfAvailable = ((parseFloat(tokenAmountNumber) / parseFloat(config.handContractData.available)) * 100).toLocaleString('ua')
 
-    const partOfTotal = (parseFloat((activeBalance * config.decimal) / 
-    config.handContractData.maxSupply) * 100).toLocaleString('ua')
+    const partOfTotal = ((parseFloat(tokenAmountNumber) / parseFloat(config.handContractData.maxSupply)) * 100).toLocaleString('ua')
 
     const saleDate = new Date(config.handContractData.saleStart * 1000).toLocaleString('ua')
+
+
+    //Personal data
+
+    const [lockedAmount, setLockedAmount ]= useState(0)
+    let [unLockedAmount, setUnLockedAmount] = useState(0)
+    const clientAccount = State.account
+
+    async function PersonalDataSetup () {
+      const firstContract = new web3.eth.Contract(config.saleABI, State.token === config.defaultToken ? 
+        config.saleContractAddrVRPUSDT : config.saleContractAddrVDAOUSDT)
+      const secondContract = new web3.eth.Contract(config.saleABI, State.token === config.defaultToken ? 
+          config.saleContractAddrVRPBUSD : config.saleContractAddrVDAOBUSD)
+
+      const firstContractUnLocked = await firstContract.methods.getUnlockedTokens(clientAccount).call()
+      const secondContractUnLocked = await secondContract.methods.getUnlockedTokens(clientAccount).call()
+      
+      setUnLockedAmount(firstContractUnLocked + secondContractUnLocked)
+    }
     
+    if (clientAccount) {
+      PersonalDataSetup ()
+    }
 
     return(
       <>
@@ -54,7 +75,7 @@ const LocalStats = () => {
                  {`locked till ${saleDate}`}
               </div>
               <div className="value--text">
-                 40 000 000 VRP
+              {`${lockedAmount} ${State.token}`}
               </div>
             </div>
             <div className="buy--column--cell row--2 no--border">
@@ -62,7 +83,7 @@ const LocalStats = () => {
                  unlocked
               </div>
               <div className="value--text">
-                 40 000 000 VRP
+              {`${unLockedAmount} ${State.token}`}
               </div>
             </div>
       </>

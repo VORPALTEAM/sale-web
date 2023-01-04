@@ -9,6 +9,8 @@ const GlobalStats = () => {
     const data = State.contractData
     const decimal = config.decimal
 
+    const soldAmount = parseFloat((((2 * data.saleAmount )- data.totalTokensLeft - data.tokensLeftSecond))/ decimal)
+
     // console.log(data.saleAmount)
     // console.log(data.totalTokensLeft)
 
@@ -17,14 +19,14 @@ const GlobalStats = () => {
     return(
       <div className="stage--stats">
         <p><b>price:</b>{` ${parseFloat(data.price / decimal)}$`}</p>
-        <p><b>available:</b>{` ${parseFloat(config.handContractData.available / decimal).toLocaleString('ua')}`}</p>
-        <p><b>sold:</b>{` ${parseFloat((data.saleAmount - data.totalTokensLeft)/ decimal).toLocaleString('ua')}`}</p>
-        <p><b>burned:</b>{` ${parseFloat(config.handContractData.burned/ decimal).toLocaleString('ua')}`}</p>
-        <p><b>Max supply:</b>{` ${parseFloat(config.handContractData.maxSupply / decimal).toLocaleString('ua')}`}</p>
-        <p><b>For current round:</b>{` ${parseFloat(config.handContractData.available / decimal).toLocaleString('ua')}`}</p>
-        <p><b>For sale total:</b>{` ${parseFloat(data.saleAmount / decimal).toLocaleString('ua')}`}</p>
-        <p><b>Total sold:</b>{` ${parseFloat((data.saleAmount - data.totalTokensLeft)/ decimal).toLocaleString('ua')}`}</p>
-        <p><b>Total burned:</b>{` ${parseFloat(config.handContractData.burned / decimal).toLocaleString('ua')}`}</p>
+        <p><b>available:</b>{` ${parseFloat(config.handContractData.available).toLocaleString('ua')}`}</p>
+        <p><b>sold:</b>{` ${soldAmount.toLocaleString('ua')}`}</p>
+        <p><b>burned:</b>{` ${parseFloat(config.handContractData.burned).toLocaleString('ua')}`}</p>
+        <p><b>Max supply:</b>{` ${parseFloat(config.handContractData.maxSupply).toLocaleString('ua')}`}</p>
+        <p><b>For current round:</b>{` ${parseFloat(config.handContractData.available).toLocaleString('ua')}`}</p>
+        <p><b>For sale total:</b>{` ${parseFloat(config.handContractData.available).toLocaleString('ua')}`}</p>
+        <p><b>Total sold:</b>{` ${soldAmount.toLocaleString('ua')}`}</p>
+        <p><b>Total burned:</b>{` ${parseFloat(config.handContractData.burned).toLocaleString('ua')}`}</p>
     </div>
     )
 }

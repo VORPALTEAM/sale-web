@@ -23,7 +23,10 @@ function App() {
 
   const ContractDataSetup = async () => {
     const tokenContract = new web3.eth.Contract(config.saleABI, State.token === config.defaultToken ? 
-      config.saleContractAddrVRP : config.saleContractAddrVDAO)
+      config.saleContractAddrVRPUSDT : config.saleContractAddrVDAOUSDT)
+    
+    const tokenSecondContract = new web3.eth.Contract(config.saleABI, State.token === config.defaultToken ? 
+        config.saleContractAddrVRPBUSD : config.saleContractAddrVDAOBUSD)
 
     const tokenPrice = await tokenContract.methods.price().call()
     const contractOwner = await tokenContract.methods.owner().call()
@@ -37,6 +40,8 @@ function App() {
     const lockPeriod = await tokenContract.methods.lockPeriod().call()
     const vorpal = await tokenContract.methods.vorpal().call()
 
+    const tokensLeftSecond = await tokenSecondContract.methods.totalTokensLeft().call()
+
     dispatch(updateContractData({
       owner: contractOwner,
       price: tokenPrice,
@@ -45,6 +50,7 @@ function App() {
       saleLength: saleLength,
       status: status,
       totalTokensLeft: totalTokensLeft,
+      tokensLeftSecond: tokensLeftSecond,
       lockPeriod: lockPeriod,
       usdc: usdc,
       vestingPeriod: vestingPeriod,
