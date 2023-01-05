@@ -9,7 +9,7 @@ export const usdTokens = [{
 	address: "0x04C9483Ef256cFEb1dAc080f90DEfB7B3aBB6006"
    },{
 	name: "BUSD",
-	address: "0xa4cD3cBB12709115d400b11b29AbFd6072d465Be"
+	address: "0x04C9483Ef256cFEb1dAc080f90DEfB7B3aBB6006"
    }]  // USDC or USDT && BUSD - list of tokens available for using for payment
 export const saleContractAddrVRPUSDT = "0x059EF2701520c35286E3605f1C6b51e5a7fA338f" // Vorpal sale contract
 export const saleContractAddrVDAOUSDT = "0x059EF2701520c35286E3605f1C6b51e5a7fA338f"
@@ -31,6 +31,7 @@ export const connectOptions = {
     ]
   }
 
+export const defaultGas = "20000000000" 
 export const handContractData = {
 	saleStart: 1673298000, // Sale start 10.01.2023 00:00
 	available: "4200000",

@@ -9,6 +9,7 @@ const openedModal = 'none' // none || connectWallet || noWallet
 const isWalletConnected = false
 const investAmountUSDVRP  = 0 // user's buying amount in USDT
 const investAmountUSDVDAO  = 0 
+const approvedAmountDefault = 0
 const contractGlobalData = config.contractDefaultGlobalData
 const contractUserData = {
   vrp: {},
@@ -23,7 +24,9 @@ export const actionNames = {
     updateUSDVRP: "UPDATE_USDVRP",
     updateUSDVDAO: "UPDATE_USDVDAO",
     connectedState: "CONNECTED_STATE_CHANGE",
-    updateContractData: "UPDATE_CONTRACT_DATA"
+    updateContractData: "UPDATE_CONTRACT_DATA",
+    updateApprovedUSDT: "UPDATE_APPROVED_USDT",
+    updateApprovedBUSD: "UPDATE_APPROVED_BUSD"
 }
 
 export const switchToken = createAction(actionNames.switchToken)
@@ -34,6 +37,8 @@ export const updateUSDVDAO = createAction(actionNames.updateUSDVDAO)
 export const seitchToConnected = createAction(actionNames.connectedState)
 export const updateEnv = createAction(actionNames.updateEnv)
 export const updateContractData = createAction(actionNames.updateContractData)
+export const updateApprovedUSDT = createAction(actionNames.updateApprovedUSDT)
+export const updateApprovedBUSD = createAction(actionNames.updateApprovedBUSD)
 
 const SwitchToken = (state = config.defaultToken, action) => {
 
@@ -105,6 +110,26 @@ const ContractDataState = (state = contractGlobalData, action) => {
   }
 }
 
+const UpdateApprovedUSDT = (state = approvedAmountDefault, action) => {
+
+  switch(action.type) {
+    case actionNames.updateApprovedUSDT : 
+      return action.payload ? action.payload : state
+    default :
+      return state
+  }
+}
+
+const UpdateApprovedBUSD = (state = approvedAmountDefault, action) => {
+
+  switch(action.type) {
+    case actionNames.updateApprovedBUSD : 
+      return action.payload ? action.payload : state
+    default :
+      return state
+  }
+}
+
 
 
 export const RootReducer = combineReducers ({
@@ -114,5 +139,7 @@ export const RootReducer = combineReducers ({
     connected: ConnectedState,
     amountUSDVRP: AmountUSDVRP,
     amountUSDVDAO: AmountUSDVDAO,
-    contractData: ContractDataState
+    contractData: ContractDataState,
+    approvedUSDT: UpdateApprovedUSDT,
+    approvedBUSD: UpdateApprovedBUSD
 })
