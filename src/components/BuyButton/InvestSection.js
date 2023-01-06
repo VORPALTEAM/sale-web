@@ -17,6 +17,7 @@ const InvestSection = () => {
     const price  = State.contractData.price
     const usdTokenList = new Map()
     const updateBalanceAction = State.token === config.defaultToken ? updateUSDVRP : updateUSDVDAO
+    const [userAgreed, userAgree] = useState(false)
 
     const currentContract = () => {
         switch (true) {
@@ -61,6 +62,12 @@ const InvestSection = () => {
         if (buying) {
           dispatch(updateBalanceAction)
         }
+    }
+
+    const checkBox = (event) => {
+        console.log("ok")
+        userAgree(event.target.checked)
+        return !event.target.checked
     }
 
 
@@ -153,12 +160,15 @@ const InvestSection = () => {
          </div>
          <div className="buy--confirm--section">
             <div className="agree--dot">
-                <input type="checkbox" />
+                <label className="agree--label">
+                   <input type="checkbox" onChange={checkBox} />
+                   <span className={`agree--checker${userAgreed ? " agreed" : ""}`} />
+                </label>
                 <p>
                    <a>I accept all terms and conditions</a>
                 </p>
             </div>
-            <div className="buy--button--section">
+            <div className="buy--button--section final--button">
                 {btn}
             </div>
          </div>

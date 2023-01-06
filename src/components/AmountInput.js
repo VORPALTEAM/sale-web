@@ -46,7 +46,7 @@ const AmountInput = () => {
       <>
         <div className="amount--input">
               <input name="amount" type="number" placeholder="0000.0000" 
-              value={ activeBalance } onChange={ValueOnChange} step="any" />
+              value={ activeBalance ?  activeBalance : "0.0000" } onChange={ValueOnChange} step="any" />
             </div>
             <div className="amount--calculator">
               <div className="number--key" data="1" onClick={KeyPressWeb}>

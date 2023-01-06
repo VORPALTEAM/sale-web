@@ -8,6 +8,10 @@ input::-webkit-inner-spin-button {
     -webkit-appearance: none;
 }
 
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 input::-webkit-input-placeholder{
   text-align:right;
   font-size: 20px;
@@ -270,6 +274,7 @@ input:checked + .checker:before {
 .buy--section {
   margin-top: 100px;
   width: 38%;
+  margin-bottom: 200px;
 }
 
 .value--subsection {
@@ -305,6 +310,11 @@ input:checked + .checker:before {
 .buy--section input {
   width: 97%;
   height: 40px;
+  text-align: right;
+  color: #1E1E1E;
+  font-weight: 300;
+  font-size: 20px;
+  text-align: right;
 }
 
 
@@ -399,12 +409,16 @@ input:checked + .checker:before {
   border: none;
   flex-direction: column;
   align-items: center;
-  height: 57px;
+  height: 54px;
   cursor: pointer;
-  padding-top: 18px;
+  padding-top: 24px;
   font-size: 32px;
   font-weight: 300;
   color: #1E1E1E;
+  border-radius: 20px;
+  font-size: 24px;
+  font-weight: 500;
+  text-transform: uppercase;
 }
 
 .confirm--button.vrp {
@@ -413,13 +427,14 @@ input:checked + .checker:before {
 
 .confirm--button.vdao {
   background: #764BA2;
+  color: #FFF;
 }
 
 .opened--arrow {
   position: absolute;
    width: 20px;
    height: 20px;
-   margin-top: 48px;
+   margin-top: 44px;
    z-index: -1;
    transform: matrix(-0.7,1,0.8,1,0,0);
    border-radius: 2px;
@@ -435,7 +450,7 @@ input:checked + .checker:before {
 }
 
 .opened--arrow.active.vdao {
-  background: linear-gradient(180deg, #667EEA 0%, #764BA2 100%);
+  background: #764BA2;
 }
 
 
@@ -501,6 +516,76 @@ input:checked + .checker:before {
 .invest--num {
   color: #FFF;
   text-transform: uppercase;
+}
+
+.invest--description {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #FFF;
+  text-align: center;
+  font-size: 10px;
+}
+
+
+.agree--dot {
+  color: #FFF;
+  font-size: 10px;
+}
+
+
+.invest--description p {
+  width: 80%;
+  text-align: center;
+}
+
+.agree--dot {
+  display: flex;
+  margin-top: 36px;
+  margin-left: 18px;
+}
+
+.agree--label {
+  width: 30px;
+  height: 30px;
+  background: #352F44;
+  border-radius: 10px;
+}
+
+.agree--checker {
+  display: block;
+  width: 28px;
+  height: 28px;
+}
+
+.agree--checker.agreed {
+ background-image: url('../public/images/icons/agree_check.svg');
+ background-repeat: no-repeat;
+ margin-top: 6px;
+ margin-left: 4px;
+}
+
+.agree--label input {
+  display: none;
+}
+
+.agree--dot p {
+  margin-left: 6px;
+}
+
+.invest--description a,
+.agree--dot a {
+  color:#AAF765;
+}
+
+
+.buy--confirm--section {
+  display: flex;
+  justify-content: space-between;
+}
+
+.final--button {
+  width: 40%;
 }
 
 /* Mobile version */

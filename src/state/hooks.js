@@ -36,7 +36,7 @@ export async function AcknowApprovedAmount (token) {
 }
 
 export async function ApproveTokens ( spendingToken, spendingContract, user, amount ) {
-    const usingAmount = `${amount}${config.decimalZeros}`
+    const usingAmount = `${Math.round(amount)}${config.decimalZeros}`
     console.log(usingAmount)
     if (!user) user = await RequestWallet ()
     

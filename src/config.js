@@ -2,23 +2,23 @@ export const mainHost = "https://vorpal.finance"
 export const chainID = 97
 export const chainHexID = '0x61'
 export const rpcUrl = "https://data-seed-prebsc-1-s1.binance.org:8545/"
-export const VRPToken = "0xCcD635c53f1F9205aA2B29D63BA4B17B03c5b0E2" // VRP
-export const VDAOToken = "0xCcD635c53f1F9205aA2B29D63BA4B17B03c5b0E2" // VDAO
+export const VRPToken = "0xacA60C4d5F7e5De0D61A7F6Cebd47f4e2f30047d" // VRP
+export const VDAOToken = "0x54E717435229c3Be76a98dD12133d60B427385fe" // VDAO
 export const usdTokens = [{
 	name: "USDT",
-	address: "0x04C9483Ef256cFEb1dAc080f90DEfB7B3aBB6006"
+	address: "0xDae3745bA5591Aff6AF3625Cc464fCb8e12c047d"
    },{
 	name: "BUSD",
-	address: "0x04C9483Ef256cFEb1dAc080f90DEfB7B3aBB6006"
+	address: "0x6172eB2b82126a4B53d57eED425E3aeF9b857404"
    }]  // USDC or USDT && BUSD - list of tokens available for using for payment
-export const saleContractAddrVRPUSDT = "0x059EF2701520c35286E3605f1C6b51e5a7fA338f" // Vorpal sale contract
-export const saleContractAddrVDAOUSDT = "0x059EF2701520c35286E3605f1C6b51e5a7fA338f"
-export const saleContractAddrVRPBUSD = "0x059EF2701520c35286E3605f1C6b51e5a7fA338f" // Vorpal sale contract
-export const saleContractAddrVDAOBUSD = "0x059EF2701520c35286E3605f1C6b51e5a7fA338f"
+export const saleContractAddrVRPUSDT = "0x3204D0b76bFC2DF859096ac97D61e2f08a0b8F39" // Vorpal sale contractы
+export const saleContractAddrVDAOUSDT = "0x955125b8F04BF6C6a03a5C924870E3adCf95Ac31"
+export const saleContractAddrVRPBUSD = "0x2Fb6037F2D55201Cdb811005b7ac9b141224F301" 
+export const saleContractAddrVDAOBUSD = "0xb8685E338132a5bd4BC500C3ee3Eb80E4De9145D"
 export const decimal = 1000000000000000000
 export const decimalZeros = "000000000000000000"
 export const defaultToken = 'VRP'
-export const selectableToken = 'VDAO'
+export const selectableToken = 'VAO'
 export const connectOptions = {
     keepAlive: true,
     withCredentials: false,
@@ -290,12 +290,8 @@ export const saleABI = [
     },
     { "inputs": [{ "internalType": "uint256", "name": "amount", "type": "uint256" }], "name": "buyTokens", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
     { "inputs": [], "name": "finishSale", "outputs": [], "stateMutability": "nonpayable", "type": "function" },
-    {
-        "inputs": [{ "internalType": "address", "name": "holder", "type": "address" }],
-        "name": "getSchedule",
-        "outputs": [
-            {
-                "components": [
+    {"inputs": [{ "internalType": "address", "name": "holder", "type": "address" }],"name": "getSchedule",
+        "outputs": [{"components": [
                     { "internalType": "uint256", "name": "amount", "type": "uint256" },
                     { "internalType": "uint256", "name": "tokensLeft", "type": "uint256" },
                     { "internalType": "uint256", "name": "unlockingStart", "type": "uint256" },
