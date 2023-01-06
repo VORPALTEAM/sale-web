@@ -11,13 +11,10 @@ const investAmountUSDVRP  = 0 // user's buying amount in USDT
 const investAmountUSDVDAO  = 0 
 const approvedAmountDefault = 0
 const contractGlobalData = config.contractDefaultGlobalData
-const contractUserData = {
-  vrp: {},
-  vdao: {}
-}
 
 export const actionNames = {
     switchToken : "SWITCH_TOKEN",
+    switchCurrency: "SWITCH_CURRENCY",
     openModal: "OPEN_MODAL",
     loadAccount: "LOAD_ACCOUNT",
     updateEnv: "UPDATE_WEB3",
@@ -30,6 +27,7 @@ export const actionNames = {
 }
 
 export const switchToken = createAction(actionNames.switchToken)
+export const switchCurrency = createAction(actionNames.switchCurrency)
 export const selectWindow = createAction(actionNames.openModal)
 export const loadAccount = createAction(actionNames.loadAccount)
 export const updateUSDVRP = createAction(actionNames.updateUSDVRP)
@@ -49,6 +47,16 @@ const SwitchToken = (state = config.defaultToken, action) => {
           return state
       }
  }  
+
+ const SwitchCurrency = (state = config.defaultCurrency, action) => {
+
+  switch (action.type) {
+    case actionNames.switchCurrency : 
+      return action.payload ? action.payload : state
+    default :
+      return state
+  }
+}
 
 const openModal = (state = openedModal, action) => {
 
@@ -134,6 +142,7 @@ const UpdateApprovedBUSD = (state = approvedAmountDefault, action) => {
 
 export const RootReducer = combineReducers ({
     token: SwitchToken,
+    currency: SwitchCurrency,
     modal: openModal,
     account: UserAccount,
     connected: ConnectedState,

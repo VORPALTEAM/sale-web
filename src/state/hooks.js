@@ -36,9 +36,18 @@ export async function AcknowApprovedAmount (token) {
 }
 
 export async function ApproveTokens ( spendingToken, spendingContract, user, amount ) {
-    const usingAmount = `${Math.round(amount)}${config.decimalZeros}`
+    console.log("Token : ")
+    console.log(spendingToken)
+    console.log("Contract : ")
+    console.log(spendingContract)
+
+    const usingAmount = `${amount}${config.decimalZeros}`
+    console.log("Amount : ")
     console.log(usingAmount)
     if (!user) user = await RequestWallet ()
+
+    console.log("User : ")
+    console.log(user)
     
     if (!env) {
         return 0
@@ -63,20 +72,31 @@ export async function ApproveTokens ( spendingToken, spendingContract, user, amo
 }
 
 export async function Buy ( spendingContract, user, amount ) {
+
     if (!env) {
         return false
     }
     if (!user) user = await RequestWallet ()
 
+    console.log("User : ")
+    console.log(user)
+    console.log("Contract : ")
+    console.log(spendingContract)
+
     try {
         const w3 = new Web3(env, config.connectOptions)
         const contract = new w3.eth.Contract(config.saleABI, spendingContract)
+        console.log("Amount in dec : ")
+        console.log(amount * config.decimal)
         const spendingAmount = `0x${(amount * config.decimal).toString(16)}`
+        console.log("Amount in hex : ")
         console.log(spendingAmount)
         const buy = await contract.methods.buyTokens(spendingAmount).send({
             from: user
         }).then((res) => {
             return true;
+        }, (rej) => {
+            return false;
         })
     } catch (e) {
         console.log(e)
@@ -84,4 +104,21 @@ export async function Buy ( spendingContract, user, amount ) {
     }
 
     return true;
+}
+
+export async function RequestMax ( token, user ) {
+    console.log(token)
+    let val = 0;
+    if (!user) user = await RequestWallet ()
+    
+    try {
+        const w3 = new Web3(config.rpcUrl, config.connectOptions)
+        const contract = new w3.eth.Contract(config.erc20ABI, token)
+        val = await contract.methods.balanceOf(user).call()
+    } catch (e) {
+        console.log(e)
+        val = 0
+    }
+
+    return val / config.decimal
 }

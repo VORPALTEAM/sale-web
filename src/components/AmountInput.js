@@ -17,7 +17,7 @@ const AmountInput = () => {
 
     const ValueOnChange = (event) => {
       const newValue = event.target.value
-      DispatchValue (newValue)
+      if (newValue<400001) DispatchValue (newValue)
     }
 
     const KeyPressWeb = (event) => {
@@ -30,9 +30,9 @@ const AmountInput = () => {
           break;
         case "." :
           let lastValue = `${activeBalance}`
-          if (lastValue.indexOf(".") < 0) {
+          /* if (lastValue.indexOf(".") < 0) {
             lastValue += "."
-          }
+          } */
           DispatchValue (lastValue)
           break;
         default:
@@ -45,8 +45,8 @@ const AmountInput = () => {
     return(
       <>
         <div className="amount--input">
-              <input name="amount" type="number" placeholder="0000.0000" 
-              value={ activeBalance ?  activeBalance : "0.0000" } onChange={ValueOnChange} step="any" />
+              <input name="amount" type="number" max="400000"
+              value={ activeBalance } onChange={ValueOnChange} />
             </div>
             <div className="amount--calculator">
               <div className="number--key" data="1" onClick={KeyPressWeb}>
@@ -79,9 +79,7 @@ const AmountInput = () => {
               <div className="number--key" data="0" onClick={KeyPressWeb}>
                 0
               </div>
-              <div className="number--key" data="." onClick={KeyPressWeb}>
-                .
-              </div>
+              <div className="number--key" data="." onClick={KeyPressWeb} />
               <div className="number--key" data="backspace" onClick={KeyPressWeb}>
                 Backspace
               </div>

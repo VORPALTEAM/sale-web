@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { switchToken, updateUSDVRP, updateUSDVDAO } from '../../state/reducer'
-import { ApproveTokens,  AcknowApprovedAmount, Buy } from '../../state/hooks'
+import { switchToken, updateUSDVRP, updateUSDVDAO, selectWindow,  } from '../../state/reducer'
+import { ApproveTokens,  RequestMax, Buy } from '../../state/hooks'
 import * as config from '../../config'
 
 const InvestSection = () => {
@@ -11,7 +11,7 @@ const InvestSection = () => {
     const activeBalance = State.token === config.defaultToken ? State.amountUSDVRP : State.amountUSDVDAO
     // "installWallet" || "connectWallet" || "insufficientAmount" || "approve" || "buy"
     const [stage, MoveToStage] = useState("approve")  
-    const [currency, SelectCurrency] = useState("USDT") // USDT || BUSD
+    const currency  = State.currency // USDT || BUSD
     const currentToken = State.token
     const btnAddClass = currentToken === config.defaultToken ? "vrp" : "vdao"
     const price  = State.contractData.price
@@ -21,13 +21,13 @@ const InvestSection = () => {
 
     const currentContract = () => {
         switch (true) {
-            case (currency === "USDT" && State.token === config.defaultToken) :
+            case (currency === config.defaultCurrency && State.token === config.defaultToken) :
             return config.saleContractAddrVRPUSDT
-            case (currency === "USDT" && State.token === config.selectableToken) :
+            case (currency === config.defaultCurrency && State.token === config.selectableToken) :
             return config.saleContractAddrVDAOUSDT
-            case (currency === "BUSD" && State.token === config.defaultToken) :
+            case (currency === config.selectableCurrency && State.token === config.defaultToken) :
             return config.saleContractAddrVRPBUSD
-            case (currency === "BUSD" && State.token === config.selectableToken) :
+            case (currency === config.selectableCurrency && State.token === config.selectableToken) :
             return config.saleContractAddrVDAOBUSD
         }
     }
@@ -37,9 +37,10 @@ const InvestSection = () => {
         usdTokenList.set(t.name, t.address)
     })
 
-    const SwitchCurrency = (event) => {
-        SelectCurrency(event.target.value)
-        MoveToStage("approve")
+    const SwitchCurrency  = (e) => {
+        console.log(e)
+        dispatch(selectWindow(e))
+        // MoveToStage("approve")
     }
 
     const SwitchToken = (event) => {
@@ -61,13 +62,22 @@ const InvestSection = () => {
         const buying = await Buy(currentContract(), State.account, activeBalance)
         if (buying) {
           dispatch(updateBalanceAction)
+          dispatch(selectWindow("success"))
+          MoveToStage("approve")
         }
     }
 
     const checkBox = (event) => {
-        console.log("ok")
+
         userAgree(event.target.checked)
         return !event.target.checked
+    }
+
+    const MaxUSD = async () => {
+        const MaxTokens = await RequestMax(usdTokenList.get(currency), State.account)
+        State.token === config.defaultToken ?
+         dispatch(updateUSDVRP(MaxTokens)) :
+         dispatch(updateUSDVDAO(MaxTokens)) 
     }
 
 
@@ -129,10 +139,14 @@ const InvestSection = () => {
                 </div>
             </div>
             <div className="invest--select">
-                <select onChange={SwitchCurrency}>
-                    <option value="USDT">USDT</option>
-                    <option value="BUSD">BUSD</option>
-                </select>
+                <div className="currency--selector">
+                  <div className="max--value--btn" onClick={MaxUSD}>MAX</div>
+                    <div className="selected--token" onClick={SwitchCurrency.bind(this, "selectCurrency")}>
+                        <img src={currency === config.defaultCurrency ? 
+                        "images/icons/USDT.png" : "images/icons/BUSD.png"} width="30" height="30" />
+                        <p>{currency}</p>
+                    </div>
+                </div>
             </div>
          </div>
          <div className="invest--count--section section--to">
@@ -145,10 +159,14 @@ const InvestSection = () => {
                 </div>
             </div>
             <div className="invest--select">
-                <select onChange={SwitchToken}>
-                    <option value={config.defaultToken}>{config.defaultToken}</option>
-                    <option value={config.selectableToken}>{config.selectableToken}</option>
-                </select>
+                <div className="currency--selector">
+                  <div className="max--value--btn" onClick={MaxUSD}>MAX</div>
+                    <div className="selected--token" onClick={SwitchCurrency.bind(this, "selectToken")}>
+                        <img src={State.token === config.defaultToken ? 
+                        "images/icons/VRP.png" : "images/icons/VAO.png"} width="30" height="30" />
+                        <p>{State.token}</p>
+                    </div>
+                </div>
             </div>
          </div>
          <div className="invest--description">

@@ -1,6 +1,8 @@
 import React, {useState} from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import NoWallet from './NoWallet'
+import SuccessNotify from './Success'
+import SelectToken from './SelectToken'
 import { selectWindow } from '../../state/reducer'
  
 const ModalContainer = () => {
@@ -18,7 +20,12 @@ const ModalContainer = () => {
       switch (windowName) {
         case "nowallet" :
           return <NoWallet />
-          break;
+        case "success" :
+          return <SuccessNotify />
+        case "selectToken" :
+          return <SelectToken pair="token" />
+        case "selectCurrency" :
+          return <SelectToken pair="currency" />
         default: 
           return null;
       }
