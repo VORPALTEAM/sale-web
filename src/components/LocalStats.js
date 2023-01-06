@@ -35,7 +35,7 @@ const LocalStats = () => {
       const firstContractUnLocked = await firstContract.methods.getUnlockedTokens(clientAccount).call()
       const secondContractUnLocked = await secondContract.methods.getUnlockedTokens(clientAccount).call()
       
-      setUnLockedAmount(firstContractUnLocked + secondContractUnLocked)
+      setUnLockedAmount(parseInt(firstContractUnLocked / config.decimal) + parseInt(secondContractUnLocked / config.decimal))
     }
     
     if (clientAccount) {
