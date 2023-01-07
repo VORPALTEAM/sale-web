@@ -78,8 +78,7 @@ export async function RequestLockedFunds (contracts = [], user) {
 }
 
 export async function RequestSaleStart (contract) {
-    console.log("contract")
-    console.log(contract)
+
     let status = 0
     try {
         const ctrct = new getterWeb3.eth.Contract(config.saleABI, contract)
@@ -91,37 +90,32 @@ export async function RequestSaleStart (contract) {
 }
 
 export async function ContractDataSetup (contracts = []) {
+    console.log("contract")
+    console.log(contracts)
     const tokenContract = new getterWeb3.eth.Contract(config.saleABI, contracts[0])
     
     const tokenSecondContract = new getterWeb3.eth.Contract(config.saleABI, contracts[1])
 
     const tokenPrice = await tokenContract.methods.price().call()
-    const contractOwner = await tokenContract.methods.owner().call()
     const saleAmount = await tokenContract.methods.saleAmount().call()
     const saleEnd = await tokenContract.methods.saleEnd().call()
     const saleLength = await tokenContract.methods.saleLength().call()
-    const status = await tokenContract.methods.status().call()
     const totalTokensLeft = await tokenContract.methods.totalTokensLeft().call()
-    const usdc = await tokenContract.methods.usdc().call()
     const vestingPeriod = await tokenContract.methods.vestingPeriod().call()
     const lockPeriod = await tokenContract.methods.lockPeriod().call()
-    const vorpal = await tokenContract.methods.vorpal().call()
 
     const tokensLeftSecond = await tokenSecondContract.methods.totalTokensLeft().call()
+    console.log(tokensLeftSecond)
 
     return ({
-      owner: contractOwner,
       price: tokenPrice,
       saleAmount: saleAmount,
       saleEnd: saleEnd,
       saleLength: saleLength,
-      status: status,
       totalTokensLeft: totalTokensLeft,
       tokensLeftSecond: tokensLeftSecond,
       lockPeriod: lockPeriod,
-      usdc: usdc,
-      vestingPeriod: vestingPeriod,
-        vorpal: vorpal
+      vestingPeriod: vestingPeriod
     })
   }
 
