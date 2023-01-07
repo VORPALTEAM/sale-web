@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { switchToken, updateOrderUSDVRP, updateOrderUSDVDAO, selectWindow,  } from '../../state/reducer'
-import { ApproveTokens,  RequestMax, Buy } from '../../state/hooks'
+import { switchToken, updateOrderUSDVRP, updateOrderUSDVDAO, selectWindow  } from '../../state/reducer'
+import { ApproveTokens,  RequestMax, RequestSaleStart, Buy } from '../../state/hooks'
 import * as config from '../../config'
 
 const InvestSection = () => {
@@ -20,7 +20,9 @@ const InvestSection = () => {
     const updateBalanceAction = State.token === config.defaultToken ? updateOrderUSDVRP : updateOrderUSDVDAO
     const [userAgreed, userAgree] = useState(false)
     const [isPending, pendingState] = useState(false)
-    const disabledState = (isPending || !userAgreed) ? " btn--disabled" : ""
+    const [isStarted, startSale] = useState(0)
+    const [isStatusRequested, isRequest] = useState(0)
+    const disabledState = (isPending || !userAgreed || !isStarted) ? " btn--disabled" : ""
 
     const currentContract = () => {
         switch (true) {
@@ -36,6 +38,15 @@ const InvestSection = () => {
             return null
         }
     }
+
+    async function IsSaleStart () {
+        if (isStatusRequested) return isStarted;
+        const startStatus = await RequestSaleStart(currentContract())
+        startSale(startStatus)
+        isRequest(1)
+        return startStatus
+    }
+
     let btn = []
 
     config.usdTokens.forEach((t) => {
@@ -90,6 +101,8 @@ const InvestSection = () => {
         }
     }
 
+    IsSaleStart()
+
 
     function mainBtn () {
         btn = []
@@ -138,7 +151,7 @@ const InvestSection = () => {
     mainBtn ()
 
     return(
-       <div className="">
+       <div className="" onLoad={IsSaleStart}>
          <div className="invest--count--section section--from">
             <div className="invest--num">
                 <div className="invest--num--title">

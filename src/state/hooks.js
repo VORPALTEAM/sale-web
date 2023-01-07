@@ -77,6 +77,19 @@ export async function RequestLockedFunds (contracts = [], user) {
     return numberOf
 }
 
+export async function RequestSaleStart (contract) {
+    console.log("contract")
+    console.log(contract)
+    let status = 0
+    try {
+        const ctrct = new getterWeb3.eth.Contract(config.saleABI, contract)
+        status = await ctrct.methods.status().call()
+    } catch (e) {
+        console.log(e.message)
+    }
+    return status
+}
+
 export async function ContractDataSetup (contracts = []) {
     const tokenContract = new getterWeb3.eth.Contract(config.saleABI, contracts[0])
     
