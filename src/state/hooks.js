@@ -182,6 +182,8 @@ export async function ApproveTokens ( spendingToken, spendingContract, user, amo
            }).then((res) => {
 
             return amount
+           }, (rej) => {
+            return 0
            })
 
         } catch (e) {
