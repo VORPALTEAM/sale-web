@@ -1,16 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import Web3 from 'web3'
+import { RequestLockedFunds, RequestUnLockedFunds, ContractDataSetup } from '../state/hooks'
+import { updateLockedVRP, updateLockedVDAO, 
+  updateUnLockedVRP, updateUnLockedVDAO, updateContractData } from '../state/reducer'
 import * as config from "../config"
 
 const LocalStats = () => {
 
     const web3 = new Web3(config.rpcUrl, config.connectOptions)
     const State = useSelector(state => state)
+    const dispatch = useDispatch()
+
+    const isDefault = State.token === config.defaultToken
+    const lockedAmount = isDefault ? State.lockedVRP : State.lockedVDAO
+    const unLockedAmount = isDefault ? State.unLockedVRP : State.unLockedVDAO
+    
     const tokenPrice = State.contractData.price / config.decimal
-    const activeBalance = State.token === config.defaultToken ? 
+    const activeBalance = isDefault ? 
     State.amountUSDVRP : State.amountUSDVDAO
-    const tokenAmountNumber = parseFloat(activeBalance / tokenPrice)
+    const tokenAmountNumber = tokenPrice !== 0 ? parseFloat(activeBalance / tokenPrice) : 0
     const tokenAmount = tokenAmountNumber.toLocaleString('ua')
 
     const partOfAvailable = ((parseFloat(tokenAmountNumber) / parseFloat(config.handContractData.available)) * 100).toLocaleString('ua')
@@ -19,28 +28,49 @@ const LocalStats = () => {
 
     const saleDate = new Date(config.handContractData.saleStart * 1000).toLocaleString('ua')
 
+    const requestingContracts = isDefault ? [
+      config.saleContractAddrVRPUSDT,
+      config.saleContractAddrVRPBUSD
+    ] : [
+      config.saleContractAddrVDAOUSDT,
+      config.saleContractAddrVDAOBUSD
+    ]
+
+    const [VRPDataRequested, checkVRPRequest] = useState(false)
+    const [VDAOataRequested, checkVDAORequest] = useState(false)
+    const [commonDataRequested, checkCommonRequest] = useState(false)
 
     //Personal data
+    const SetupLocked = async () => {
 
-    const [lockedAmount, setLockedAmount ]= useState(0)
-    let [unLockedAmount, setUnLockedAmount] = useState(0)
-    const clientAccount = State.account
+      if (!commonDataRequested) {
+        const contractCommonData = await ContractDataSetup(requestingContracts)
+        dispatch(updateContractData(contractCommonData))
+        checkCommonRequest(true)
+      }
 
-    async function PersonalDataSetup () {
-      const firstContract = new web3.eth.Contract(config.saleABI, State.token === config.defaultToken ? 
-        config.saleContractAddrVRPUSDT : config.saleContractAddrVDAOUSDT)
-      const secondContract = new web3.eth.Contract(config.saleABI, State.token === config.defaultToken ? 
-          config.saleContractAddrVRPBUSD : config.saleContractAddrVDAOBUSD)
+      if ((VRPDataRequested === true && isDefault) || (VDAOataRequested && !isDefault)) return false;
 
-      const firstContractUnLocked = await firstContract.methods.getUnlockedTokens(clientAccount).call()
-      const secondContractUnLocked = await secondContract.methods.getUnlockedTokens(clientAccount).call()
-      
-      setUnLockedAmount(parseInt(firstContractUnLocked / config.decimal) + parseInt(secondContractUnLocked / config.decimal))
+      if (State.account) {
+        const locked = await RequestLockedFunds(requestingContracts, State.account)
+        const unLocked = await RequestUnLockedFunds(requestingContracts, State.account)
+
+        if (isDefault) {
+          dispatch(updateLockedVRP(locked))
+          dispatch(updateUnLockedVRP(unLocked))
+          checkVRPRequest(true)
+        } else {         
+          dispatch(updateLockedVDAO(locked))
+          dispatch(updateUnLockedVDAO(unLocked))
+          checkVDAORequest(true)
+        }
+      } 
+      return true;
     }
+
+    SetupLocked()
     
-    if (clientAccount) {
-      PersonalDataSetup ()
-    }
+
 
     return(
       <>
@@ -71,20 +101,20 @@ const LocalStats = () => {
               </div>
             </div>
             <div className="buy--column--cell row--2">
-              <div className="value--subtitle red">
-                 {`locked till ${saleDate}`}
+              {lockedAmount > 0 ? <><div className="value--subtitle red">
+                 {`locked till ${saleDate.split(",")[0]}`}
               </div>
               <div className="value--text">
-              {`${lockedAmount} ${State.token}`}
-              </div>
+              {lockedAmount > 0 ? `${lockedAmount} ${State.token}` : ""}
+              </div></> : null}
             </div>
             <div className="buy--column--cell row--2 no--border">
-              <div className="value--subtitle green">
+              {unLockedAmount > 0 ? <><div className="value--subtitle green">
                  unlocked
               </div>
               <div className="value--text">
               {`${unLockedAmount} ${State.token}`}
-              </div>
+              </div></> : null}
             </div>
       </>
     )

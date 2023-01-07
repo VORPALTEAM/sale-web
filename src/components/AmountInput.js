@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { updateUSDVRP, updateUSDVDAO } from '../state/reducer'
-import { defaultToken } from '../config'
+import { defaultToken, maxInvestments } from '../config'
 
 const AmountInput = () => {
 
@@ -17,7 +17,7 @@ const AmountInput = () => {
 
     const ValueOnChange = (event) => {
       const newValue = event.target.value
-      if (newValue<400001) DispatchValue (newValue)
+      if (newValue <= maxInvestments) DispatchValue (newValue)
     }
 
     const KeyPressWeb = (event) => {
@@ -36,8 +36,10 @@ const AmountInput = () => {
           DispatchValue (lastValue)
           break;
         default:
-          const dgValue = activeBalance === "0" ? `${dt}` : `${activeBalance}` + `${dt}`
-          DispatchValue (dgValue)
+          const dgValue = (activeBalance === 0 || activeBalance === "0") ? `${dt}` : `${activeBalance}` + `${dt}`
+          if(parseInt(dgValue) <= maxInvestments) {
+            DispatchValue (dgValue)
+          }
           break;
       }
     }
@@ -45,7 +47,7 @@ const AmountInput = () => {
     return(
       <>
         <div className="amount--input">
-              <input name="amount" type="number" max="400000"
+              <input name="amount" type="number" max={maxInvestments}
               value={ activeBalance } onChange={ValueOnChange} />
             </div>
             <div className="amount--calculator">

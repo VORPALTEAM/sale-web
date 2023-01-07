@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import Web3 from 'web3';
 import { selectWindow, loadAccount } from '../../state/reducer'
 import { connectOptions, chainID, chainHexID, rpcUrl } from '../../config'
-import { RequestWallet } from '../../state/hooks'
+import { RequestWallet, CheckIsConnected } from '../../state/hooks'
 
 const ConnectWalletBtn = () => {
 
@@ -16,6 +16,8 @@ const ConnectWalletBtn = () => {
         const wallet = await RequestWallet()
         if (!wallet) {
           dispatch(selectWindow("nowallet"))
+        } else {
+          document.cookie = "saleWalletConnected=true"
         }
         dispatch(loadAccount(wallet))
       } catch (e) {
@@ -23,7 +25,15 @@ const ConnectWalletBtn = () => {
         dispatch(loadAccount(null))
       }
 
+      return true
     }
+
+    useEffect(() => {
+      if (CheckIsConnected () ||
+         document.cookie.indexOf("saleWalletConnected=true") >= 0) {
+        ConnectWallet()
+      }
+    }, [])
 
     const DisconnectUser = () => {
 

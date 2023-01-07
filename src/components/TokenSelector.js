@@ -22,7 +22,6 @@ const TokenSelector = () => {
         <div className={`token token--vrp ${State.token !== defaultToken ? 'inActive' : ''}`}>{defaultToken}</div>
         <label className="switch--token">
            <input type="checkbox" onChange={checkBox} 
-           defaultChecked={State.token === defaultToken ? "" : "checked"}
            checked={State.token === defaultToken ? "" : "checked"} />
            <span className="checker round"></span>
         </label>

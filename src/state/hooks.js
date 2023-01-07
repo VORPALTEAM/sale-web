@@ -1,7 +1,8 @@
 import * as config from '../config'
 import Web3 from 'web3';
 
-export const env = window.ethereum
+const env = window.ethereum
+const getterWeb3 = new Web3(config.rpcUrl, config.connectOptions)
 
 export async function RequestWallet () {
 
@@ -30,6 +31,120 @@ export async function RequestWallet () {
     }
 
   }
+
+export function CheckIsConnected () {
+    let connected = false
+    try {
+        connected = env.isConnected()
+    } catch (e) {
+        console.log(e.message)
+        connected = false
+    }
+    return connected
+}
+
+export async function RequestLockedFunds (contracts = [], user) {
+
+    let numberOf = 0
+    if (!user) return numberOf
+
+    try {
+        const ctrct = new getterWeb3.eth.Contract(config.saleABI, contracts[0])
+        const shedule = await ctrct.methods.getSchedule(user).call()
+        
+        if (shedule) {
+            numberOf += parseInt(shedule.tokensLeft / config.decimal)
+        }
+    } catch (e) {
+        console.log(e.message)
+        numberOf += 0
+    }
+
+    try {
+        const ctrct = new getterWeb3.eth.Contract(config.saleABI, contracts[1])
+        const shedule = await ctrct.methods.getSchedule(user).call()
+        // console.log(shedule)
+        if (shedule) {
+            numberOf += parseInt(shedule.tokensLeft / config.decimal)
+        }
+    } catch (e) {
+        console.log(e.message)
+        numberOf += 0
+    }
+
+    // console.log(numberOf)
+
+    return numberOf
+}
+
+export async function ContractDataSetup (contracts = []) {
+    const tokenContract = new getterWeb3.eth.Contract(config.saleABI, contracts[0])
+    
+    const tokenSecondContract = new getterWeb3.eth.Contract(config.saleABI, contracts[1])
+
+    const tokenPrice = await tokenContract.methods.price().call()
+    const contractOwner = await tokenContract.methods.owner().call()
+    const saleAmount = await tokenContract.methods.saleAmount().call()
+    const saleEnd = await tokenContract.methods.saleEnd().call()
+    const saleLength = await tokenContract.methods.saleLength().call()
+    const status = await tokenContract.methods.status().call()
+    const totalTokensLeft = await tokenContract.methods.totalTokensLeft().call()
+    const usdc = await tokenContract.methods.usdc().call()
+    const vestingPeriod = await tokenContract.methods.vestingPeriod().call()
+    const lockPeriod = await tokenContract.methods.lockPeriod().call()
+    const vorpal = await tokenContract.methods.vorpal().call()
+
+    const tokensLeftSecond = await tokenSecondContract.methods.totalTokensLeft().call()
+
+    return ({
+      owner: contractOwner,
+      price: tokenPrice,
+      saleAmount: saleAmount,
+      saleEnd: saleEnd,
+      saleLength: saleLength,
+      status: status,
+      totalTokensLeft: totalTokensLeft,
+      tokensLeftSecond: tokensLeftSecond,
+      lockPeriod: lockPeriod,
+      usdc: usdc,
+      vestingPeriod: vestingPeriod,
+        vorpal: vorpal
+    })
+  }
+
+export async function RequestUnLockedFunds (contracts = [], user) {
+
+    let numberOf = 0
+    if (!user) return numberOf
+
+    try {
+        const ctrct = new getterWeb3.eth.Contract(config.saleABI, contracts[0])
+        const shedule = await ctrct.methods.getUnlockedTokens(user).call()
+        
+        if (shedule) {
+            numberOf += parseInt(shedule / config.decimal)
+        }
+    } catch (e) {
+        console.log(e.message)
+        numberOf += 0
+    }
+
+    try {
+        const ctrct = new getterWeb3.eth.Contract(config.saleABI, contracts[1])
+        const shedule = await ctrct.methods.getUnlockedTokens(user).call()
+        // console.log(shedule)
+        if (shedule) {
+            numberOf += parseInt(shedule / config.decimal)
+        }
+    } catch (e) {
+        console.log(e.message)
+        numberOf += 0
+    }
+
+    // console.log(numberOf)
+
+    return numberOf
+}
 
 export async function AcknowApprovedAmount (token) {
     return 0

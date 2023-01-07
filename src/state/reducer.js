@@ -20,10 +20,16 @@ export const actionNames = {
     updateEnv: "UPDATE_WEB3",
     updateUSDVRP: "UPDATE_USDVRP",
     updateUSDVDAO: "UPDATE_USDVDAO",
+    orderUSDVRP: "ORDER_USDVRP",
+    orderUSDVDAO: "ORDER_USDVDAO",
     connectedState: "CONNECTED_STATE_CHANGE",
     updateContractData: "UPDATE_CONTRACT_DATA",
     updateApprovedUSDT: "UPDATE_APPROVED_USDT",
-    updateApprovedBUSD: "UPDATE_APPROVED_BUSD"
+    updateApprovedBUSD: "UPDATE_APPROVED_BUSD",
+    amountVRPLocked: "AMOUNT_VRP_LOCKED",
+    amountVDAOLocked: "AMOUNT_VDAO_LOCKED",
+    amountVRPunLocked: "AMOUNT_VRP_UNLOCKED",
+    amountVDAOunLocked: "AMOUNT_VDAO_UNLOCKED"
 }
 
 export const switchToken = createAction(actionNames.switchToken)
@@ -37,6 +43,12 @@ export const updateEnv = createAction(actionNames.updateEnv)
 export const updateContractData = createAction(actionNames.updateContractData)
 export const updateApprovedUSDT = createAction(actionNames.updateApprovedUSDT)
 export const updateApprovedBUSD = createAction(actionNames.updateApprovedBUSD)
+export const updateOrderUSDVRP = createAction(actionNames.orderUSDVRP)
+export const updateOrderUSDVDAO = createAction(actionNames.orderUSDVDAO)
+export const updateLockedVRP = createAction(actionNames.amountVRPLocked)
+export const updateLockedVDAO = createAction(actionNames.amountVDAOLocked)
+export const updateUnLockedVRP = createAction(actionNames.amountVRPunLocked)
+export const updateUnLockedVDAO = createAction(actionNames.amountVDAOunLocked)
 
 const SwitchToken = (state = config.defaultToken, action) => {
 
@@ -139,6 +151,68 @@ const UpdateApprovedBUSD = (state = approvedAmountDefault, action) => {
 }
 
 
+const OrderUSDVRP = (state = investAmountUSDVRP, action) => {
+
+  switch(action.type) {
+    case actionNames.orderUSDVRP : 
+      return action.payload ? action.payload : state
+    default :
+      return state
+  }
+}
+
+const OrderUSDVDAO = (state = investAmountUSDVDAO, action) => {
+
+  switch(action.type) {
+    case actionNames.orderUSDVDAO : 
+      return action.payload ? action.payload : state
+    default :
+      return state
+  }
+}
+
+
+const UpdateLockedVRP = (state = investAmountUSDVRP, action) => {
+
+  switch(action.type) {
+    case actionNames.amountVRPLocked : 
+      return action.payload ? action.payload : state
+    default :
+      return state
+  }
+}
+
+const UpdateLockedVDAO = (state = investAmountUSDVDAO, action) => {
+
+  switch(action.type) {
+    case actionNames.amountVDAOLocked : 
+      return action.payload ? action.payload : state
+    default :
+      return state
+  }
+}
+
+const UpdateUnLockedVRP = (state = investAmountUSDVRP, action) => {
+
+  switch(action.type) {
+    case actionNames.amountVRPunLocked : 
+      return action.payload ? action.payload : state
+    default :
+      return state
+  }
+}
+
+const UpdateUnLockedVDAO = (state = investAmountUSDVDAO, action) => {
+
+  switch(action.type) {
+    case actionNames.amountVDAOunLocked : 
+      return action.payload ? action.payload : state
+    default :
+      return state
+  }
+}
+
+
 
 export const RootReducer = combineReducers ({
     token: SwitchToken,
@@ -148,7 +222,13 @@ export const RootReducer = combineReducers ({
     connected: ConnectedState,
     amountUSDVRP: AmountUSDVRP,
     amountUSDVDAO: AmountUSDVDAO,
+    orderUSDVRP: OrderUSDVRP,
+    orderUSDVDAO: OrderUSDVDAO,
     contractData: ContractDataState,
     approvedUSDT: UpdateApprovedUSDT,
-    approvedBUSD: UpdateApprovedBUSD
+    approvedBUSD: UpdateApprovedBUSD,
+    lockedVRP: UpdateLockedVRP,
+    lockedVDAO: UpdateLockedVDAO,
+    unLockedVRP: UpdateUnLockedVRP,
+    unLockedVDAO: UpdateUnLockedVDAO,
 })

@@ -380,6 +380,9 @@ input:checked + .checker:before {
   transition-property: all;
   transition-duration: 0.4s;
   transition-timing-function: ease-in-out;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  user-select: none;  
 }
 
 .number--key:hover,
@@ -576,6 +579,13 @@ input:checked + .checker:before {
   text-transform: uppercase;
 }
 
+.buy--section input.order--input {
+  text-align: left;
+  border: none;
+  background: transparent;
+  color: #FFF;
+}
+
 .invest--description {
   display: flex;
   flex-direction: column;
@@ -646,6 +656,11 @@ input:checked + .checker:before {
   width: 40%;
 }
 
+.btn--disabled {
+  opacity: 0.9;
+  pointer-events: none;
+}
+
 /* Mobile version */
 
 @media screen and (max-width : 768px) {
@@ -673,5 +688,10 @@ input:checked + .checker:before {
 
   .sale--timer--heading {
     text-align: center;
+  }
+
+
+  .invest--section {
+    width: 100%;
   }
 }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { switchToken, updateUSDVRP, updateUSDVDAO, selectWindow,  } from '../../state/reducer'
+import { switchToken, updateOrderUSDVRP, updateOrderUSDVDAO, selectWindow,  } from '../../state/reducer'
 import { ApproveTokens,  RequestMax, Buy } from '../../state/hooks'
 import * as config from '../../config'
 
@@ -8,7 +8,8 @@ const InvestSection = () => {
 
     const State = useSelector(state => state)
     const dispatch = useDispatch()
-    const activeBalance = State.token === config.defaultToken ? State.amountUSDVRP : State.amountUSDVDAO
+    // const activeBalance = State.token === config.defaultToken ? State.amountUSDVRP : State.amountUSDVDAO
+    const orderedBalance = State.token === config.defaultToken ? State.orderUSDVRP : State.orderUSDVDAO
     // "installWallet" || "connectWallet" || "insufficientAmount" || "approve" || "buy"
     const [stage, MoveToStage] = useState("approve")  
     const currency  = State.currency // USDT || BUSD
@@ -16,8 +17,10 @@ const InvestSection = () => {
     const btnAddClass = currentToken === config.defaultToken ? "vrp" : "vdao"
     const price  = State.contractData.price
     const usdTokenList = new Map()
-    const updateBalanceAction = State.token === config.defaultToken ? updateUSDVRP : updateUSDVDAO
+    const updateBalanceAction = State.token === config.defaultToken ? updateOrderUSDVRP : updateOrderUSDVDAO
     const [userAgreed, userAgree] = useState(false)
+    const [isPending, pendingState] = useState(false)
+    const disabledState = (isPending || !userAgreed) ? " btn--disabled" : ""
 
     const currentContract = () => {
         switch (true) {
@@ -29,6 +32,8 @@ const InvestSection = () => {
             return config.saleContractAddrVRPBUSD
             case (currency === config.selectableCurrency && State.token === config.selectableToken) :
             return config.saleContractAddrVDAOBUSD
+            default : 
+            return null
         }
     }
     let btn = []
@@ -38,33 +43,31 @@ const InvestSection = () => {
     })
 
     const SwitchCurrency  = (e) => {
-        console.log(e)
+        // console.log(e)
         dispatch(selectWindow(e))
         // MoveToStage("approve")
     }
 
-    const SwitchToken = (event) => {
-        dispatch(switchToken(event.target.value))
-        MoveToStage("approve")
-    }
-
 
     const ApproveToken = async () => {
-
+         pendingState(true)
          const amount = await ApproveTokens(usdTokenList.get(currency),
-         currentContract(), State.account, activeBalance)
-         if (amount >= activeBalance) {
+         currentContract(), State.account, orderedBalance)
+         if (amount >= orderedBalance) {
             MoveToStage("buy")
          }
+         pendingState(false)
     }
 
     const Invest = async () => {
-        const buying = await Buy(currentContract(), State.account, activeBalance)
+        pendingState(true)
+        const buying = await Buy(currentContract(), State.account, orderedBalance)
         if (buying) {
-          dispatch(updateBalanceAction)
+          dispatch(updateBalanceAction(0))
           dispatch(selectWindow("success"))
           MoveToStage("approve")
         }
+        pendingState(false)
     }
 
     const checkBox = (event) => {
@@ -76,8 +79,15 @@ const InvestSection = () => {
     const MaxUSD = async () => {
         const MaxTokens = await RequestMax(usdTokenList.get(currency), State.account)
         State.token === config.defaultToken ?
-         dispatch(updateUSDVRP(MaxTokens)) :
-         dispatch(updateUSDVDAO(MaxTokens)) 
+         dispatch(updateOrderUSDVRP(MaxTokens)) :
+         dispatch(updateOrderUSDVDAO(MaxTokens)) 
+    }
+
+    const UpdateOrderUSD = (event) => {
+        const newValue = event.target.value
+        if (newValue <= config.maxInvestments) {
+            dispatch(updateBalanceAction(newValue))
+        }
     }
 
 
@@ -86,38 +96,38 @@ const InvestSection = () => {
         switch (stage) {
             case "installWallet" :
             btn.push(
-                <div key="stage0" className={`confirm--button ${btnAddClass} install--stage`}>
-                    Install wallet to start investing
+                <div key="stage0" className={`confirm--button ${btnAddClass} install--stage${disabledState}`}>
+                    {isPending? "Pending..." : "Install wallet to start investing"}
                 </div>
             )
             break;
             case "connectWallet" :
             btn.push(
-                    <div key="stage1" className={`confirm--button ${btnAddClass} connect--stage`}>
-                        Connect Wallet
+                    <div key="stage1" className={`confirm--button ${btnAddClass} connect--stage${disabledState}`}>
+                         {isPending? "Pending..." : "Connect Wallet"}
                     </div>
                 )
             break;
             case "insufficientAmount" :
             btn.push(
-                <div key="stage2" className={`confirm--button ${btnAddClass} insufficient--stage`}>
-                    Not enough currency
+                <div key="stage2" className={`confirm--button ${btnAddClass}${disabledState}`}>
+                    {isPending? "Pending..." : "Not enough currency"}
                 </div>
             )
             break;
             case "approve" : 
             btn.push(
-                <div key="stage3" className={`confirm--button ${btnAddClass} insufficient--stage`}
+                <div key="stage3" className={`confirm--button ${btnAddClass}${disabledState}`}
                  onClick={ApproveToken}>
-                    Approve
+                    {isPending? "Pending..." : "Approve"}
                 </div>
             )
             break;
             case "buy" :
             btn.push(
                 <div key="stage4" onClick={Invest}
-                className={`confirm--button ${btnAddClass} insufficient--stage`}>
-                    Buy tokens
+                className={`confirm--button ${btnAddClass}${disabledState}`}>
+                    {isPending? "Pending..." : "Buy tokens"}
                 </div>
             )
             break;
@@ -135,7 +145,7 @@ const InvestSection = () => {
                     from
                 </div>
                 <div className="invest--num--count">
-                    {activeBalance}
+                    <input type="number" className="order--input" value={orderedBalance} onChange={UpdateOrderUSD} />
                 </div>
             </div>
             <div className="invest--select">
@@ -155,7 +165,7 @@ const InvestSection = () => {
                     to
                 </div>
                 <div className="invest--num--count">
-                    {price ? ((activeBalance * config.decimal )/ price) : 0}
+                    {price ? ((orderedBalance * config.decimal )/ price) : 0}
                 </div>
             </div>
             <div className="invest--select">

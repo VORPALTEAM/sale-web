@@ -4,6 +4,7 @@ import Web3 from 'web3'
 import './App.css';
 import * as config from './config' 
 import { updateContractData } from './state/reducer'
+import { ContractDataSetup } from './state/hooks'
 import Header from './components/header'
 import TokenSelector from './components/TokenSelector'
 import StarDiagram from './components/StarDiagram'
@@ -16,52 +17,14 @@ import ModalContainer from './components/modals'
 
 function App() {
 
-  const web3 = new Web3(config.rpcUrl, config.connectOptions)
   const State = useSelector(state => state)
   const dispatch = useDispatch()
   
 
-  const ContractDataSetup = async () => {
-    const tokenContract = new web3.eth.Contract(config.saleABI, State.token === config.defaultToken ? 
-      config.saleContractAddrVRPUSDT : config.saleContractAddrVDAOUSDT)
-    
-    const tokenSecondContract = new web3.eth.Contract(config.saleABI, State.token === config.defaultToken ? 
-        config.saleContractAddrVRPBUSD : config.saleContractAddrVDAOBUSD)
-
-    const tokenPrice = await tokenContract.methods.price().call()
-    const contractOwner = await tokenContract.methods.owner().call()
-    const saleAmount = await tokenContract.methods.saleAmount().call()
-    const saleEnd = await tokenContract.methods.saleEnd().call()
-    const saleLength = await tokenContract.methods.saleLength().call()
-    const status = await tokenContract.methods.status().call()
-    const totalTokensLeft = await tokenContract.methods.totalTokensLeft().call()
-    const usdc = await tokenContract.methods.usdc().call()
-    const vestingPeriod = await tokenContract.methods.vestingPeriod().call()
-    const lockPeriod = await tokenContract.methods.lockPeriod().call()
-    const vorpal = await tokenContract.methods.vorpal().call()
-
-    const tokensLeftSecond = await tokenSecondContract.methods.totalTokensLeft().call()
-
-    dispatch(updateContractData({
-      owner: contractOwner,
-      price: tokenPrice,
-      saleAmount: saleAmount,
-      saleEnd: saleEnd,
-      saleLength: saleLength,
-      status: status,
-      totalTokensLeft: totalTokensLeft,
-      tokensLeftSecond: tokensLeftSecond,
-      lockPeriod: lockPeriod,
-      usdc: usdc,
-      vestingPeriod: vestingPeriod,
-        vorpal: vorpal
-    }))
-  }
-
   return (
     <div className="App">
       <Header />
-      <div className="presale--body" onLoad={ContractDataSetup}>
+      <div className="presale--body">
         <div className="star--section">
           <TokenSelector />
           <StarDiagram />
