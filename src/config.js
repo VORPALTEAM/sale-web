@@ -9,19 +9,19 @@ export const selectableToken = 'VAO'
 export const defaultCurrency = 'USDT'
 export const selectableCurrency = 'BUSD'
 export const maxInvestments = 400000
-export const VRPToken = "0xdAF3994dF0C80a26aFB932703929E66B68422D2C" // VRP
-export const VDAOToken = "0x54E717435229c3Be76a98dD12133d60B427385fe" // VDAO
+export const VRPToken = "0xed68c7D783E40caAe86aA3a3BCDca0481330ee41" // VRP
+export const VDAOToken = "0x4807Aa82d46501F284AB2512e69e95b7F71681FB" // VDAO
 export const usdTokens = [{
 	name: defaultCurrency,
 	address: "0xd747C4455a894BB5042cbf23B32D44cdFDd11DAF"
    },{
 	name: selectableCurrency,
-	address: "0x6172eB2b82126a4B53d57eED425E3aeF9b857404"
+	address: "0xd747C4455a894BB5042cbf23B32D44cdFDd11DAF"
    }]  // USDC or USDT && BUSD - list of tokens available for using for payment
-export const saleContractAddrVRPUSDT = "0x13Cd2D2925f9B6C84f1195eDF9138172d40d9a27" // Vorpal sale contractы
-export const saleContractAddrVDAOUSDT = "0x955125b8F04BF6C6a03a5C924870E3adCf95Ac31"
-export const saleContractAddrVRPBUSD = "0x2Fb6037F2D55201Cdb811005b7ac9b141224F301" 
-export const saleContractAddrVDAOBUSD = "0xb8685E338132a5bd4BC500C3ee3Eb80E4De9145D"
+export const saleContractAddrVRPUSDT = "0x207BeCd371eDC8F730E9eB8012Ee5b17a0819081" // Vorpal sale contractы
+export const saleContractAddrVDAOUSDT = "0x31063075E8AC3eD0a9D727250e405B4244183A9d"
+export const saleContractAddrVRPBUSD = "0xabD18d8137F34Da2A8D6053a070AdA2083285b9B" 
+export const saleContractAddrVDAOBUSD = "0xA953ACA1F1eD48FEE99E24156f8d8fFc43E5D133"
 
 export const connectOptions = {
     keepAlive: true,
@@ -47,13 +47,13 @@ export const handContractData = {
 export const contractDefaultGlobalData = {
 	owner: "0x0f2d11eb3b6d4e220360bce6f7253282ccc6d12e",
 	price: 0,
-	saleAmount: "4200000000000000000000000",
+	saleAmount: "5000000000000000000000000",
 	saleEnd: "1674329899",
 	saleLength: "2629743",
 	lockPeriod: 1800,
 	status: 0,
-	totalTokensLeft: "4200000000000000000000000",
-	tokensLeftSecond: "4200000000000000000000000",
+	totalTokensLeft: "5000000000000000000000000",
+	tokensLeftSecond: "5000000000000000000000000",
 	usdc: "0x04c9483ef256cfeb1dac080f90defb7b3abb6006",
 	vestingPeriod: 360,
     vorpal: "0xccd635c53f1f9205aa2b29d63ba4b17b03c5b0e2"
