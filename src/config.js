@@ -9,19 +9,19 @@ export const selectableToken = 'VAO'
 export const defaultCurrency = 'USDT'
 export const selectableCurrency = 'BUSD'
 export const maxInvestments = 400000
-export const VRPToken = "0xed68c7D783E40caAe86aA3a3BCDca0481330ee41" // VRP
-export const VDAOToken = "0x4807Aa82d46501F284AB2512e69e95b7F71681FB" // VDAO
+export const VRPToken = "0xC67743851bDa360c793c021975EA013852005533" // VRP
+export const VDAOToken = "0xC67743851bDa360c793c021975EA013852005533" // VDAO
 export const usdTokens = [{
 	name: defaultCurrency,
-	address: "0xd747C4455a894BB5042cbf23B32D44cdFDd11DAF"
+	address: "0xA3EcED2102512E296044f3127829ad109D60C16F"
    },{
 	name: selectableCurrency,
-	address: "0xd747C4455a894BB5042cbf23B32D44cdFDd11DAF"
+	address: "0xA3EcED2102512E296044f3127829ad109D60C16F"
    }]  // USDC or USDT && BUSD - list of tokens available for using for payment
-export const saleContractAddrVRPUSDT = "0x207BeCd371eDC8F730E9eB8012Ee5b17a0819081" // Vorpal sale contractы
-export const saleContractAddrVDAOUSDT = "0x31063075E8AC3eD0a9D727250e405B4244183A9d"
-export const saleContractAddrVRPBUSD = "0xabD18d8137F34Da2A8D6053a070AdA2083285b9B" 
-export const saleContractAddrVDAOBUSD = "0xA953ACA1F1eD48FEE99E24156f8d8fFc43E5D133"
+export const saleContractAddrVRPUSDT = "0xC797549E705cC24e2E85e57A6010BD2E2fe17e66" // Vorpal sale contractы
+export const saleContractAddrVDAOUSDT = "0xC797549E705cC24e2E85e57A6010BD2E2fe17e66"
+export const saleContractAddrVRPBUSD = "0xC797549E705cC24e2E85e57A6010BD2E2fe17e66" 
+export const saleContractAddrVDAOBUSD = "0xC797549E705cC24e2E85e57A6010BD2E2fe17e66"
 
 export const connectOptions = {
     keepAlive: true,
