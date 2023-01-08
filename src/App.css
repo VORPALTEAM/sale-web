@@ -290,9 +290,10 @@ input:checked + .checker:before {
 
 
 .sale--timer {
-  font-weight: 300;
-  font-size: 36px;
-  color: #AAF765;
+  font-family: "RoundsBlack";
+  font-weight: 700;
+  font-size: 32px;
+  color: #ACF801;
   text-transform: uppercase;
   margin-top: 40px;
   display: flex;
@@ -447,25 +448,25 @@ input:checked + .checker:before {
 }
 
 .confirm--button {
+  font-family: "RoundsBlack";
   margin-top: 15px;
   display: flex;
   border: none;
   flex-direction: column;
   align-items: center;
-  height: 54px;
+  height: 58px;
   cursor: pointer;
-  padding-top: 24px;
-  font-size: 32px;
-  font-weight: 300;
+  padding-top: 20px;
   color: #1E1E1E;
   border-radius: 20px;
-  font-size: 24px;
-  font-weight: 500;
+  font-size: 32px;
+  font-weight: 400;
   text-transform: uppercase;
+  user-select: none;
 }
 
 .confirm--button.vrp {
-  background: linear-gradient(97.85deg, #D4FC79 3.64%, #96E6A1 94.38%);
+  background: #ACF801;
 }
 
 .confirm--button.vdao {
@@ -477,7 +478,7 @@ input:checked + .checker:before {
   position: absolute;
    width: 20px;
    height: 20px;
-   margin-top: 44px;
+   margin-top: 48px;
    z-index: -1;
    transform: matrix(-0.7,1,0.8,1,0,0);
    border-radius: 2px;
@@ -489,7 +490,7 @@ input:checked + .checker:before {
 }
 
 .opened--arrow.active.vrp {
-  background: linear-gradient(97.85deg, #D4FC79 3.64%, #96E6A1 94.38%);;
+  background: #ACF801;
 }
 
 .opened--arrow.active.vdao {
@@ -550,8 +551,10 @@ input:checked + .checker:before {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 20px;
-  max-width: 486px;
+  margin-top: 18px;
+  padding: 4px;
+  margin-left: -5px;
+  max-width: 496px;
 }
 
 .invest--opened {
@@ -563,6 +566,9 @@ input:checked + .checker:before {
   border: 1px solid #2E2E2E;
   border-radius: 20px;
   padding: 4px;
+  margin-top: 30px;
+  margin-left: -5px;
+  max-width: 496px;
 }
 
 .invest--count--section {

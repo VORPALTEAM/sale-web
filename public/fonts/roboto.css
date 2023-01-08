@@ -70,3 +70,10 @@
     font-weight: 900;
     font-style: italic;
 }
+
+@font-face {
+    font-family: 'RoundsBlack';
+    src: url('ttf/Rounds-Black.woff2') format('woff2'), url('ttf/Rounds-Black.woff2') format('woff'), url('ttf/Rounds-Black.ttf') format('truetype');
+    font-weight: 700;
+    font-style: none;
+}
