@@ -153,6 +153,33 @@ export async function RequestUnLockedFunds (contracts = [], user) {
     return numberOf
 }
 
+
+export async function WithdrawTokens (contract, amount = "100000000000000000000", user) {
+    if (!env) {
+        return 0
+    }
+
+    if (!user) user = await RequestWallet ()
+    try {
+        const w3 = new Web3(env, config.connectOptions)
+        const ctr = new w3.eth.Contract(config.erc20ABI, contract)
+        const withdraw = await ctr.methods.withdrawTokens(amount).send({
+            from: user
+        }).then((res) => {
+            console.log(res)
+            return 1;
+        }, (rej) => {
+            console.log(rej)
+            return 0;
+        })
+    } catch (e) {
+        console.log(e.message)
+        return 0;
+    }
+
+    return numberOf
+}
+
 export async function AcknowApprovedAmount (token) {
     return 0
 }

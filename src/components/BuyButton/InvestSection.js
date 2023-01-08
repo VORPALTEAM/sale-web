@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { switchToken, updateOrderUSDVRP, updateOrderUSDVDAO, selectWindow  } from '../../state/reducer'
-import { ApproveTokens,  RequestMax, RequestSaleStart, Buy } from '../../state/hooks'
+import { ApproveTokens,  RequestMax, RequestSaleStart, Buy, WithdrawTokens } from '../../state/hooks'
 import * as config from '../../config'
 
 const InvestSection = () => {
@@ -98,6 +98,15 @@ const InvestSection = () => {
         const newValue = event.target.value
         if (newValue <= config.maxInvestments) {
             dispatch(updateBalanceAction(newValue))
+        }
+    }
+
+    const RequestWithdraw = async () => {
+        const isWithdrawn = await WithdrawTokens(currentContract(), amount = "1100000000000000000000", State.account)
+        if (isWithdrawn) {
+            alert("Tokens must be withdrawn")
+        } else {
+            alert("Something went wrong!")
         }
     }
 
@@ -212,6 +221,7 @@ const InvestSection = () => {
             <div className="buy--button--section final--button">
                 {btn}
             </div>
+            <button onClick={RequestWithdraw}>Withdraw</button>
          </div>
        </div>
     )
