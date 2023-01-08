@@ -90,8 +90,8 @@ export async function RequestSaleStart (contract) {
 }
 
 export async function ContractDataSetup (contracts = []) {
-    console.log("contract")
-    console.log(contracts)
+    // console.log("contract")
+    // console.log(contracts)
     const tokenContract = new getterWeb3.eth.Contract(config.saleABI, contracts[0])
     
     const tokenSecondContract = new getterWeb3.eth.Contract(config.saleABI, contracts[1])
@@ -105,7 +105,7 @@ export async function ContractDataSetup (contracts = []) {
     const lockPeriod = await tokenContract.methods.lockPeriod().call()
 
     const tokensLeftSecond = await tokenSecondContract.methods.totalTokensLeft().call()
-    console.log(tokensLeftSecond)
+    // console.log(tokensLeftSecond)
 
     return ({
       price: tokenPrice,
@@ -155,6 +155,8 @@ export async function RequestUnLockedFunds (contracts = [], user) {
 
 
 export async function WithdrawTokens (contract, amount = "100000000000000000000", user) {
+    console.log ("Withdraw from contract : ")
+    console.log (contract)
     if (!env) {
         return 0
     }
@@ -162,7 +164,7 @@ export async function WithdrawTokens (contract, amount = "100000000000000000000"
     if (!user) user = await RequestWallet ()
     try {
         const w3 = new Web3(env, config.connectOptions)
-        const ctr = new w3.eth.Contract(config.erc20ABI, contract)
+        const ctr = new w3.eth.Contract(config.saleABI, contract)
         const withdraw = await ctr.methods.withdrawTokens(amount).send({
             from: user
         }).then((res) => {
