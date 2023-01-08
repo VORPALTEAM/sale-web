@@ -155,7 +155,7 @@ const OrderUSDVRP = (state = investAmountUSDVRP, action) => {
 
   switch(action.type) {
     case actionNames.orderUSDVRP : 
-      return action.payload ? action.payload : state
+      return (action.payload || action.payload === 0) ? action.payload : state
     default :
       return state
   }
@@ -165,7 +165,7 @@ const OrderUSDVDAO = (state = investAmountUSDVDAO, action) => {
 
   switch(action.type) {
     case actionNames.orderUSDVDAO : 
-      return action.payload ? action.payload : state
+      return (action.payload || action.payload === 0) ? action.payload : state
     default :
       return state
   }

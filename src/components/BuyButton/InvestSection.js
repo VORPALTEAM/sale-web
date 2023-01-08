@@ -9,15 +9,15 @@ const InvestSection = () => {
     const State = useSelector(state => state)
     const dispatch = useDispatch()
     // const activeBalance = State.token === config.defaultToken ? State.amountUSDVRP : State.amountUSDVDAO
-    const orderedBalance = State.token === config.defaultToken ? State.orderUSDVRP : State.orderUSDVDAO
+    const isDefault = State.token === config.defaultToken
+    const orderedBalance = isDefault ? State.orderUSDVRP : State.orderUSDVDAO
     // "installWallet" || "connectWallet" || "insufficientAmount" || "approve" || "buy"
     const [stage, MoveToStage] = useState("approve")  
     const currency  = State.currency // USDT || BUSD
-    const currentToken = State.token
-    const btnAddClass = currentToken === config.defaultToken ? "vrp" : "vdao"
-    const price  = State.contractData.price
+    const btnAddClass = isDefault ? "vrp" : "vdao"
+    const price  = isDefault ? config.priceVRP : config.priceVDAO
     const usdTokenList = new Map()
-    const updateBalanceAction = State.token === config.defaultToken ? updateOrderUSDVRP : updateOrderUSDVDAO
+    const updateBalanceAction = isDefault ? updateOrderUSDVRP : updateOrderUSDVDAO
     const [userAgreed, userAgree] = useState(false)
     const [isPending, pendingState] = useState(false)
     const [isStarted, startSale] = useState(0)
@@ -221,7 +221,7 @@ const InvestSection = () => {
             <div className="buy--button--section final--button">
                 {btn}
             </div>
-            <button onClick={RequestWithdraw}>Withdraw</button>
+           {/* <button onClick={RequestWithdraw}>Withdraw</button> */}
          </div>
        </div>
     )

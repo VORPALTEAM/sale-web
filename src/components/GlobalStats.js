@@ -8,6 +8,7 @@ const GlobalStats = () => {
     const State = useSelector(state => state)
     const data = State.contractData
     const decimal = config.decimal
+    const tokenPrice = State.token === config.defaultToken ? config.priceVRP : config.priceVDAO
 
     const soldAmount = parseFloat((((2 * data.saleAmount )- data.totalTokensLeft - data.tokensLeftSecond))/ decimal)
 
@@ -18,7 +19,7 @@ const GlobalStats = () => {
 
     return(
       <div className="stage--stats">
-        <p><b>price:</b>{` ${data.price === 0 ? "Updating..." : parseFloat(data.price / decimal)}$`}</p>
+        <p><b>price:</b>{` ${tokenPrice}$`}</p>
         <p><b>available:</b>{` ${parseFloat(config.handContractData.available).toLocaleString('ua')}`}</p>
         <p><b>sold:</b>{` ${soldAmount === 0 ? "Updating..." : soldAmount.toLocaleString('ua')}`}</p>
         <p style={{

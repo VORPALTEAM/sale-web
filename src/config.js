@@ -9,6 +9,8 @@ export const selectableToken = 'VAO'
 export const defaultCurrency = 'USDT'
 export const selectableCurrency = 'BUSD'
 export const maxInvestments = 400000
+export const priceVRP = 0.0025
+export const priceVDAO = 1.5
 export const VRPToken = "0xC67743851bDa360c793c021975EA013852005533" // VRP
 export const VDAOToken = "0xC67743851bDa360c793c021975EA013852005533" // VDAO
 export const usdTokens = [{
@@ -46,7 +48,6 @@ export const handContractData = {
 
 export const contractDefaultGlobalData = {
 	owner: "0x0f2d11eb3b6d4e220360bce6f7253282ccc6d12e",
-	price: 0,
 	saleAmount: "5000000000000000000000000",
 	saleEnd: "1674329899",
 	saleLength: "2629743",

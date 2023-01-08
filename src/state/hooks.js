@@ -96,7 +96,6 @@ export async function ContractDataSetup (contracts = []) {
     
     const tokenSecondContract = new getterWeb3.eth.Contract(config.saleABI, contracts[1])
 
-    const tokenPrice = await tokenContract.methods.price().call()
     const saleAmount = await tokenContract.methods.saleAmount().call()
     const saleEnd = await tokenContract.methods.saleEnd().call()
     const saleLength = await tokenContract.methods.saleLength().call()
@@ -108,7 +107,6 @@ export async function ContractDataSetup (contracts = []) {
     // console.log(tokensLeftSecond)
 
     return ({
-      price: tokenPrice,
       saleAmount: saleAmount,
       saleEnd: saleEnd,
       saleLength: saleLength,

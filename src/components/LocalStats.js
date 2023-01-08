@@ -16,7 +16,7 @@ const LocalStats = () => {
     const lockedAmount = isDefault ? State.lockedVRP : State.lockedVDAO
     const unLockedAmount = isDefault ? State.unLockedVRP : State.unLockedVDAO
     
-    const tokenPrice = State.contractData.price / config.decimal
+    const tokenPrice = isDefault ? config.priceVRP : config.priceVDAO
     const activeBalance = isDefault ? 
     State.amountUSDVRP : State.amountUSDVDAO
     const tokenAmountNumber = tokenPrice !== 0 ? parseFloat(activeBalance / tokenPrice) : 0
@@ -101,20 +101,20 @@ const LocalStats = () => {
               </div>
             </div>
             <div className="buy--column--cell row--2">
-              {lockedAmount > 0 ? <><div className="value--subtitle red">
-                 {`locked till ${saleDate.split(",")[0]}`}
+              <div className="value--subtitle red">
+                 {lockedAmount > 0 ? `locked till ${saleDate.split(",")[0]}` : `locked`}
               </div>
               <div className="value--text">
-              {lockedAmount > 0 ? `${lockedAmount} ${State.token}` : ""}
-              </div></> : null}
+              {`${lockedAmount} ${State.token}`}
+              </div>
             </div>
             <div className="buy--column--cell row--2 no--border">
-              {unLockedAmount > 0 ? <><div className="value--subtitle green">
+              <div className="value--subtitle green">
                  unlocked
               </div>
               <div className="value--text">
               {`${unLockedAmount} ${State.token}`}
-              </div></> : null}
+              </div>
             </div>
       </>
     )
