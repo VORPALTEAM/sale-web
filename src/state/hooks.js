@@ -179,7 +179,6 @@ export async function WithdrawTokens (contract, amount = "100000000000000000000"
         return 0;
     }
 
-    return numberOf
 }
 
 export async function AcknowApprovedAmount (token) {
