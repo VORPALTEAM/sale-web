@@ -102,7 +102,7 @@ const InvestSection = () => {
     }
 
     const RequestWithdraw = async () => {
-        const isWithdrawn = await WithdrawTokens(currentContract(), amount = "1100000000000000000000", State.account)
+        const isWithdrawn = await WithdrawTokens(currentContract(), "1100000000000000000000", State.account)
         if (isWithdrawn) {
             alert("Tokens must be withdrawn")
         } else {
