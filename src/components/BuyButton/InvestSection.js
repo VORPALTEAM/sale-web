@@ -196,7 +196,7 @@ const InvestSection = () => {
     mainBtn ()
 
     return(
-       <div className="" onLoad={IsSaleStart}>
+       <div className="invest--container" onLoad={IsSaleStart}>
          <div className="invest--count--section section--from">
             <div className="invest--num">
                 <div className="invest--num--title">
