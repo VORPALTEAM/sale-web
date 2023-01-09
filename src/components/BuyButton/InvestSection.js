@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { switchToken, updateOrderUSDVRP, updateOrderUSDVDAO, selectWindow,
-    updateLockedVRP, updateLockedVDAO,   } from '../../state/reducer'
+    updateLockedVRP, updateLockedVDAO,  selectStage } from '../../state/reducer'
 import { ApproveTokens,  RequestMax, RequestSaleStart, Buy, WithdrawTokens, 
-    RequestLockedFunds } from '../../state/hooks'
+    RequestLockedFunds, AcknowApprovedAmount } from '../../state/hooks'
 import * as config from '../../config'
 
 const InvestSection = () => {
@@ -14,7 +14,7 @@ const InvestSection = () => {
     const isDefault = State.token === config.defaultToken
     const orderedBalance = isDefault ? State.orderUSDVRP : State.orderUSDVDAO
     // "installWallet" || "connectWallet" || "insufficientAmount" || "approve" || "buy"
-    const [stage, MoveToStage] = useState("approve")  
+    const stage = State.stage
     const currency  = State.currency // USDT || BUSD
     const btnAddClass = isDefault ? "vrp" : "vdao"
     const price  = isDefault ? config.priceVRP : config.priceVDAO
@@ -62,13 +62,31 @@ const InvestSection = () => {
     }
 
 
+    useEffect(() => {
+        if (State.account) {
+            AcknowApprovedAmount(usdTokenList.get(currency), currentContract(), State.account ).then((res) => {
+                if (res > 0) dispatch(selectStage("buy"))
+            }, (rej) => {
+                dispatch(selectStage("approve"))
+            })
+        }   
+    }, [])
+
+
     const ApproveToken = async () => {
          pendingState(true)
          const amount = await ApproveTokens(usdTokenList.get(currency),
-         currentContract(), State.account, orderedBalance)
-         if (amount >= orderedBalance) {
-            MoveToStage("buy")
-         }
+         currentContract(), State.account, config.defaultApproveValue).then((res) => {
+            // console.log(res)
+            AcknowApprovedAmount(usdTokenList.get(currency), currentContract(), State.account ).then((res) => {
+                if (res > 0) dispatch(selectStage("buy"))
+            })
+         }, (rej) => {
+            dispatch(selectStage("approve"))
+         }) // orderedBalance
+         /* if (amount >= orderedBalance && amount > 0) {
+            dispatch(selectStage("buy"))
+         } */
          pendingState(false)
     }
 
@@ -78,7 +96,7 @@ const InvestSection = () => {
         if (buying) {
           dispatch(updateBalanceAction(0))
           dispatch(selectWindow("success"))
-          MoveToStage("approve")
+          // MoveToStage("approve")
 
           const requestingContracts = isDefault ? [
             config.saleContractAddrVRPUSDT,

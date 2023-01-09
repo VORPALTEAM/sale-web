@@ -5,8 +5,9 @@ import * as config from '../config'
 
 // Default values
 const clientAccount = null // 0x000000000000000000000
-const openedModal = 'none' // none || connectWallet || noWallet
+const openedModal = 'none' // none || selecttoken || nowallet
 const isWalletConnected = false
+const buyingStage = "approve"
 const investAmountUSDVRP  = 0 // user's buying amount in USDT
 const investAmountUSDVDAO  = 0 
 const approvedAmountDefault = 0
@@ -29,7 +30,8 @@ export const actionNames = {
     amountVRPLocked: "AMOUNT_VRP_LOCKED",
     amountVDAOLocked: "AMOUNT_VDAO_LOCKED",
     amountVRPunLocked: "AMOUNT_VRP_UNLOCKED",
-    amountVDAOunLocked: "AMOUNT_VDAO_UNLOCKED"
+    amountVDAOunLocked: "AMOUNT_VDAO_UNLOCKED",
+    selectStage: "SELECT_STAGE"
 }
 
 export const switchToken = createAction(actionNames.switchToken)
@@ -49,6 +51,7 @@ export const updateLockedVRP = createAction(actionNames.amountVRPLocked)
 export const updateLockedVDAO = createAction(actionNames.amountVDAOLocked)
 export const updateUnLockedVRP = createAction(actionNames.amountVRPunLocked)
 export const updateUnLockedVDAO = createAction(actionNames.amountVDAOunLocked)
+export const selectStage = createAction(actionNames.selectStage)
 
 const SwitchToken = (state = config.defaultToken, action) => {
 
@@ -212,6 +215,16 @@ const UpdateUnLockedVDAO = (state = investAmountUSDVDAO, action) => {
   }
 }
 
+const SelectStage = (state = buyingStage, action) => {
+
+  switch(action.type) {
+    case actionNames.selectStage : 
+      return action.payload ? action.payload : state
+    default :
+      return state
+  }
+}
+
 
 
 export const RootReducer = combineReducers ({
@@ -231,4 +244,5 @@ export const RootReducer = combineReducers ({
     lockedVDAO: UpdateLockedVDAO,
     unLockedVRP: UpdateUnLockedVRP,
     unLockedVDAO: UpdateUnLockedVDAO,
+    stage: SelectStage
 })

@@ -1,13 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-import { switchToken, switchCurrency, selectWindow } from '../../state/reducer'
+import { switchToken, switchCurrency, selectWindow, selectStage } from '../../state/reducer'
+import { AcknowApprovedAmount } from '../../state/hooks';
 import * as config from '../../config'
 
 
 const SelectToken = ({ pair }) => {
+   
+    const State = useSelector(state => state)
+    const dispatch = useDispatch()
 
     const isCurrency = pair === "currency" ? true : false
-    const dispatch = useDispatch()
+    const isDefault = State.token === config.defaultToken
+
+    let currentContract = null
 
     const SetupValue = (value) => {
         const isPrimary = value === "primary" ? true : false
@@ -15,10 +21,12 @@ const SelectToken = ({ pair }) => {
             case (isCurrency && isPrimary) :
                 dispatch(switchCurrency(config.defaultCurrency))
                 dispatch(selectWindow("none"))
+                currentContract = isDefault ? config.saleContractAddrVRPUSDT : config.saleContractAddrVDAOUSDT
                 break;
             case (isCurrency && !isPrimary) :
                 dispatch(switchCurrency(config.selectableCurrency))
                 dispatch(selectWindow("none"))
+                currentContract = isDefault ? config.saleContractAddrVRPBUSD : config.saleContractAddrVDAOBUSD
                 break;
             case (!isCurrency && isPrimary) :
                 dispatch(switchToken(config.defaultToken))
@@ -28,6 +36,21 @@ const SelectToken = ({ pair }) => {
                 dispatch(switchToken(config.selectableToken))
                 dispatch(selectWindow("none"))
                 break;
+        }
+
+        if (isCurrency) {
+            if (currentContract && State.account) {
+                const currencyAddr = isPrimary ? config.usdTokens[0].address : config.usdTokens[1].address
+                AcknowApprovedAmount(currencyAddr, currentContract, State.account).then((res) => {
+                    if (res > 0) {
+                        dispatch(selectStage("buy"))
+                    } else {
+                        dispatch(selectStage("approve"))
+                    }
+                }, (rej) => {
+                    dispatch(selectStage("approve"))
+                })
+            }
         }
     }
 

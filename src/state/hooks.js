@@ -182,25 +182,37 @@ export async function WithdrawTokens (contract, amount = "100000000000000000000"
 
 }
 
-export async function AcknowApprovedAmount (token) {
-    return 0
+export async function AcknowApprovedAmount (token, spender, user) {
+    if (!token || !spender || !user){ 
+        Promise.reject(0)
+        return 0
+    }
+    
+    try {
+        const w3 = new getterWeb3.eth.Contract(config.erc20ABI, token)
+        const allowance = await w3.methods.allowance(user, spender).call()
+        const result = parseInt(allowance / config.decimal)
+        Promise.resolve(result)
+        return parseInt(result)
+    } catch (e) {
+        console.log(e.message)
+        Promise.reject(0)
+        return 0;
+    }
+    
 }
 
-export async function ApproveTokens ( spendingToken, spendingContract, user, amount ) {
-    console.log("Token : ")
-    console.log(spendingToken)
-    console.log("Contract : ")
-    console.log(spendingContract)
+export async function ApproveTokens ( spendingToken, spendingContract, user, amount = config.defaultApproveValue ) {
 
     const usingAmount = `${amount}${config.decimalZeros}`
-    console.log("Amount : ")
-    console.log(usingAmount)
+
     if (!user) user = await RequestWallet ()
 
     console.log("User : ")
     console.log(user)
     
     if (!env) {
+        Promise.reject(0)
         return 0
     } else {
         try {
@@ -209,19 +221,21 @@ export async function ApproveTokens ( spendingToken, spendingContract, user, amo
            const approving = await contract.methods.approve(spendingContract, usingAmount).send({
              from: user
            }).then((res) => {
-
-            return amount
+            Promise.resolve(1)
+            return 1
            }, (rej) => {
+            Promise.reject(0)
             return 0
            })
 
         } catch (e) {
             console.log(e.message)
+            Promise.reject(0)
             return 0
         }
     }
 
-    return amount
+    // return amount
 }
 
 export async function Buy ( spendingContract, user, amount ) {
