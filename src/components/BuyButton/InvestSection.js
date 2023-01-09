@@ -65,7 +65,7 @@ const InvestSection = () => {
     useEffect(() => {
         if (State.account) {
             AcknowApprovedAmount(usdTokenList.get(currency), currentContract(), State.account ).then((res) => {
-                if (res > 0) dispatch(selectStage("buy"))
+                if (res >= config.maxInvestments) dispatch(selectStage("buy"))
             }, (rej) => {
                 dispatch(selectStage("approve"))
             })
