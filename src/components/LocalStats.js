@@ -73,8 +73,6 @@ const LocalStats = () => {
     }, 600000)
 
     SetupLocked()
-    
-
 
     return(
       <>

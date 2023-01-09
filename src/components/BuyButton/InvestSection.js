@@ -92,10 +92,9 @@ const InvestSection = () => {
 
     const Invest = async () => {
         pendingState(true)
-        const buying = await Buy(currentContract(), State.account, orderedBalance)
-        if (buying) {
+        await Buy(currentContract(), State.account, orderedBalance)
+
           dispatch(updateBalanceAction(0))
-          dispatch(selectWindow("success"))
           // MoveToStage("approve")
 
           const requestingContracts = isDefault ? [
@@ -105,15 +104,19 @@ const InvestSection = () => {
             config.saleContractAddrVDAOUSDT,
             config.saleContractAddrVDAOBUSD
           ]
+          
+          setTimeout(() => {
+            RequestLockedFunds(requestingContracts, State.account).then((res) => {
 
-          const locked = await RequestLockedFunds(requestingContracts, State.account)
+                if (isDefault) {
+                    dispatch(updateLockedVRP(res))
+                    console.log(State.lockedVRP)
+                  } else {         
+                    dispatch(updateLockedVDAO(res))
+                  }
+            })
+          }, 3000)
 
-          if (isDefault) {
-            dispatch(updateLockedVRP(locked))
-          } else {         
-            dispatch(updateLockedVDAO(locked))
-          }
-        }
         pendingState(false)
     }
 

@@ -1,3 +1,5 @@
+import store from './store'
+import { selectWindow } from './reducer'
 import * as config from '../config'
 import Web3 from 'web3';
 
@@ -95,7 +97,6 @@ export async function ContractDataSetup (contracts = []) {
     const tokenContract = new getterWeb3.eth.Contract(config.saleABI, contracts[0])
     
     const tokenSecondContract = new getterWeb3.eth.Contract(config.saleABI, contracts[1])
-    console.log(tokenSecondContract)
 
     const saleAmount = await tokenContract.methods.saleAmount().call()
     // const saleEnd = await tokenContract.methods.saleEnd().call()
@@ -105,8 +106,6 @@ export async function ContractDataSetup (contracts = []) {
     // const lockPeriod = await tokenContract.methods.lockPeriod().call()
 
     const tokensLeftSecond = await tokenSecondContract.methods.totalTokensLeft().call()
-    console.log(tokensLeftSecond)
-
 
     return ({
       saleAmount: saleAmount,
@@ -156,8 +155,7 @@ export async function RequestUnLockedFunds (contracts = [], user) {
 
 
 export async function WithdrawTokens (contract, amount = "100000000000000000000", user) {
-    console.log ("Withdraw from contract : ")
-    console.log (contract)
+
     if (!env) {
         return 0
     }
@@ -207,9 +205,6 @@ export async function ApproveTokens ( spendingToken, spendingContract, user, amo
     const usingAmount = `${amount}${config.decimalZeros}`
 
     if (!user) user = await RequestWallet ()
-
-    console.log("User : ")
-    console.log(user)
     
     if (!env) {
         Promise.reject(0)
@@ -245,36 +240,34 @@ export async function Buy ( spendingContract, user, amount ) {
     }
     if (!user) user = await RequestWallet ()
 
-    console.log("User : ")
-    console.log(user)
-    console.log("Contract : ")
-    console.log(spendingContract)
-
     try {
         const w3 = new Web3(env, config.connectOptions)
         const contract = new w3.eth.Contract(config.saleABI, spendingContract)
-        console.log("Amount in dec : ")
-        console.log(amount * config.decimal)
+
         const spendingAmount = `0x${(amount * config.decimal).toString(16)}`
-        console.log("Amount in hex : ")
-        console.log(spendingAmount)
-        const buy = await contract.methods.buyTokens(spendingAmount).send({
+
+        await contract.methods.buyTokens(spendingAmount).send({
             from: user
-        }).then((res) => {
-            return true;
-        }, (rej) => {
-            return false;
+        }, (res, result) => {
+            if (result) {
+                store.dispatch(selectWindow("success"))
+            }
+
+            // store.dispatch(selectWindow("success"))
         })
+
+        // store.dispatch(selectWindow("success"))
+
     } catch (e) {
-        console.log(e)
+        console.log(e.code)
+        Promise.reject(false)
         return false
     }
 
-    return true;
 }
 
 export async function RequestMax ( token, user ) {
-    console.log(token)
+
     let val = 0;
     if (!user) user = await RequestWallet ()
     
