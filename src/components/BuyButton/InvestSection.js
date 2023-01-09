@@ -10,6 +10,8 @@ const InvestSection = () => {
 
     const State = useSelector(state => state)
     const dispatch = useDispatch()
+    const [cachedApprovedValueUSDT, cacheApprovedValueUSDT] = useState(0)
+    const [cachedApprovedValueBUSD, cacheApprovedValueBUSD] = useState(0)
     // const activeBalance = State.token === config.defaultToken ? State.amountUSDVRP : State.amountUSDVDAO
     const isDefault = State.token === config.defaultToken
     const orderedBalance = isDefault ? State.orderUSDVRP : State.orderUSDVDAO
@@ -65,7 +67,12 @@ const InvestSection = () => {
     useEffect(() => {
         if (State.account) {
             AcknowApprovedAmount(usdTokenList.get(currency), currentContract(), State.account ).then((res) => {
-                if (res >= config.maxInvestments) dispatch(selectStage("buy"))
+                if (isDefault) {
+                    cacheApprovedValueUSDT(res)
+                } else {
+                    cacheApprovedValueBUSD(res)
+                }
+                if (res > 0) dispatch(selectStage("buy"))
             }, (rej) => {
                 dispatch(selectStage("approve"))
             })
@@ -79,6 +86,11 @@ const InvestSection = () => {
          currentContract(), State.account, config.defaultApproveValue).then((res) => {
             // console.log(res)
             AcknowApprovedAmount(usdTokenList.get(currency), currentContract(), State.account ).then((res) => {
+                if (isDefault) {
+                    cacheApprovedValueUSDT(res)
+                } else {
+                    cacheApprovedValueBUSD(res)
+                }
                 if (res > 0) dispatch(selectStage("buy"))
             })
          }, (rej) => {
@@ -135,8 +147,14 @@ const InvestSection = () => {
 
     const UpdateOrderUSD = (event) => {
         const newValue = event.target.value
+        const allowance = isDefault ? cachedApprovedValueUSDT : cachedApprovedValueBUSD
         if (newValue <= config.maxInvestments) {
             dispatch(updateBalanceAction(newValue))
+            if (newValue > allowance && State.stage !== "approve") {
+                dispatch(selectStage("approve"))
+            } else {
+                dispatch(selectStage("buy"))
+            }
         }
     }
 
