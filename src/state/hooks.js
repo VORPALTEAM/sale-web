@@ -95,25 +95,28 @@ export async function ContractDataSetup (contracts = []) {
     const tokenContract = new getterWeb3.eth.Contract(config.saleABI, contracts[0])
     
     const tokenSecondContract = new getterWeb3.eth.Contract(config.saleABI, contracts[1])
+    console.log(tokenSecondContract)
 
     const saleAmount = await tokenContract.methods.saleAmount().call()
-    const saleEnd = await tokenContract.methods.saleEnd().call()
-    const saleLength = await tokenContract.methods.saleLength().call()
+    // const saleEnd = await tokenContract.methods.saleEnd().call()
+    // const saleLength = await tokenContract.methods.saleLength().call()
     const totalTokensLeft = await tokenContract.methods.totalTokensLeft().call()
-    const vestingPeriod = await tokenContract.methods.vestingPeriod().call()
-    const lockPeriod = await tokenContract.methods.lockPeriod().call()
+    // const vestingPeriod = await tokenContract.methods.vestingPeriod().call()
+    // const lockPeriod = await tokenContract.methods.lockPeriod().call()
 
     const tokensLeftSecond = await tokenSecondContract.methods.totalTokensLeft().call()
-    // console.log(tokensLeftSecond)
+    console.log(tokensLeftSecond)
+
 
     return ({
       saleAmount: saleAmount,
-      saleEnd: saleEnd,
-      saleLength: saleLength,
+      // saleEnd: saleEnd,
+      // saleLength: saleLength,
       totalTokensLeft: totalTokensLeft,
       tokensLeftSecond: tokensLeftSecond,
-      lockPeriod: lockPeriod,
-      vestingPeriod: vestingPeriod
+      // lockPeriod: lockPeriod,
+      // vestingPeriod: vestingPeriod
+      isDataRequested: true
     })
   }
 

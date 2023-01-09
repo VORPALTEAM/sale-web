@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { switchToken, updateOrderUSDVRP, updateOrderUSDVDAO, selectWindow  } from '../../state/reducer'
-import { ApproveTokens,  RequestMax, RequestSaleStart, Buy, WithdrawTokens } from '../../state/hooks'
+import { switchToken, updateOrderUSDVRP, updateOrderUSDVDAO, selectWindow,
+    updateLockedVRP, updateLockedVDAO,   } from '../../state/reducer'
+import { ApproveTokens,  RequestMax, RequestSaleStart, Buy, WithdrawTokens, 
+    RequestLockedFunds } from '../../state/hooks'
 import * as config from '../../config'
 
 const InvestSection = () => {
@@ -77,6 +79,22 @@ const InvestSection = () => {
           dispatch(updateBalanceAction(0))
           dispatch(selectWindow("success"))
           MoveToStage("approve")
+
+          const requestingContracts = isDefault ? [
+            config.saleContractAddrVRPUSDT,
+            config.saleContractAddrVRPBUSD
+          ] : [
+            config.saleContractAddrVDAOUSDT,
+            config.saleContractAddrVDAOBUSD
+          ]
+
+          const locked = await RequestLockedFunds(requestingContracts, State.account)
+
+          if (isDefault) {
+            dispatch(updateLockedVRP(locked))
+          } else {         
+            dispatch(updateLockedVDAO(locked))
+          }
         }
         pendingState(false)
     }
@@ -149,7 +167,7 @@ const InvestSection = () => {
             btn.push(
                 <div key="stage4" onClick={Invest}
                 className={`confirm--button ${btnAddClass}${disabledState}`}>
-                    {isPending? "Pending..." : "Buy tokens"}
+                    {isPending? "Pending..." : "Buy"}
                 </div>
             )
             break;
@@ -187,7 +205,7 @@ const InvestSection = () => {
                     to
                 </div>
                 <div className="invest--num--count">
-                    {price ? ((orderedBalance * config.decimal )/ price) : 0}
+                    {price ? (orderedBalance / price) : 0}
                 </div>
             </div>
             <div className="invest--select">

@@ -26,7 +26,7 @@ const LocalStats = () => {
 
     const partOfTotal = ((parseFloat(tokenAmountNumber) / parseFloat(config.handContractData.maxSupply)) * 100).toLocaleString('ua')
 
-    const saleDate = new Date(config.handContractData.saleStart * 1000).toLocaleString('ua')
+    const saleDate = new Date(config.handContractData.saleEnd * 1000).toLocaleString('ua')
 
     const requestingContracts = isDefault ? [
       config.saleContractAddrVRPUSDT,
@@ -68,6 +68,10 @@ const LocalStats = () => {
       return true;
     }
 
+    setInterval(() => {
+      SetupLocked()
+    }, 600000)
+
     SetupLocked()
     
 
@@ -105,7 +109,7 @@ const LocalStats = () => {
                  {lockedAmount > 0 ? `locked till ${saleDate.split(",")[0]}` : `locked`}
               </div>
               <div className="value--text">
-              {`${lockedAmount} ${State.token}`}
+              {`${(lockedAmount - unLockedAmount) < 0 ? 0 : (lockedAmount - unLockedAmount)} ${State.token}`}
               </div>
             </div>
             <div className="buy--column--cell row--2 no--border">

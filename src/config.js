@@ -9,6 +9,7 @@ export const selectableToken = 'VAO'
 export const defaultCurrency = 'USDT'
 export const selectableCurrency = 'BUSD'
 export const maxInvestments = 400000
+export const defaultApproveValue = 100000
 export const priceVRP = 0.0025
 export const priceVDAO = 1.5
 export const VRPToken = "0xC67743851bDa360c793c021975EA013852005533" // VRP
@@ -39,9 +40,10 @@ export const connectOptions = {
 
 export const defaultGas = "20000000000" 
 export const handContractData = {
-	saleStart: 1673172756, // Sale start 10.01.2023 00:00
-	available: "4200000",
-	forCurrentRound: "4200000",
+	saleStart: 1673481600, // Sale start 12.01.2023 00:00
+	saleEnd: 1675123200, // Sale утв 31.01.2023 00:00
+	available: "5000000",
+	forCurrentRound: "5000000",
 	maxSupply: "21000000000",
 	burned: "0"
 }
@@ -50,14 +52,10 @@ export const contractDefaultGlobalData = {
 	owner: "0x0f2d11eb3b6d4e220360bce6f7253282ccc6d12e",
 	saleAmount: "5000000000000000000000000",
 	saleEnd: "1674329899",
-	saleLength: "2629743",
-	lockPeriod: 1800,
 	status: 0,
+	isDataRequested: false,
 	totalTokensLeft: "5000000000000000000000000",
 	tokensLeftSecond: "5000000000000000000000000",
-	usdc: "0x04c9483ef256cfeb1dac080f90defb7b3abb6006",
-	vestingPeriod: 360,
-    vorpal: "0xccd635c53f1f9205aa2b29d63ba4b17b03c5b0e2"
 }
 
 export const erc20ABI = [
