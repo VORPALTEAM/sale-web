@@ -118,7 +118,16 @@ const InvestSection = () => {
         await Buy(currentContract(), State.account, orderedBalance)
 
           dispatch(updateBalanceAction(0))
-          // MoveToStage("approve")
+        if (isDefault) {
+            cacheApprovedValueUSDT((a) => {
+                return a - orderedBalance 
+            })
+        } else {
+            cacheApprovedValueBUSD((a) => {
+                return a - orderedBalance 
+            })
+        }
+        dispatch(selectStage("approve"))
 
           const requestingContracts = isDefault ? [
             config.saleContractAddrVRPUSDT,
