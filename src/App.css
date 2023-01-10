@@ -584,7 +584,7 @@ input:checked + .checker:before {
   align-items: center;
   margin-top: 18px;
   padding: 4px;
-  margin-left: -5px;
+  margin-left: -6px;
   max-width: 496px;
   /* transition-property: all;
   transition-duration: 0.4s;
@@ -594,6 +594,9 @@ input:checked + .checker:before {
 .invest--opened {
   margin: 0px;
   max-width: none;
+  max-width: 486px !important;
+  margin-top: 2px;
+  margin-left: -1px;
 }
 
 .invest--section.opened {
@@ -601,7 +604,7 @@ input:checked + .checker:before {
   border-radius: 20px;
   padding: 4px;
   margin-top: 30px;
-  margin-left: -5px;
+  margin-left: -6px;
   max-width: 496px;
 }
 

@@ -8,6 +8,7 @@ const clientAccount = null // 0x000000000000000000000
 const openedModal = 'none' // none || selecttoken || nowallet
 const isWalletConnected = false
 const buyingStage = "approve"
+const defaultAmount = 100
 const investAmountUSDVRP  = 0 // user's buying amount in USDT
 const investAmountUSDVDAO  = 0 
 const approvedAmountDefault = 0
@@ -93,7 +94,7 @@ const UserAccount = (state = clientAccount, action) => {
   }
 } 
 
-const AmountUSDVRP = (state = investAmountUSDVRP, action) => {
+const AmountUSDVRP = (state = defaultAmount, action) => {
 
   switch(action.type) {
     case actionNames.updateUSDVRP : 
@@ -103,7 +104,7 @@ const AmountUSDVRP = (state = investAmountUSDVRP, action) => {
   }
 } 
 
-const AmountUSDVDAO = (state = investAmountUSDVDAO, action) => {
+const AmountUSDVDAO = (state = defaultAmount, action) => {
 
   switch(action.type) {
     case actionNames.updateUSDVDAO : 
