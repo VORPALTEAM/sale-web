@@ -18,10 +18,11 @@ const AmountInput = () => {
     const ValueOnChange = (event) => {
       
       let newValue = event.target.value.toString()
-      if (newValue[0] === '0' && newValue.length > 1) {
+      if (newValue[0] === '0' && newValue !== '0') {
 
         newValue = newValue.substring(1)
       }
+
       if (newValue <= maxInvestments) DispatchValue (newValue)
     }
 
