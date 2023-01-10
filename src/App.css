@@ -16,10 +16,6 @@ input::-webkit-inner-spin-button {
     -webkit-appearance: none;
 }
 
-input[type=number] {
-  -moz-appearance: textfield;
-}
-
 input::-webkit-input-placeholder{
   text-align:right;
   font-size: 20px;

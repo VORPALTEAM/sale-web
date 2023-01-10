@@ -18,12 +18,18 @@ const AmountInput = () => {
     const ValueOnChange = (event) => {
       
       let newValue = event.target.value.toString()
+ 
       if (newValue[0] === '0' && newValue !== '0') {
 
         newValue = newValue.substring(1)
       }
 
-      if (newValue <= maxInvestments) DispatchValue (newValue)
+      if (newValue === "" || newValue === null) {
+        DispatchValue ("0")
+      } else {
+        if (newValue <= maxInvestments) DispatchValue (newValue)
+      }
+
     }
 
     const KeyPressWeb = (event) => {

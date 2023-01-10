@@ -171,6 +171,9 @@ const InvestSection = () => {
               newValue = newValue.substring(1)
             }
         const allowance = isDefault ? cachedApprovedValueUSDT : cachedApprovedValueBUSD
+        if (newValue === "" || newValue === null) {
+            newValue = "0"
+        }
         if (newValue <= config.maxInvestments) {
             dispatch(updateBalanceAction(newValue))
             if (newValue > allowance && State.stage !== "approve") {

@@ -45,6 +45,19 @@ export function CheckIsConnected () {
     return connected
 }
 
+export async function RequestPrice (contract) {
+    
+    try {
+        const ctrct = new getterWeb3.eth.Contract(config.saleABI, contract)
+        const reqPrice = await ctrct.methods.price().call()
+        return parseFloat(reqPrice / config.decimal)
+    } catch (e) {
+        console.log(e)
+        return null
+    }
+
+}
+
 export async function RequestLockedFunds (contracts = [], user) {
 
     let numberOf = 0
