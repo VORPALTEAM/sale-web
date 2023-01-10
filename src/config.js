@@ -21,10 +21,10 @@ export const usdTokens = [{
 	name: selectableCurrency,
 	address: "0xA3EcED2102512E296044f3127829ad109D60C16F"
    }]  // USDC or USDT && BUSD - list of tokens available for using for payment
-export const saleContractAddrVRPUSDT = "0xC797549E705cC24e2E85e57A6010BD2E2fe17e66" // Vorpal sale contractы
-export const saleContractAddrVDAOUSDT = "0xC797549E705cC24e2E85e57A6010BD2E2fe17e66"
-export const saleContractAddrVRPBUSD = "0xC797549E705cC24e2E85e57A6010BD2E2fe17e66" 
-export const saleContractAddrVDAOBUSD = "0xC797549E705cC24e2E85e57A6010BD2E2fe17e66"
+export const saleContractAddrVRPUSDT = "0x1eEd22a12Bb40e85664f7ad0792967130E2AfBee" // Vorpal sale contractы
+export const saleContractAddrVDAOUSDT = "0x1eEd22a12Bb40e85664f7ad0792967130E2AfBee"
+export const saleContractAddrVRPBUSD = "0x1eEd22a12Bb40e85664f7ad0792967130E2AfBee" 
+export const saleContractAddrVDAOBUSD = "0x1eEd22a12Bb40e85664f7ad0792967130E2AfBee"
 
 export const connectOptions = {
     keepAlive: true,
