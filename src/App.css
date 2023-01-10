@@ -812,4 +812,16 @@ input:checked + .checker:before {
      margin-left: -30px;
      bottom: 30px;
    }
+
+   .final--button {
+     width: 70%;
+   }
+
+   .buy--section {
+     width: 90%;
+   }
+
+   .modal--window {
+     width: 60%;
+   }
 }
