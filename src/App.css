@@ -333,7 +333,7 @@ input:checked + .checker:before {
 
 .buy--column--right {
   width: 40%;
-  border-left: 1px solid #2E2E2E;
+  /* border-left: 1px solid #2E2E2E; */
 }
 
 .buy--column--heading,
@@ -349,7 +349,7 @@ input:checked + .checker:before {
 }
 
 .buy--section input {
-  width: 97%;
+  width: calc(100% - 6px);
   height: 40px;
   text-align: right;
   color: #1E1E1E;
@@ -364,11 +364,11 @@ input:checked + .checker:before {
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  margin: 6px 3px;
+  margin: 3px;
 }
 
 .number--key {
-  width: 32.2%;
+  width: calc(33% - 4px);
   border: 1px solid #2E2E2E;
   cursor: pointer;
   text-align: center;
@@ -377,6 +377,7 @@ input:checked + .checker:before {
   font-weight: 300;
   text-transform: uppercase;
   height: 29px;
+  margin-top: 1px;
   padding-top: 12px;
   transition-property: all;
   transition-duration: 0.4s;
@@ -384,6 +385,10 @@ input:checked + .checker:before {
   -moz-user-select: none;
   -khtml-user-select: none;
   user-select: none;  
+}
+
+.backspace--key {
+  width: calc(67% - 4px);
 }
 
 .number--key:hover,
@@ -413,7 +418,7 @@ input:checked + .checker:before {
   font-weight: 300;
   text-align: center;
   color: #F1F6F9;
-  border: 1px solid #2E2E2E;
+  border-top: 1px solid #2E2E2E;
   padding-top: 12px;
 }
 
@@ -432,7 +437,7 @@ input:checked + .checker:before {
 }
 
 .row--1 {
-  height: 31.5px;
+  height: 36px;
 }
 
 .row--2 {
@@ -670,6 +675,10 @@ input:checked + .checker:before {
   pointer-events: none;
 }
 
+.mobile--menu {
+  display: none;
+}
+
 /* Mobile version */
 
 @media screen and (max-width : 768px) {
@@ -678,8 +687,16 @@ input:checked + .checker:before {
     background: #000;
   }
 
+  .buy--section input {
+    width: calc(100% - 16px);
+  }
+
   .menu--section {
     display: none;
+  }
+
+  .mobile--menu--ctnr {
+    display: flex;
   }
 
   .presale--body,
@@ -699,8 +716,71 @@ input:checked + .checker:before {
     text-align: center;
   }
 
+  .amount--input {
+    margin: 3px;
+    width: 100%;
+  }
+
 
   .invest--section {
     width: 100%;
   }
+
+  .mobile--menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    bottom: 0;
+    left:0;
+    width: 100%;
+    background: #000;
+  }
+
+  .mobile--menu.menu--section {
+    display: flex;
+  }
+
+  .mobile--sub {
+    position: fixed;
+    bottom: 40px;
+    margin-left: -90px;
+  }
+}
+
+@media screen and (max-width : 556px) {
+   .logo--section img {
+     width: 120px;
+   }
+
+   .connectWallet--btn,
+   .wallet--connected {
+      width: 120px;
+      height: 20px;
+      padding-top: 4px;
+      font-size: 12px;
+   }
+
+   .mobile--menu--ctnr {
+    width: 100%;
+    justify-content: center;
+   }
+
+   .menu--item {
+     font-size: 10px;
+     padding: 0 10px;
+   }
+
+   .menu--section .menu--item  {
+      padding: 0 10px;
+   }
+
+   .main--submenu {
+     width: 100px;
+   }
+
+   .mobile--sub {
+     margin-left: -30px;
+     bottom: 30px;
+   }
 }

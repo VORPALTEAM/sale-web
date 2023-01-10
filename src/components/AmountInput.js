@@ -81,8 +81,7 @@ const AmountInput = () => {
               <div className="number--key" data="0" onClick={KeyPressWeb}>
                 0
               </div>
-              <div className="number--key" data="." onClick={KeyPressWeb} />
-              <div className="number--key" data="backspace" onClick={KeyPressWeb}>
+              <div className="number--key backspace--key" data="backspace" onClick={KeyPressWeb}>
                 Backspace
               </div>
             </div>

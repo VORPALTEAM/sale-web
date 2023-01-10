@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-import Web3 from 'web3'
 import { RequestLockedFunds, RequestUnLockedFunds, ContractDataSetup } from '../state/hooks'
 import { updateLockedVRP, updateLockedVDAO, 
   updateUnLockedVRP, updateUnLockedVDAO, updateContractData } from '../state/reducer'
@@ -8,7 +7,6 @@ import * as config from "../config"
 
 const LocalStats = () => {
 
-    const web3 = new Web3(config.rpcUrl, config.connectOptions)
     const State = useSelector(state => state)
     const dispatch = useDispatch()
 
@@ -98,7 +96,11 @@ const LocalStats = () => {
               </div>
             </div>
             <div className="buy--column--cell">
-              <div className="stage--heading">
+              <div className="stage--heading row--1" style={{
+                paddingTop: 5,
+                borderBottom: 'none',
+                height: 36
+              }}>
                 Balance
               </div>
             </div>
@@ -110,7 +112,7 @@ const LocalStats = () => {
               {`${(lockedAmount - unLockedAmount) < 0 ? 0 : (lockedAmount - unLockedAmount)} ${State.token}`}
               </div>
             </div>
-            <div className="buy--column--cell row--2 no--border">
+            <div className="buy--column--cell row--2">
               <div className="value--subtitle green">
                  unlocked
               </div>

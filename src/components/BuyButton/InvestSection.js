@@ -26,7 +26,15 @@ const InvestSection = () => {
     const [isPending, pendingState] = useState(false)
     const [isStarted, startSale] = useState(0)
     const [isStatusRequested, isRequest] = useState(0)
-    const disabledState = (isPending || !userAgreed || !isStarted) ? " btn--disabled" : ""
+
+    let time = (config.handContractData.saleStart * 1000) - new Date().getTime()
+
+    const disabledState = (isPending || !userAgreed || !isStarted || time > 0) ? " btn--disabled" : ""
+    const saletimer = (time > 0) ? setInterval(() => {
+        if (time > 0) {
+            time -= 1000
+        }
+    }, 1000) : null
 
     const currentContract = () => {
         switch (true) {
@@ -83,23 +91,25 @@ const InvestSection = () => {
     const ApproveToken = async () => {
          pendingState(true)
          const amount = await ApproveTokens(usdTokenList.get(currency),
-         currentContract(), State.account, config.defaultApproveValue).then((res) => {
+         currentContract(), State.account, orderedBalance).then((res) => {
             // console.log(res)
             AcknowApprovedAmount(usdTokenList.get(currency), currentContract(), State.account ).then((res) => {
+                // console.log(res)
+                pendingState(false)
                 if (isDefault) {
                     cacheApprovedValueUSDT(res)
                 } else {
                     cacheApprovedValueBUSD(res)
                 }
-                if (res > 0) dispatch(selectStage("buy"))
+                if (res >= orderedBalance) dispatch(selectStage("buy"))
             })
          }, (rej) => {
+            pendingState(false)
             dispatch(selectStage("approve"))
          }) // orderedBalance
          /* if (amount >= orderedBalance && amount > 0) {
             dispatch(selectStage("buy"))
          } */
-         pendingState(false)
     }
 
     const Invest = async () => {
