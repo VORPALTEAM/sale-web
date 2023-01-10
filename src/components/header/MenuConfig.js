@@ -43,7 +43,7 @@ export const menu = [
         style: styles.default,
         submenu: [{
             name: "LitePaper",
-            url: `${mainHost}/`
+            url: `https://drive.google.com/file/d/1cIb9qYmjKwp0Br5g-tJvyCzQ6V_5iW8T/view?usp=sharing`
           }, {
             name: "Blog",
             url: "https://vorpaldao.medium.com/"
