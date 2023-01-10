@@ -8,7 +8,7 @@ const BuyButton = () => {
     const [investOpened, openInvest] = useState(false)
     const State = useSelector(state => state)
     const btnAddClass = State.token === defaultToken ? "vrp" : "vdao"
-    const btnClassName = `value--subsection confirm--button ${btnAddClass}${investOpened ? " invest--opened" : ""}`
+    const btnClassName = `value--subsection confirm--button btn--disabled ${btnAddClass}${investOpened ? " invest--opened" : ""}`
 
     const StartInvest = () => {
 
