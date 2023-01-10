@@ -167,7 +167,7 @@ const InvestSection = () => {
 
     const UpdateOrderUSD = (event) => {
         let newValue = event.target.value.toString()
-            if (newValue[0] === '0') {
+            if (newValue[0] === '0' && newValue.length > 1) {
               newValue = newValue.substring(1)
             }
         const allowance = isDefault ? cachedApprovedValueUSDT : cachedApprovedValueBUSD
