@@ -23,7 +23,7 @@ const Header = () => {
 
           return(
             <div className={itemClass} key={"mainmenu"+index}>
-             <a href={item.url}>{item.name}</a>
+             <a href={item.url} target="_blank">{item.name}</a>
              {hasSubs ? <div key={"submenu_"+index} className={`main--submenu${isMobile ? " mobile--sub" : ""}`}>
                 {item.submenu.map((subitem, ind) => {
                    const siClass = `submenu--item${(ind === 0) ? 
@@ -31,7 +31,7 @@ const Header = () => {
                 " submenu--item--last" : "")}`
                    return(
                     <div key={"subs_"+index+"_"+ind} className={siClass}>
-                       <a href={subitem.url}>{subitem.name}</a>
+                       <a href={subitem.url} target="_blank">{subitem.name}</a>
                     </div>
                    )
                 })} 
@@ -47,7 +47,7 @@ const Header = () => {
     return(
        <header className="dex--header">
         <div className="logo--section">
-          <a href={mainHost}><img src="images/logo.svg" /></a>
+          <a href={''}><img src="images/logo.svg" /></a>
         </div>
            <MenuSection />
         <div className="wallet--section">
