@@ -285,11 +285,11 @@ const InvestSection = () => {
             </div>
          </div>
          <div className="invest--description">
-            <p>
+            {/* <p>
             WebGradients is a free collection of 180 linear gradients that you can use as
             content backdrops in any part of your website. Easy copy CSS3 crossbrowser code
             and use it in a moment! <a>How to buy?</a>
-            </p>
+            </p> */}
          </div>
          <div className="buy--confirm--section">
             <div className="agree--dot">
