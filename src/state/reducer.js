@@ -97,7 +97,7 @@ const AmountUSDVRP = (state = investAmountUSDVRP, action) => {
 
   switch(action.type) {
     case actionNames.updateUSDVRP : 
-      return action.payload ? action.payload : state
+      return (action.payload !== "undefined") ? action.payload : state
     default :
       return state
   }
@@ -107,7 +107,7 @@ const AmountUSDVDAO = (state = investAmountUSDVDAO, action) => {
 
   switch(action.type) {
     case actionNames.updateUSDVDAO : 
-      return action.payload ? action.payload : state
+      return (action.payload !== "undefined") ? action.payload : state
     default :
       return state
   }
@@ -137,7 +137,7 @@ const UpdateApprovedUSDT = (state = approvedAmountDefault, action) => {
 
   switch(action.type) {
     case actionNames.updateApprovedUSDT : 
-      return action.payload ? action.payload : state
+      return (action.payload || action.payload === 0) ? action.payload : state
     default :
       return state
   }
@@ -147,7 +147,7 @@ const UpdateApprovedBUSD = (state = approvedAmountDefault, action) => {
 
   switch(action.type) {
     case actionNames.updateApprovedBUSD : 
-      return action.payload ? action.payload : state
+      return (action.payload || action.payload === 0) ? action.payload : state
     default :
       return state
   }
@@ -158,7 +158,7 @@ const OrderUSDVRP = (state = investAmountUSDVRP, action) => {
 
   switch(action.type) {
     case actionNames.orderUSDVRP : 
-      return (action.payload || action.payload === 0) ? action.payload : state
+      return (action.payload !== "undefined") ? action.payload : state
     default :
       return state
   }
@@ -168,7 +168,7 @@ const OrderUSDVDAO = (state = investAmountUSDVDAO, action) => {
 
   switch(action.type) {
     case actionNames.orderUSDVDAO : 
-      return (action.payload || action.payload === 0) ? action.payload : state
+      return (action.payload !== "undefined") ? action.payload : state
     default :
       return state
   }
@@ -179,7 +179,7 @@ const UpdateLockedVRP = (state = investAmountUSDVRP, action) => {
 
   switch(action.type) {
     case actionNames.amountVRPLocked : 
-      return action.payload ? action.payload : state
+      return (action.payload || action.payload === 0) ? action.payload : state
     default :
       return state
   }
@@ -189,7 +189,7 @@ const UpdateLockedVDAO = (state = investAmountUSDVDAO, action) => {
 
   switch(action.type) {
     case actionNames.amountVDAOLocked : 
-      return action.payload ? action.payload : state
+      return (action.payload || action.payload === 0) ? action.payload : state
     default :
       return state
   }
@@ -199,7 +199,7 @@ const UpdateUnLockedVRP = (state = investAmountUSDVRP, action) => {
 
   switch(action.type) {
     case actionNames.amountVRPunLocked : 
-      return action.payload ? action.payload : state
+      return (action.payload || action.payload === 0) ? action.payload : state
     default :
       return state
   }
@@ -209,7 +209,7 @@ const UpdateUnLockedVDAO = (state = investAmountUSDVDAO, action) => {
 
   switch(action.type) {
     case actionNames.amountVDAOunLocked : 
-      return action.payload ? action.payload : state
+      return (action.payload || action.payload === 0) ? action.payload : state
     default :
       return state
   }

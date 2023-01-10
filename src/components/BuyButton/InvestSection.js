@@ -80,7 +80,8 @@ const InvestSection = () => {
                 } else {
                     cacheApprovedValueBUSD(res)
                 }
-                if (res > 0) dispatch(selectStage("buy"))
+                dispatch(selectStage("approve"))
+                // if (res > 0) dispatch(selectStage("buy"))
             }, (rej) => {
                 dispatch(selectStage("approve"))
             })
@@ -156,14 +157,17 @@ const InvestSection = () => {
     }
 
     const UpdateOrderUSD = (event) => {
-        const newValue = event.target.value
+        let newValue = event.target.value.toString()
+            if (newValue[0] === '0') {
+              newValue = newValue.substring(1)
+            }
         const allowance = isDefault ? cachedApprovedValueUSDT : cachedApprovedValueBUSD
         if (newValue <= config.maxInvestments) {
             dispatch(updateBalanceAction(newValue))
             if (newValue > allowance && State.stage !== "approve") {
                 dispatch(selectStage("approve"))
             } else {
-                dispatch(selectStage("buy"))
+                if (newValue > 0) dispatch(selectStage("buy"))
             }
         }
     }

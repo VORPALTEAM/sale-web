@@ -6,8 +6,8 @@ import { defaultToken,
 const StarTimer = () => {
 
     const State = useSelector(state => state)
-    const [timeStatus, setTimeStatus] = useState("Starts in:") // Starts in (will end in, closed):
-    const [countdown, setCountdown] = useState("00:00:00:00") 
+    const [timeStatus, setTimeStatus] = useState("") // Starts in (will end in, closed):
+    const [countdown, setCountdown] = useState("") 
     const [isTimerSetup, setIsTimerSetup] = useState(false)
 
     function UpdateTimer (totalSeconds) {
@@ -36,30 +36,27 @@ const StarTimer = () => {
     function TimerSetup () {
       if (!isTimerSetup) {
 
-         const date = new Date().getTime()
          const saleEnd = State.contractData.saleEnd * 1000
          const saleStart = handContractData.saleStart * 1000
 
-         if (date < saleStart) {
-            setTimeStatus("Starts in:")
-            UpdateTimer (saleStart - date)
-            setInterval(() => {
-               const ndate = new Date().getTime()
-               UpdateTimer (saleStart - ndate)
-            }, 1000)
-         }
-         if (date > saleEnd) {
-            setTimeStatus("Closed")
-            UpdateTimer (null)
-         }
-         if (date >= saleStart && date <= saleEnd) {
-            setTimeStatus("Will end in")
-            UpdateTimer (saleEnd - date)
-            setInterval(() => {
-               const ndate = new Date().getTime()
-               UpdateTimer (saleEnd - ndate)
-            }, 1000)
-         }
+         const liveTimer = setInterval(() => {
+            const date = new Date().getTime()
+            if (date < saleStart) {
+               setTimeStatus("Starts in:")
+               UpdateTimer (saleStart - date)
+            }
+            if (date > saleEnd) {
+               setTimeStatus("Closed")
+               UpdateTimer (null)
+               clearInterval(liveTimer)
+            }
+            if (date >= saleStart && date <= saleEnd) {
+               setTimeStatus("Will end in")
+               UpdateTimer (saleEnd - date)
+            }
+         }, 1000)
+
+         
          setIsTimerSetup(true)
       }
     } 

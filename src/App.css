@@ -103,11 +103,27 @@ input::-webkit-input-placeholder{
   align-items: center;
 }
 
-.green--btn a {
-  border: 1px solid #AAF765;
+.starmap--btn a {
+  border: 1px solid #00F0FF;
   border-radius: 4px;
   padding: 4px 12px;
-  color: #AAF765;
+  color: #00F0FF;
+  text-transform: uppercase;
+}
+
+.starmap--btn a:hover,
+.starmap--btn a:focus {
+  background: #00F0FF;
+  border-radius: 4px;
+  padding: 4px 12px;
+  color: #000;
+}
+
+.green--btn a {
+  background: #AAF765;
+  border-radius: 4px;
+  padding: 4px 12px;
+  color: #000;
 }
 
 .connectWallet--btn {
@@ -183,7 +199,6 @@ input::-webkit-input-placeholder{
   margin-top: 16px;
   display: flex;
   justify-content: center;
-  cursor: pointer;
 }
 
 .currency--selector {
@@ -222,6 +237,7 @@ input::-webkit-input-placeholder{
 
 .token--selector .token {
   font-size: 18px;
+  font-family: "RoundsBlack";
   text-transform: uppercase;
   margin: 0 10px;
 }
@@ -246,6 +262,7 @@ input::-webkit-input-placeholder{
   width: 60px;
   height: 34px;
   margin-top: -6px;
+  cursor: pointer;
 }
 
 .switch--token input {
@@ -339,6 +356,7 @@ input:checked + .checker:before {
 .buy--column--heading,
 .stage--heading {
   width: 100%;
+  font-family: "RoundsBlack";
   text-align: center;
   font-weight: 500;
   font-size: 24px;

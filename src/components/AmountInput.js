@@ -16,7 +16,12 @@ const AmountInput = () => {
     }
 
     const ValueOnChange = (event) => {
-      const newValue = event.target.value
+      
+      let newValue = event.target.value.toString()
+      if (newValue[0] === '0') {
+
+        newValue = newValue.substring(1)
+      }
       if (newValue <= maxInvestments) DispatchValue (newValue)
     }
 
@@ -43,6 +48,15 @@ const AmountInput = () => {
           break;
       }
     }
+
+    /* const InputFilter = (event) => {
+      if (event.code === "Backspace") {
+        console.log(event)
+        if (activeBalance < 10) {
+          DispatchValue ("")
+        }
+      }
+    } */
 
     return(
       <>
