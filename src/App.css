@@ -1,3 +1,10 @@
+html, body { 
+  position: relative;
+  max-width: 100%; 
+  overflow-x: hidden; 
+  min-height: 160vh;
+}
+
 body {
   background: url("../public/images/stars_bkg.png");
   font-family: 'Roboto';
@@ -579,9 +586,9 @@ input:checked + .checker:before {
   padding: 4px;
   margin-left: -5px;
   max-width: 496px;
-  transition-property: all;
+  /* transition-property: all;
   transition-duration: 0.4s;
-  transition-timing-function: linear;
+  transition-timing-function: linear; */
 }
 
 .invest--opened {
