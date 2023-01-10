@@ -15,7 +15,10 @@ const ConnectWalletBtn = () => {
       try {
         const wallet = await RequestWallet()
         if (!wallet) {
-          dispatch(selectWindow("nowallet"))
+          if (!window.ethereum) {
+            dispatch(selectWindow("nowallet"))
+          }
+         // dispatch(selectWindow("nowallet"))
         } else {
           document.cookie = "saleWalletConnected=true"
         }
