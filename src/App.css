@@ -6,7 +6,8 @@ html, body {
 }
 
 body {
-  background: url("../public/images/stars_bkg.png");
+  /* background: url("../public/images/stars_bkg.png"); */
+  background: #000;
   font-family: 'Roboto';
 }
 

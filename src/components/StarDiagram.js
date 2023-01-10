@@ -8,7 +8,7 @@ const StarDiagram = () => {
     const [isLoaded, setLoaded] = useState(false)
     const isDefault = State.token === defaultToken
     const staticImage = isDefault ? "images/star_vrp.png" : "images/star_vdao.png"
-    const animImage = isDefault ? "images/sun.gif" : "images/star_vdao.png"
+    const animImage = isDefault ? "images/sun.webp" : "images/star_vdao.png"
 
     const animLoad = new Image(400)
     animLoad.addEventListener('load', () => {
