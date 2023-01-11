@@ -437,7 +437,7 @@ input:checked + .checker:before {
     background: #F1F6F9;
   }
 
-  .amount--input {
+  .amount--input input {
     background: #F1F6F9;
   }
 }
