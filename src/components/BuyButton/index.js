@@ -1,15 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-import { defaultToken } from '../../config'
+import { defaultToken, handContractData } from '../../config'
 import InvestSection from './InvestSection'
 
 const BuyButton = () => {
 
     const [investOpened, openInvest] = useState(false)
     const State = useSelector(state => state)
+    const now = new Date().getTime()
+    const [disabledStatus, setDisabled] = useState(now < handContractData.saleStart)
+    
     const btnAddClass = State.token === defaultToken ? "vrp" : "vdao"
-    const btnClassName = `value--subsection confirm--button btn--disabled ${btnAddClass}${investOpened ? " invest--opened" : ""}`
-
+    const btnClassName = `value--subsection confirm--button${!disabledStatus ? " btn--disabled" : ""} ${btnAddClass}${investOpened ? " invest--opened" : ""}`
+    
+    if (disabledStatus) {
+        setTimeout(() => {
+            setDisabled(false)
+        }, (now - handContractData.saleStart) * 1000)
+    }
     const StartInvest = () => {
 
         const newState = investOpened ? false : true
