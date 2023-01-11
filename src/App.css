@@ -418,10 +418,26 @@ input:checked + .checker:before {
   width: calc(67% - 4px);
 }
 
-.number--key:hover {
-  color: #000;
-  background: #F1F6F9;
+@media (pointer: fine) {
+  .number--key:hover {
+    color: #000;
+    background: #F1F6F9;
+  }
 }
+
+@media (pointer: coarse) { 
+
+  .number--key {
+    transition-property: none;
+  }
+
+  .number--key:focus,
+  .number--key:active {
+    color: #000;
+    background: #F1F6F9;
+  }
+}
+
 
 .stage--stats {
   margin: 8px;
