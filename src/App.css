@@ -449,6 +449,7 @@ input:checked + .checker:before {
 }
 
 .value--subtitle {
+   margin-top: 15px;
    font-size: 13px;
 }
 
@@ -463,11 +464,11 @@ input:checked + .checker:before {
 }
 
 .row--1 {
-  height: 36px;
+  height: 38px;
 }
 
 .row--2 {
-  height: 75px;
+  height: 79.5px;
 }
 
 .stage--heading {
