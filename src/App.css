@@ -436,6 +436,10 @@ input:checked + .checker:before {
     color: #000;
     background: #F1F6F9;
   }
+
+  .amount--input {
+    color: #F1F6F9;
+  }
 }
 
 
