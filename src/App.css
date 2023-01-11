@@ -16,6 +16,10 @@ input::-webkit-inner-spin-button {
     -webkit-appearance: none;
 }
 
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 input::-webkit-input-placeholder{
   text-align:right;
   font-size: 20px;
@@ -400,7 +404,7 @@ input:checked + .checker:before {
   font-weight: 300;
   text-transform: uppercase;
   height: 29px;
-  margin-top: 1px;
+  margin-top: 4px;
   padding-top: 12px;
   transition-property: all;
   transition-duration: 0.4s;
@@ -414,8 +418,7 @@ input:checked + .checker:before {
   width: calc(67% - 4px);
 }
 
-.number--key:hover,
-.number--key:focus {
+.number--key:hover {
   color: #000;
   background: #F1F6F9;
 }
@@ -803,7 +806,7 @@ input:checked + .checker:before {
    }
 
    .menu--item {
-     font-size: 10px;
+     font-size: 16px;
      padding: 0 10px;
    }
 
