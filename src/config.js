@@ -40,8 +40,8 @@ export const connectOptions = {
 
 export const defaultGas = "20000000000" 
 export const handContractData = {
-	saleStart: 1673794800, // Sale start 15.01.2023 18:00 UTC = 1673794800
-	saleEnd: 1676473200, // Sale end 15.01.2023 18:00 UTC
+	saleStart: 1673805600, // Sale start 15.01.2023 21:00
+	saleEnd: 1676484000, // Sale end 15.01.2023 21:00
 	available: "5000000",
 	forCurrentRound: "5000000",
 	maxSupply: "21000000000",
