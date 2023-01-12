@@ -181,6 +181,9 @@ input::-webkit-input-placeholder{
 .presale--body {
   display: flex;
   width: 100%;
+  max-width: 1292px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .star--section {
@@ -199,6 +202,7 @@ input::-webkit-input-placeholder{
 
 .star--section img {
   width: 90%;
+  max-width: 722px;
 }
 
 .token--selector {
