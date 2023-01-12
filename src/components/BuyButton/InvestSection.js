@@ -304,7 +304,7 @@ const InvestSection = () => {
             <div className="buy--button--section final--button">
                 {btn}
             </div>
-           {/* <button onClick={RequestWithdraw}>Withdraw</button> */}
+           <button onClick={RequestWithdraw}>Withdraw</button>
          </div>
        </div>
     )
