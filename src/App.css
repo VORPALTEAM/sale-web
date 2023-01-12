@@ -128,7 +128,7 @@ input::-webkit-input-placeholder{
 }
 
 .green--btn a {
-  background: #AAF765;
+  background: #ACF800;
   border-radius: 4px;
   padding: 4px 12px;
   color: #000;
@@ -141,7 +141,7 @@ input::-webkit-input-placeholder{
   font-size: 16px;
   text-align: center;
   padding-top: 7px;
-  background: linear-gradient(97.85deg, #D4FC79 3.64%, #96E6A1 94.38%);
+  background: #ACF800;
   color: #1E1E1E;
 }
 
@@ -526,7 +526,7 @@ input:checked + .checker:before {
 }
 
 .confirm--button.vdao {
-  background: #764BA2;
+  background: linear-gradient(2.11deg, #AF15FF 4.13%, #3D217F 147.4%);
   color: #FFF;
 }
 
@@ -550,12 +550,13 @@ input:checked + .checker:before {
 }
 
 .opened--arrow.active.vdao {
-  background: #764BA2;
+  background: linear-gradient(2.11deg, #AF15FF 4.13%, #3D217F 147.4%);
 }
 
 
 .timer--vdao {
-  color: #6574F7;
+  color: #9418E1;
+  ;
 }
 
 .modal--overlay {
@@ -726,6 +727,9 @@ input:checked + .checker:before {
 
 .btn--disabled {
   opacity: 0.9;
+  background: #CFCFCF !important;
+  box-shadow: inset 0px 0px 80px #000000;
+  color: rgba(30, 30, 30, 0.3);
   pointer-events: none;
 }
 
