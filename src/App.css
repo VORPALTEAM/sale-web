@@ -261,11 +261,14 @@ input::-webkit-input-placeholder{
 }
 
 .token--vdao {
-  color: #6574F7;
+  background: linear-gradient(2.11deg, #AF15FF 4.13%, #3D217F 147.4%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .inActive {
   color: #D9D9D94D;
+  background: none;
   text-shadow: none;
 }
 
@@ -729,7 +732,7 @@ input:checked + .checker:before {
   opacity: 0.9;
   background: #CFCFCF !important;
   box-shadow: inset 0px 0px 80px #000000;
-  color: rgba(30, 30, 30, 0.3);
+  color: rgba(30, 30, 30, 0.3) !important;
   pointer-events: none;
 }
 
