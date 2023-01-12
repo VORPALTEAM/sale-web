@@ -36,7 +36,7 @@ const StarTimer = () => {
     function TimerSetup () {
       if (!isTimerSetup) {
 
-         const saleEnd = State.contractData.saleEnd * 1000
+         const saleEnd = handContractData.saleEnd * 1000
          const saleStart = handContractData.saleStart * 1000
 
          const liveTimer = setInterval(() => {

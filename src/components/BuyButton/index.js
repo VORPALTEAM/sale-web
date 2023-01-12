@@ -7,20 +7,21 @@ const BuyButton = () => {
 
     const [investOpened, openInvest] = useState(false)
     const State = useSelector(state => state)
-    const now = new Date().getTime()
-    const [disabledStatus, setDisabled] = useState(now < (handContractData.saleStart * 1000))
-    /* console.log(now)
-    console.log(handContractData.saleStart)
-    console.log(disabledStatus)
-    console.log(now < handContractData.saleStart) */
+    const nowD = new Date()
+    const now = nowD.getTime()
+    const beginMS = handContractData.saleStart * 1000
+    const [time, setTime] = useState(now)
+
     const btnAddClass = State.token === defaultToken ? "vrp" : "vdao"
-    const btnClassName = `value--subsection confirm--button${disabledStatus ? " btn--disabled" : ""} ${btnAddClass}${investOpened ? " invest--opened" : ""}`
+    const btnClassName = `value--subsection confirm--button${(time < beginMS) ? " btn--disabled" : ""} ${btnAddClass}${investOpened ? " invest--opened" : ""}`
     
-    if (disabledStatus) {
-        setTimeout(() => {
-            setDisabled(false)
-        }, (now - handContractData.saleStart) * 1000)
-    }
+
+    if (time < beginMS)  setTimeout(() => {
+            const nowm = new Date()
+            const nowt = nowm.getTime()
+            setTime(nowt)
+        }, (beginMS - time + 1000))
+
     const StartInvest = () => {
 
         const newState = investOpened ? false : true
