@@ -17,8 +17,8 @@ export const VRPToken = "0x4807Aa82d46501F284AB2512e69e95b7F71681FB" // VRP
 export const VDAOToken = "0x4807Aa82d46501F284AB2512e69e95b7F71681FB" // VDAO
 */
 
-export const VRPToken = "0x4807Aa82d46501F284AB2512e69e95b7F71681FB" // VRP
-export const VDAOToken = "0x4807Aa82d46501F284AB2512e69e95b7F71681FB" // VDAO
+export const VRPToken = "0x1e6cde19068eFfc4d9EfBAF4Ce4A6e7d33fC6F5b" // VRP
+export const VDAOToken = "0x1e6cde19068eFfc4d9EfBAF4Ce4A6e7d33fC6F5b" // VDAO
 
 /* 
 export const usdTokens = [{
@@ -44,10 +44,10 @@ export const saleContractAddrVDAOUSDT = "0x5577791dbdb9AE73a750A6DB27Fca3D66D866
 export const saleContractAddrVRPBUSD = "0x2E90CEd6C48Bd961DAbC00710aF6d2c8677346C9" 
 export const saleContractAddrVDAOBUSD = "0x5577791dbdb9AE73a750A6DB27Fca3D66D866928" 
 */
-export const saleContractAddrVRPUSDT = "0x2E90CEd6C48Bd961DAbC00710aF6d2c8677346C9" // Vorpal sale contractы
-export const saleContractAddrVDAOUSDT = "0x5577791dbdb9AE73a750A6DB27Fca3D66D866928"
-export const saleContractAddrVRPBUSD = "0x2E90CEd6C48Bd961DAbC00710aF6d2c8677346C9" 
-export const saleContractAddrVDAOBUSD = "0x5577791dbdb9AE73a750A6DB27Fca3D66D866928"
+export const saleContractAddrVRPUSDT = "0x10b5E5cD3DfE7F7b013D3B5FFF634E5d98614716" // Vorpal sale contractы
+export const saleContractAddrVDAOUSDT = "0x10b5E5cD3DfE7F7b013D3B5FFF634E5d98614716"
+export const saleContractAddrVRPBUSD = "0x10b5E5cD3DfE7F7b013D3B5FFF634E5d98614716" 
+export const saleContractAddrVDAOBUSD = "0x10b5E5cD3DfE7F7b013D3B5FFF634E5d98614716"
 
 export const connectOptions = {
     keepAlive: true,
@@ -63,8 +63,8 @@ export const connectOptions = {
 
 export const defaultGas = "20000000000" 
 export const handContractData = {
-	saleStart: 1673805600, // Sale start 15.01.2023 21:00
-	saleEnd: 1676484000, // Sale end 15.01.2023 21:00
+	saleStart: 1701446629, // Sale start 15.01.2023 21:00 = 1673805600
+	saleEnd: 1701447229, // Sale end 15.02.2023 21:00 = 1676484000
 	available: "5000000",
 	forCurrentRound: "5000000",
 	maxSupply: "21000000000",
