@@ -23,7 +23,7 @@ const GlobalStats = () => {
       cachePriceVDAO(newPriceVDAO)
     }
 
-    const availableTokens = parseFloat((data.totalTokensLeft + data.tokensLeftSecond) / decimal)
+    const availableTokens = parseFloat(data.totalTokensLeft / decimal) + parseFloat(data.tokensLeftSecond / decimal)
 
     useEffect(() => {
       UpdatePrices()
