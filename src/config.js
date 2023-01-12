@@ -44,10 +44,10 @@ export const saleContractAddrVDAOUSDT = "0x5577791dbdb9AE73a750A6DB27Fca3D66D866
 export const saleContractAddrVRPBUSD = "0x2E90CEd6C48Bd961DAbC00710aF6d2c8677346C9" 
 export const saleContractAddrVDAOBUSD = "0x5577791dbdb9AE73a750A6DB27Fca3D66D866928" 
 */
-export const saleContractAddrVRPUSDT = "0x10b5E5cD3DfE7F7b013D3B5FFF634E5d98614716" // Vorpal sale contractы
-export const saleContractAddrVDAOUSDT = "0x10b5E5cD3DfE7F7b013D3B5FFF634E5d98614716"
-export const saleContractAddrVRPBUSD = "0x10b5E5cD3DfE7F7b013D3B5FFF634E5d98614716" 
-export const saleContractAddrVDAOBUSD = "0x10b5E5cD3DfE7F7b013D3B5FFF634E5d98614716"
+export const saleContractAddrVRPUSDT = "0x932Ddb0552E4AC749ECD884B5e8B556c63610432" // Vorpal sale contractы
+export const saleContractAddrVDAOUSDT = "0x932Ddb0552E4AC749ECD884B5e8B556c63610432"
+export const saleContractAddrVRPBUSD = "0x932Ddb0552E4AC749ECD884B5e8B556c63610432" 
+export const saleContractAddrVDAOBUSD = "0x932Ddb0552E4AC749ECD884B5e8B556c63610432"
 
 export const connectOptions = {
     keepAlive: true,
@@ -63,8 +63,8 @@ export const connectOptions = {
 
 export const defaultGas = "20000000000" 
 export const handContractData = {
-	saleStart: 1673539500, // Sale start 15.01.2023 21:00 = 1673805600
-	saleEnd: 1673540100, // Sale end 15.02.2023 21:00 = 1676484000
+	saleStart: 1673540100, // Sale start 15.01.2023 21:00 = 1673805600
+	saleEnd: 1673540700, // Sale end 15.02.2023 21:00 = 1676484000
 	available: "5000000",
 	forCurrentRound: "5000000",
 	maxSupply: "21000000000",
