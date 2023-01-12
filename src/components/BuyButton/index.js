@@ -9,9 +9,12 @@ const BuyButton = () => {
     const State = useSelector(state => state)
     const now = new Date().getTime()
     const [disabledStatus, setDisabled] = useState(now < handContractData.saleStart)
-    
+    console.log(now)
+    console.log(handContractData.saleStart)
+    console.log(disabledStatus)
+    console.log(now < handContractData.saleStart)
     const btnAddClass = State.token === defaultToken ? "vrp" : "vdao"
-    const btnClassName = `value--subsection confirm--button${!disabledStatus ? " btn--disabled" : ""} ${btnAddClass}${investOpened ? " invest--opened" : ""}`
+    const btnClassName = `value--subsection confirm--button${disabledStatus ? " btn--disabled" : ""} ${btnAddClass}${investOpened ? " invest--opened" : ""}`
     
     if (disabledStatus) {
         setTimeout(() => {
