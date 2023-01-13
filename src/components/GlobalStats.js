@@ -23,7 +23,9 @@ const GlobalStats = () => {
       cachePriceVDAO(newPriceVDAO)
     }
 
-    const availableTokens = parseFloat(data.totalTokensLeft / decimal) + parseFloat(data.tokensLeftSecond / decimal)
+    const availableTokens = (data.totalTokensLeft !== null) ? 
+    (parseFloat(data.totalTokensLeft / decimal) + parseFloat(data.tokensLeftSecond / decimal)).toLocaleString('ua') :
+    defaultValueText
 
     useEffect(() => {
       UpdatePrices()
@@ -32,7 +34,7 @@ const GlobalStats = () => {
     return(
       <div className="stage--stats">
         <p><b>price:</b>{tokenPrice ? ` ${tokenPrice}$` : defaultValueText}</p>
-        <p><b>available:</b>{` ${availableTokens.toLocaleString('ua')}`}</p>
+        <p><b>available:</b>{` ${availableTokens}`}</p>
         <p><b>sold:</b>{` ${!data.isDataRequested ? defaultValueText : soldAmount.toLocaleString('ua')}`}</p>
         <p style={{
           paddingBottom: 8

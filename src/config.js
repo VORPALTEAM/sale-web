@@ -71,8 +71,8 @@ export const contractDefaultGlobalData = {
 	saleEnd: "1674329899",
 	status: 0,
 	isDataRequested: false,
-	totalTokensLeft: "5000000000000000000000000",
-	tokensLeftSecond: "5000000000000000000000000",
+	totalTokensLeft: null,
+	tokensLeftSecond: null,
 }
 
 export const erc20ABI = [
