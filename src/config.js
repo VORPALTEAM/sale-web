@@ -12,23 +12,22 @@ export const maxInvestments = 100000
 export const defaultApproveValue = "100000"
 export const priceVRP = 0.0025
 export const priceVDAO = 1.5
+
+export const imageUrl = ( scrWidth, token ) => {
+
+	const starName = token === defaultToken ? 'sun' : 'nova'
+    return `images/star/${starName}_${scrWidth}.webp`
+}
 /* 
+null - 0x0000000000000000000000000000000000000000
 export const VRPToken = "0x4807Aa82d46501F284AB2512e69e95b7F71681FB" // VRP
 export const VDAOToken = "0x4807Aa82d46501F284AB2512e69e95b7F71681FB" // VDAO
 */
 
-export const VRPToken = "0x1e6cde19068eFfc4d9EfBAF4Ce4A6e7d33fC6F5b" // VRP
-export const VDAOToken = "0x1e6cde19068eFfc4d9EfBAF4Ce4A6e7d33fC6F5b" // VDAO
+export const VRPToken = "0x4807Aa82d46501F284AB2512e69e95b7F71681FB" // VRP
+export const VDAOToken = "0x4807Aa82d46501F284AB2512e69e95b7F71681FB" // VDAO
 
-/* 
-export const usdTokens = [{
-	name: defaultCurrency,
-	address: "0xAd8a6e033cbaCD0910234c596f15ef8326B7cDF1"
-   },{
-	name: selectableCurrency,
-	address: "0xAd8a6e033cbaCD0910234c596f15ef8326B7cDF1"
-   }]
-*/
+export const zeroAddress = "0x0000000000000000000000000000000000000000"
 
 export const usdTokens = [{
 	name: defaultCurrency,
@@ -38,16 +37,11 @@ export const usdTokens = [{
 	address: "0xAd8a6e033cbaCD0910234c596f15ef8326B7cDF1"
    }]  // USDC or USDT && BUSD - list of tokens available for using for payment
 
-/*
 export const saleContractAddrVRPUSDT = "0x2E90CEd6C48Bd961DAbC00710aF6d2c8677346C9" // Vorpal sale contractы
 export const saleContractAddrVDAOUSDT = "0x5577791dbdb9AE73a750A6DB27Fca3D66D866928"
 export const saleContractAddrVRPBUSD = "0x2E90CEd6C48Bd961DAbC00710aF6d2c8677346C9" 
 export const saleContractAddrVDAOBUSD = "0x5577791dbdb9AE73a750A6DB27Fca3D66D866928" 
-*/
-export const saleContractAddrVRPUSDT = "0xbd3DDE41c3c3Eb3Fa4308Ef8F7F37543984592c8" // Vorpal sale contractы
-export const saleContractAddrVDAOUSDT = "0xbd3DDE41c3c3Eb3Fa4308Ef8F7F37543984592c8"
-export const saleContractAddrVRPBUSD = "0xbd3DDE41c3c3Eb3Fa4308Ef8F7F37543984592c8" 
-export const saleContractAddrVDAOBUSD = "0xbd3DDE41c3c3Eb3Fa4308Ef8F7F37543984592c8"
+
 
 export const connectOptions = {
     keepAlive: true,
@@ -63,8 +57,8 @@ export const connectOptions = {
 
 export const defaultGas = "20000000000" 
 export const handContractData = {
-	saleStart: 	1673543400, // Sale start 15.01.2023 21:00 = 1673805600
-	saleEnd: 	1673544000, // Sale end 15.02.2023 21:00 = 1676484000
+	saleStart: 	1673805600, // Sale start 15.01.2023 21:00 = 1673805600
+	saleEnd: 	1676484000, // Sale end 15.02.2023 21:00 = 1676484000
 	available: "5000000",
 	forCurrentRound: "5000000",
 	maxSupply: "21000000000",
