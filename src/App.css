@@ -831,6 +831,9 @@ input:checked + .checker:before {
     margin-left: -90px;
   }
 
+  .stage--heading {
+    font-size: 16px;
+  }
 }
 
 @media screen and (max-width : 556px) {
@@ -880,4 +883,5 @@ input:checked + .checker:before {
    .modal--window {
      width: 60%;
    }
+
 }
