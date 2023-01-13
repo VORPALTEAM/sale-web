@@ -213,7 +213,7 @@ input::-webkit-input-placeholder{
 }
 
 .star--section img {
-  width: 90%;
+  width: 100%;
   max-width: 620px;
 }
 
@@ -830,6 +830,7 @@ input:checked + .checker:before {
     bottom: 40px;
     margin-left: -90px;
   }
+
 }
 
 @media screen and (max-width : 556px) {
