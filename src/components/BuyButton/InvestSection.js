@@ -170,7 +170,7 @@ const InvestSection = () => {
         }
         if (newValue <= config.maxInvestments) {
             dispatch(updateBalanceAction(newValue))
-            if (newValue > allowance && State.stage !== "approve") {
+            if (newValue > allowance) {
                 dispatch(selectStage("approve"))
             } else {
                 if (newValue > 0) dispatch(selectStage("buy"))
