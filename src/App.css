@@ -497,6 +497,7 @@ input:checked + .checker:before {
 .value--subtitle.red {
   font-size: 10px;
   color: #FF0000;
+  font-weight: 700;
 }
 
 .value--subtitle.green {

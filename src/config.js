@@ -24,23 +24,23 @@ export const imageUrl = ( scrWidth, token ) => {
     return `images/star/${starName}_${scrWidth}.webp`
 }
 
-export const VRPToken = "0xEE8b03687e884e5f210F21998d23ECc2138eBb20" // VRP
-export const VDAOToken = "0xf4c514D28F7b7095edce97C242182B7d4865E0D8" // VDAO
+export const VRPToken = "0x0807c60fEE664D57398dBEbA90E837595745112A" // VRP
+export const VDAOToken = "0xF9252D6Dd69090e2D4bFE6F013aC1b9d2C2e83bC" // VDAO
 
 export const zeroAddress = "0x0000000000000000000000000000000000000000"
 
 export const usdTokens = [{
 	name: defaultCurrency,
-	address: "0x819d821055240cA6E0e6ED97cF73AA313536a95b"
+	address: "0x68c17d182Cad0e8b8C1c68B7A00E6dc20BA988A6"
    },{
 	name: selectableCurrency,
-	address: "0x87341B8264a0559a3f56d1501d7DED7d98A99120"
+	address: "0x0CB9358A182069cf095cb4951E23f26f3545143C"
    }]  // USDC or USDT && BUSD - list of tokens available for using for payment
 
-export const saleContractAddrVRPUSDT = "0xFf94E3b90a31D33799A94be27339FcB5974B4566" // Vorpal sale contractы
-export const saleContractAddrVDAOUSDT = "0x4e106484B83CB930054a5b57d85f90163Ee6EE9e"
-export const saleContractAddrVRPBUSD = "0xea7F0C1958Be2bE86031a5f21927C43c174B7D65" 
-export const saleContractAddrVDAOBUSD = "0xCBf7Af9E919A097DCd4523b6Cea62Ff55Ff55fD6" 
+export const saleContractAddrVRPUSDT = "0xC7f1Ffab2599812053acc367e4ed5EF256671fEA" // Vorpal sale contractы
+export const saleContractAddrVDAOUSDT = "0xaA7A191Cd28692c279e3618084EA124E42aA981D"
+export const saleContractAddrVRPBUSD = "0x49d55aE83C97744428e27f158eA6C7f9e9a36f0c" 
+export const saleContractAddrVDAOBUSD = "0xD4208DB09DF557fFe336B2E84EB96aEb2f2F2C94" 
 
 
 export const connectOptions = {
@@ -57,8 +57,8 @@ export const connectOptions = {
 
 export const defaultGas = "20000000000" 
 export const handContractData = {
-	saleStart: 	1673610600, // Sale start 15.01.2023 21:00 = 1673805600
-	saleEnd: 	1673611200, // Sale end 15.02.2023 21:00 = 1676484000
+	saleStart: 	1673112600, // Sale start 15.01.2023 21:00 = 1673805600
+	saleEnd: 	1673113200, // Sale end 15.02.2023 21:00 = 1676484000
 	available: "5000000",
 	forCurrentRound: "5000000",
 	maxSupply: "21000000000",
