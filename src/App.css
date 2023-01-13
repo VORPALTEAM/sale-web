@@ -212,7 +212,8 @@ input::-webkit-input-placeholder{
   align-items: center;
 }
 
-.star--section img {
+.star--section img,
+.star--section video {
   width: 100%;
   max-width: 620px;
 }
@@ -898,7 +899,8 @@ input:checked + .checker:before {
      min-width: 1900px;
   }
 
-  .star--section img {
+  .star--section img,
+  .star--section video {
     width: 100%;
     max-width: 1200px;
   }

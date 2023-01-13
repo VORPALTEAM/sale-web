@@ -34,7 +34,8 @@ const GlobalStats = () => {
     }
 
     const availableTokens = (data.totalTokensLeft !== null) ? 
-    (parseFloat(data.totalTokensLeft / decimal) + parseFloat(data.tokensLeftSecond / decimal)).toLocaleString('ua') :
+    (parseFloat(data.totalTokensLeft / decimal) + 
+    parseFloat(data.tokensLeftSecond / decimal) - burnedAmount).toLocaleString('ua') :
     defaultValueText
 
     useEffect(() => {
@@ -51,8 +52,8 @@ const GlobalStats = () => {
           paddingBottom: 8
         }}><b>burned:</b>{` ${parseFloat(burnedAmount).toLocaleString('ua')}`}</p>
         <p><b>Max supply:</b>{` ${parseFloat(config.handContractData.maxSupply).toLocaleString('ua')}`}</p>
-        <p><b>This round:</b>{` ${parseFloat(config.handContractData.available).toLocaleString('ua')}`}</p>
         <p><b>For sale total:</b>{` ${parseFloat(config.handContractData.available).toLocaleString('ua')}`}</p>
+        <p><b>This round:</b>{` ${parseFloat(config.handContractData.available).toLocaleString('ua')}`}</p>
         <p><b>Total sold:</b>{` ${!data.isDataRequested ? defaultValueText : soldAmount.toLocaleString('ua')}`}</p>
         <p><b>Total burned:</b>{` ${parseFloat(burnedAmount).toLocaleString('ua')}`}</p>
     </div>
