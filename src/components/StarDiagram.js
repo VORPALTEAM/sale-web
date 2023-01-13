@@ -1,7 +1,7 @@
 import { configure } from '@testing-library/react';
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-import { defaultToken, imageUrl,defaultToken , selectableToken } from '../config'
+import { defaultToken, imageUrl, selectableToken } from '../config'
 
 const StarDiagram = () => {
 
