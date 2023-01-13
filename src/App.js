@@ -37,15 +37,14 @@ function App() {
   animLoad.addEventListener('load', () => {
     setLoaded(true)
   })
-  
+  // <Preloader />
 
   return (
     <div className="App">
-      {isPending ? <Preloader /> : 
-      <>
       <Header />
       <div className="presale--body">
-        <div className="star--section">
+        {isPending ? <Preloader /> :
+        <><div className="star--section">
           <TokenSelector />
           <StarDiagram />
           <StarTimer />
@@ -70,10 +69,9 @@ function App() {
            </div>
           </div>
           <BuyButton />
-        </div>
+        </div></>}
       </div>
       <ModalContainer />
-      </>}
     </div>
   );
 }
