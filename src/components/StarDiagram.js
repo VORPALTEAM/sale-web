@@ -45,8 +45,8 @@ const StarDiagram = () => {
     return(
       <div className="star--image">       
            {isDefault ? 
-           <video src="/images/star/sun_1000.mp4" autoplay="true" loop muted />  :
-            <video src="/images/star/nova_1000.mp4" autoplay="true" loop muted />
+           <video src="/images/star/sun_1000.mp4" autoPlay="true" loop muted />  :
+            <video src="/images/star/nova_1000.mp4" autoPlay="true" loop muted />
             }      
       </div>
     )

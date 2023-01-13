@@ -9,8 +9,8 @@ const GlobalStats = () => {
     const State = useSelector(state => state)
     const [cachedPriceVRP, cachePriceVRP ] = useState(0)
     const [cachedPriceVDAO, cachePriceVDAO ] = useState(0)
-    const [burnedAmountVRP, setBurnedVRP] = useState(0)
-    const [burnedAmountVDAO, setBurnedVDAO] = useState(0)
+    const [burnedAmountVRP, setBurnedVRP] = useState(null)
+    const [burnedAmountVDAO, setBurnedVDAO] = useState(null)
     const defaultValueText = "Scanning..."
     const data = State.contractData
     const decimal = config.decimal
@@ -50,12 +50,12 @@ const GlobalStats = () => {
         <p><b>sold:</b>{` ${!data.isDataRequested ? defaultValueText : soldAmount.toLocaleString('ua')}`}</p>
         <p style={{
           paddingBottom: 8
-        }}><b>burned:</b>{` ${parseFloat(burnedAmount).toLocaleString('ua')}`}</p>
+        }}><b>burned:</b>{burnedAmount !== null ? ` ${parseFloat(burnedAmount).toLocaleString('ua')}` : defaultValueText}</p>
         <p><b>Max supply:</b>{` ${parseFloat(config.handContractData.maxSupply).toLocaleString('ua')}`}</p>
         <p><b>For sale total:</b>{` ${parseFloat(config.handContractData.available).toLocaleString('ua')}`}</p>
         <p><b>This round:</b>{` ${parseFloat(config.handContractData.available).toLocaleString('ua')}`}</p>
         <p><b>Total sold:</b>{` ${!data.isDataRequested ? defaultValueText : soldAmount.toLocaleString('ua')}`}</p>
-        <p><b>Total burned:</b>{` ${parseFloat(burnedAmount).toLocaleString('ua')}`}</p>
+        <p><b>Total burned:</b>{burnedAmount !== null ? ` ${parseFloat(burnedAmount).toLocaleString('ua')}` : defaultValueText}</p>
     </div>
     )
 }
