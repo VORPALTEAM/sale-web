@@ -1,7 +1,12 @@
 export const mainHost = "https://vorpal.finance"
-export const chainID = 97
-export const chainHexID = '0x61'
-export const rpcUrl = "https://data-seed-prebsc-1-s1.binance.org:8545/"
+export const chainID = 4
+export const chainHexID = '0x4'
+// export const chainName = 'Binance'
+export const chainName = 'Rinkeby'
+// export const ethSymbol = 'BNB'
+export const ethSymbol = 'ETH'
+export const rpcUrl = "https://rpc.ankr.com/eth_rinkeby"
+// export const rpcUrl = "https://data-seed-prebsc-1-s1.binance.org:8545/"
 export const decimal = 1000000000000000000
 export const decimalZeros = "000000000000000000"
 export const defaultToken = 'VRP'
@@ -18,29 +23,24 @@ export const imageUrl = ( scrWidth, token ) => {
 	const starName = token === defaultToken ? 'sun' : 'nova'
     return `images/star/${starName}_${scrWidth}.webp`
 }
-/* 
-null - 0x0000000000000000000000000000000000000000
-export const VRPToken = "0x4807Aa82d46501F284AB2512e69e95b7F71681FB" // VRP
-export const VDAOToken = "0x4807Aa82d46501F284AB2512e69e95b7F71681FB" // VDAO
-*/
 
-export const VRPToken = "0x4807Aa82d46501F284AB2512e69e95b7F71681FB" // VRP
-export const VDAOToken = "0x4807Aa82d46501F284AB2512e69e95b7F71681FB" // VDAO
+export const VRPToken = "0xEE8b03687e884e5f210F21998d23ECc2138eBb20" // VRP
+export const VDAOToken = "0xf4c514D28F7b7095edce97C242182B7d4865E0D8" // VDAO
 
 export const zeroAddress = "0x0000000000000000000000000000000000000000"
 
 export const usdTokens = [{
 	name: defaultCurrency,
-	address: "0xAd8a6e033cbaCD0910234c596f15ef8326B7cDF1"
+	address: "0x819d821055240cA6E0e6ED97cF73AA313536a95b"
    },{
 	name: selectableCurrency,
-	address: "0xAd8a6e033cbaCD0910234c596f15ef8326B7cDF1"
+	address: "0x87341B8264a0559a3f56d1501d7DED7d98A99120"
    }]  // USDC or USDT && BUSD - list of tokens available for using for payment
 
-export const saleContractAddrVRPUSDT = "0x2E90CEd6C48Bd961DAbC00710aF6d2c8677346C9" // Vorpal sale contractы
-export const saleContractAddrVDAOUSDT = "0x5577791dbdb9AE73a750A6DB27Fca3D66D866928"
-export const saleContractAddrVRPBUSD = "0x2E90CEd6C48Bd961DAbC00710aF6d2c8677346C9" 
-export const saleContractAddrVDAOBUSD = "0x5577791dbdb9AE73a750A6DB27Fca3D66D866928" 
+export const saleContractAddrVRPUSDT = "0xFf94E3b90a31D33799A94be27339FcB5974B4566" // Vorpal sale contractы
+export const saleContractAddrVDAOUSDT = "0x4e106484B83CB930054a5b57d85f90163Ee6EE9e"
+export const saleContractAddrVRPBUSD = "0xea7F0C1958Be2bE86031a5f21927C43c174B7D65" 
+export const saleContractAddrVDAOBUSD = "0xCBf7Af9E919A097DCd4523b6Cea62Ff55Ff55fD6" 
 
 
 export const connectOptions = {

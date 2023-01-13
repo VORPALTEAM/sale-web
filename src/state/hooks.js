@@ -19,10 +19,10 @@ export async function RequestWallet () {
             method: 'wallet_addEthereumChain',
             params: [{ 
               chainId: config.chainHexID,
-              chainName: 'Binance',
+              chainName: config.chainName,
               nativeCurrency: {
-                  name: 'BNB',
-                  symbol: 'BNB',
+                  name: config.ethSymbol,
+                  symbol: config.ethSymbol,
                   decimals: 18
               },
               rpcUrls: [config.rpcUrl]
@@ -282,7 +282,7 @@ export async function Buy ( spendingContract, user, amount ) {
 export async function RequestMax ( token, user ) {
 
     let val = 0;
-    if (!user) user = await RequestWallet ()
+    if (!user && user !== config.zeroAddress) user = await RequestWallet ()
     
     try {
         const w3 = new Web3(config.rpcUrl, config.connectOptions)
