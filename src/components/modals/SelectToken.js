@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-import { switchToken, switchCurrency, selectWindow, selectStage } from '../../state/reducer'
-import { AcknowApprovedAmount } from '../../state/hooks';
+import { switchToken, switchCurrency, selectWindow, selectStage, updateContractData } from '../../state/reducer'
+import { AcknowApprovedAmount, ContractDataSetup } from '../../state/hooks';
 import * as config from '../../config'
-
 
 const SelectToken = ({ pair }) => {
    
@@ -14,6 +13,12 @@ const SelectToken = ({ pair }) => {
     const isDefault = State.token === config.defaultToken
 
     let currentContract = null
+
+
+    const updateContract = async (requestingContracts) => {
+        const contractCommonData = await ContractDataSetup(requestingContracts)
+        dispatch(updateContractData(contractCommonData))
+      }
 
     const SetupValue = (value) => {
         const isPrimary = value === "primary" ? true : false
@@ -31,10 +36,18 @@ const SelectToken = ({ pair }) => {
             case (!isCurrency && isPrimary) :
                 dispatch(switchToken(config.defaultToken))
                 dispatch(selectWindow("none"))
+                updateContract([
+                    config.saleContractAddrVRPBUSD,
+                    config.saleContractAddrVRPUSDT
+                ])
                 break;
             case (!isCurrency && !isPrimary) :
                 dispatch(switchToken(config.selectableToken))
                 dispatch(selectWindow("none"))
+                updateContract([
+                    config.saleContractAddrVDAOUSDT,
+                    config.saleContractAddrVDAOBUSD
+                ])
                 break;
         }
 

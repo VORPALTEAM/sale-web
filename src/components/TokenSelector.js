@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-import { actionNames, switchToken } from '../state/reducer'
-import { defaultToken, selectableToken } from '../config'
-import { configureStore } from '@reduxjs/toolkit';
+import { actionNames, switchToken, updateContractData } from '../state/reducer'
+import * as config from '../config'
+import { ContractDataSetup } from '../state/hooks'
 
 const TokenSelector = () => {
 
@@ -11,21 +11,35 @@ const TokenSelector = () => {
     
     const checkBox = (event) => {
 
-      const actualToken = State.token === defaultToken ? selectableToken : defaultToken
+      const actualToken = State.token === config.defaultToken ? config.selectableToken : config.defaultToken
       dispatch(switchToken(actualToken))
 
+      const requestingContracts = (actualToken === config.defaultToken) ? [
+        config.saleContractAddrVRPUSDT,
+        config.saleContractAddrVRPBUSD
+      ] : [
+        config.saleContractAddrVDAOUSDT,
+        config.saleContractAddrVDAOBUSD
+      ]
+      updateContract(requestingContracts)
       return !event.target.checked
     }
 
+    const updateContract = async (requestingContracts) => {
+      const contractCommonData = await ContractDataSetup(requestingContracts)
+      dispatch(updateContractData(contractCommonData))
+    }
+    
+
     return(
        <div className="token--selector">
-        <div className={`token token--vrp ${State.token !== defaultToken ? 'inActive' : ''}`}>{defaultToken}</div>
+        <div className={`token token--vrp ${State.token !== config.defaultToken ? 'inActive' : ''}`}>{config.defaultToken}</div>
         <label className="switch--token">
            <input type="checkbox" onChange={checkBox} 
-           checked={State.token === defaultToken ? "" : "checked"} />
+           checked={State.token === config.defaultToken ? "" : "checked"} />
            <span className="checker round"></span>
         </label>
-        <div className={`token token--vdao ${State.token === defaultToken ? 'inActive' : ''}`}>{selectableToken}</div>
+        <div className={`token token--vdao ${State.token === config.defaultToken ? 'inActive' : ''}`}>{config.selectableToken}</div>
       </div>
     )
 }
