@@ -27,14 +27,8 @@ const InvestSection = () => {
     const [isStarted, startSale] = useState(0)
     const [isStatusRequested, isRequest] = useState(0)
 
-    let time = (config.handContractData.saleStart * 1000) - new Date().getTime()
+    const disabledState = (isPending || !userAgreed || !isStarted ) ? " btn--disabled" : ""
 
-    const disabledState = (isPending || !userAgreed || !isStarted || time > 0) ? " btn--disabled" : ""
-    const saletimer = (time > 0) ? setInterval(() => {
-        if (time > 0) {
-            time -= 1000
-        }
-    }, 1000) : null
 
     const currentContract = () => {
         switch (true) {
