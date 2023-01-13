@@ -923,4 +923,13 @@ input:checked + .checker:before {
   .invest--section.opened {
     max-width: 810px;
   }
+
+  .row--2 {
+    height: 141.5px;
+  }
+
+  .value--subtitle {
+    margin-top: 40px;
+    font-size: 16px;
+  }
 }
