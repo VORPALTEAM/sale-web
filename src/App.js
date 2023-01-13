@@ -43,8 +43,7 @@ function App() {
     <div className="App">
       <Header />
       <div className="presale--body">
-        {isPending ? <Preloader /> :
-        <><div className="star--section">
+        <div className="star--section">
           <TokenSelector />
           <StarDiagram />
           <StarTimer />
@@ -69,7 +68,7 @@ function App() {
            </div>
           </div>
           <BuyButton />
-        </div></>}
+        </div>
       </div>
       <ModalContainer />
     </div>
