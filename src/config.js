@@ -29,8 +29,8 @@ export const windowNames = {
 	selectCurrency: "selectCurrency"
 }
 
-export const VRPToken = "0xd4B0038286BDfadf1a6642e320fb32F056f7C80D" // VRP
-export const VDAOToken = "0xe7aaC5A0213c91fcEC68aEF3f0733D7cBDbfdE04" // VDAO
+export const VRPToken = "0x1146106a2B4111b5F6154C48a0446D5D2F176F13" // VRP
+export const VDAOToken = "0xF2ab2Af931019a65d3cE0E2394C42146ed3EC8BC" // VDAO
 
 export const zeroAddress = "0x0000000000000000000000000000000000000000"
 
@@ -42,10 +42,10 @@ export const usdTokens = [{
 	address: "0x0CB9358A182069cf095cb4951E23f26f3545143C"
    }]  // USDC or USDT && BUSD - list of tokens available for using for payment
 
-export const saleContractAddrVRPUSDT = "0x369CfA6dE9ED9155e18474C24f190acA7B02A195" // Vorpal sale contractы
-export const saleContractAddrVDAOUSDT = "0x460F9E2A0643b977f656f2cf7F37baC69c9BfF33"
-export const saleContractAddrVRPBUSD = "0xf9993c74bf9AA67b50E877a26bD7eD95B92C31b3" 
-export const saleContractAddrVDAOBUSD = "0xf4fD299AE7423f75a9011aDE431b3fB4709c382a" 
+export const saleContractAddrVRPUSDT = "0xb13051b260c3020CA5f5dACdB8d6D79DbC60C8C2" // Vorpal sale contractы
+export const saleContractAddrVDAOUSDT = "0xd57Ac449E9482a15DE72E62b23Ea79940679aC7d"
+export const saleContractAddrVRPBUSD = "0xDc896B083e188Cf80210113468ed93e989Bb4d0B" 
+export const saleContractAddrVDAOBUSD = "0x249A8E311B8a15295cb4A8581Bd417Cf6e3bE44b" 
 
 
 export const connectOptions = {
