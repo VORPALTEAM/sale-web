@@ -1,5 +1,5 @@
 import store from './store'
-import { selectWindow } from './reducer'
+import { selectWindow, configmBuy } from './reducer'
 import * as config from '../config'
 import Web3 from 'web3';
 
@@ -262,8 +262,9 @@ export async function Buy ( spendingContract, user, amount ) {
         await contract.methods.buyTokens(spendingAmount).send({
             from: user
         }, (res, result) => {
+
             if (result) {
-                store.dispatch(selectWindow("success"))
+                store.dispatch(configmBuy(true))
             }
 
             // store.dispatch(selectWindow("success"))

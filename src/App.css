@@ -598,7 +598,7 @@ input:checked + .checker:before {
     position: fixed;
     width: 336px;
     left: calc(50% - 168px);
-    top: 15%;
+    top: calc(50% - 151px);
     z-index: 197;
     background: #FFF;
     border-radius: 40px;
@@ -755,6 +755,88 @@ input:checked + .checker:before {
   display: none;
 }
 
+.modal--env {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 790;
+}
+
+.success--modal {
+  background: no-repeat url('../public/images/success_bkg.svg')
+}
+
+.modal--container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 60%;
+}
+
+.modal--heading,
+.modal--description {
+  width: 100%;
+  text-align: center;
+}
+
+.modal--heading {
+  font-family: "RoundsBlack";
+  font-weight: 400;
+  font-size: 64px;
+}
+
+.modal--description {
+  font-size: 24px;
+  color: #F1F6F9;
+  margin-top: -50px;
+}
+
+.modal--description.vrp a {
+  color: #ACF800;
+  font-weight: 700;
+}
+
+.modal--description.vdao a {
+  color: #9418E1;
+  font-weight: 700;
+}
+
+.modal--heading.vrp {
+  color: #ACF800;
+}
+
+.modal--heading.vdao {
+  color: #9418E1;
+}
+
+.window--action-button {
+  width: 30%;
+  height: 50px;
+  text-align: center;
+  padding-top: 20px;
+  border-radius: 20px;
+  margin-top: 40px;
+  font-family: "RoundsBlack";
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.window--action-button.vrp {
+   background: #ACF800;
+   color: #1E1E1E;
+}
+
+.window--action-button.vdao {
+  background: #9418E1;
+  color: #F1F6F9;
+}
 /* Mobile version */
 
 @media screen and (max-width : 768px) {
@@ -841,6 +923,18 @@ input:checked + .checker:before {
   .stage--heading {
     height: 30.5px;
   }
+
+  .modal--container {
+    width: 90%;
+  }
+
+  .modal--heading {
+    font-size: 24px;
+  }
+
+  .modal--description {
+    margin-top: 0;
+  }
 }
 
 @media screen and (max-width : 556px) {
@@ -889,6 +983,7 @@ input:checked + .checker:before {
 
    .modal--window {
      width: 60%;
+     top: 15%;
    }
 
 }

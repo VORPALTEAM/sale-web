@@ -18,29 +18,31 @@ export const defaultApproveValue = "100000"
 export const priceVRP = 0.0025
 export const priceVDAO = 1.5
 
-export const imageUrl = ( scrWidth, token ) => {
-
-	const starName = token === defaultToken ? 'sun' : 'nova'
-    return `images/star/${starName}_${scrWidth}.webp`
+export const windowNames = {
+	none : "none",
+	success: "success",
+	nowallet: "nowallet",
+	selectToken: "selectToken",
+	selectCurrenct: "selectCurrency"
 }
 
 export const VRPToken = "0x0807c60fEE664D57398dBEbA90E837595745112A" // VRP
-export const VDAOToken = "0xF9252D6Dd69090e2D4bFE6F013aC1b9d2C2e83bC" // VDAO
+export const VDAOToken = "0x0807c60fEE664D57398dBEbA90E837595745112A" // VDAO
 
 export const zeroAddress = "0x0000000000000000000000000000000000000000"
 
 export const usdTokens = [{
 	name: defaultCurrency,
-	address: "0x68c17d182Cad0e8b8C1c68B7A00E6dc20BA988A6"
+	address: "0x0CB9358A182069cf095cb4951E23f26f3545143C"
    },{
 	name: selectableCurrency,
 	address: "0x0CB9358A182069cf095cb4951E23f26f3545143C"
    }]  // USDC or USDT && BUSD - list of tokens available for using for payment
 
-export const saleContractAddrVRPUSDT = "0x2032E1b284f82Eb8CC574d3229a8cC3ADE9a0403" // Vorpal sale contractы
-export const saleContractAddrVDAOUSDT = "0xA0e6591a6d571bf5f479aa8C961DA500f44e9E94"
-export const saleContractAddrVRPBUSD = "0xd32554213365a5D481811aaeAfc3d02673a29bD1" 
-export const saleContractAddrVDAOBUSD = "0xD4f677171084f28995ab9Ed4DC07Aa1D2307a112" 
+export const saleContractAddrVRPUSDT = "0x2C6C86BE6097821A7Ace653A7C183B188a98eb2F" // Vorpal sale contractы
+export const saleContractAddrVDAOUSDT = "0x2C6C86BE6097821A7Ace653A7C183B188a98eb2F"
+export const saleContractAddrVRPBUSD = "0x2C6C86BE6097821A7Ace653A7C183B188a98eb2F" 
+export const saleContractAddrVDAOBUSD = "0x2C6C86BE6097821A7Ace653A7C183B188a98eb2F" 
 
 
 export const connectOptions = {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { switchToken, updateOrderUSDVRP, updateOrderUSDVDAO, selectWindow,
-    updateLockedVRP, updateLockedVDAO,  selectStage } from '../../state/reducer'
+    updateLockedVRP, updateLockedVDAO,  selectStage, configmBuy } from '../../state/reducer'
 import { ApproveTokens,  RequestMax, RequestSaleStart, Buy, WithdrawTokens, 
     RequestLockedFunds, AcknowApprovedAmount } from '../../state/hooks'
 import * as config from '../../config'
@@ -130,18 +130,24 @@ const InvestSection = () => {
             config.saleContractAddrVDAOUSDT,
             config.saleContractAddrVDAOBUSD
           ]
-          
+          const lastLocked = isDefault ? State.lockedVRP : State.lockedVDAO
           setTimeout(() => {
-            RequestLockedFunds(requestingContracts, State.account).then((res) => {
+            RequestLockedFunds(requestingContracts, State.account).then((res, rej) => {
+
+                if (res) {
+                    if (res > lastLocked) {
+                        dispatch(selectWindow(config.windowNames.success))
+                        dispatch(configmBuy(false))
+                    }
+                }
 
                 if (isDefault) {
                     dispatch(updateLockedVRP(res))
-                    console.log(State.lockedVRP)
                   } else {         
                     dispatch(updateLockedVDAO(res))
                   }
             })
-          }, 3000)
+          }, 1000)
 
         pendingState(false)
     }
@@ -155,8 +161,8 @@ const InvestSection = () => {
     const MaxUSD = async () => {
         const MaxTokens = await RequestMax(usdTokenList.get(currency), State.account)
         State.token === config.defaultToken ?
-         dispatch(updateOrderUSDVRP(MaxTokens)) :
-         dispatch(updateOrderUSDVDAO(MaxTokens)) 
+         dispatch(updateOrderUSDVRP(Math.round(MaxTokens))) :
+         dispatch(updateOrderUSDVDAO(Math.round(MaxTokens))) 
     }
 
     const UpdateOrderUSD = (event) => {
