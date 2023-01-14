@@ -174,8 +174,7 @@ const InvestSection = () => {
         if (newValue === "" || newValue === null) {
             newValue = "0"
         }
-        if (newValue <= config.maxInvestments &&
-            newValue >= config.minInvestments) {
+        if (newValue <= config.maxInvestments ) {
             dispatch(updateBalanceAction(newValue))
             if (newValue > allowance) {
                 dispatch(selectStage("approve"))

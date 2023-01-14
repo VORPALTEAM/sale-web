@@ -27,8 +27,7 @@ const AmountInput = () => {
       if (newValue === "" || newValue === null) {
         DispatchValue ("0")
       } else {
-        if (newValue <= maxInvestments && 
-          newValue >= minInvestments) DispatchValue (newValue)
+        if (newValue <= maxInvestments) DispatchValue (newValue)
       }
 
     }
