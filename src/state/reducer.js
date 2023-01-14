@@ -60,6 +60,11 @@ const SwitchToken = (state = config.defaultToken, action) => {
 
       switch (action.type) {
         case actionNames.switchToken : 
+          try {
+            document.cookie = `${config.tokenCookieName}=${action.payload}`
+          } catch (e) {
+            console.log(e.message)
+          }
           return action.payload ? action.payload : state
         default :
           return state
@@ -157,7 +162,7 @@ const UpdateApprovedBUSD = (state = approvedAmountDefault, action) => {
 }
 
 
-const OrderUSDVRP = (state = investAmountUSDVRP, action) => {
+const OrderUSDVRP = (state = config.defaultInvestments, action) => {
 
   switch(action.type) {
     case actionNames.orderUSDVRP : 
@@ -167,7 +172,7 @@ const OrderUSDVRP = (state = investAmountUSDVRP, action) => {
   }
 }
 
-const OrderUSDVDAO = (state = investAmountUSDVDAO, action) => {
+const OrderUSDVDAO = (state = config.defaultInvestments, action) => {
 
   switch(action.type) {
     case actionNames.orderUSDVDAO : 

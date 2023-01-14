@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { updateUSDVRP, updateUSDVDAO } from '../state/reducer'
-import { defaultToken, maxInvestments } from '../config'
+import { defaultToken, maxInvestments, minInvestments } from '../config'
 
 const AmountInput = () => {
 
@@ -27,7 +27,8 @@ const AmountInput = () => {
       if (newValue === "" || newValue === null) {
         DispatchValue ("0")
       } else {
-        if (newValue <= maxInvestments) DispatchValue (newValue)
+        if (newValue <= maxInvestments && 
+          newValue >= minInvestments) DispatchValue (newValue)
       }
 
     }
@@ -68,7 +69,7 @@ const AmountInput = () => {
     return(
       <>
         <div className="amount--input">
-              <input name="amount" type="number" max={maxInvestments}
+              <input name="amount" type="number" min={minInvestments} max={maxInvestments}
               value={ activeBalance } onChange={ValueOnChange} />
             </div>
             <div className="amount--calculator">

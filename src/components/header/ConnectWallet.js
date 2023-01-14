@@ -24,7 +24,7 @@ const ConnectWalletBtn = () => {
         }
         dispatch(loadAccount(wallet))
       } catch (e) {
-        dispatch(selectWindow("nowallet"))
+        // dispatch(selectWindow("nowallet"))
         dispatch(loadAccount(null))
       }
 
@@ -40,7 +40,8 @@ const ConnectWalletBtn = () => {
 
     const DisconnectUser = () => {
 
-      dispatch(loadAccount(false))
+      dispatch(loadAccount(null))
+      document.cookie = "saleWalletConnected=true;  Max-Age=0;";
     }
     
     const VisibleName = ( account ) => {

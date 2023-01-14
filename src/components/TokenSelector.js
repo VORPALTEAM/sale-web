@@ -8,6 +8,7 @@ const TokenSelector = () => {
 
     const dispatch = useDispatch()
     const State = useSelector(state => state)
+    const checkingCookieName = `${config.tokenCookieName}=${config.selectableToken}`
     
     const checkBox = (event) => {
 
@@ -29,6 +30,16 @@ const TokenSelector = () => {
       const contractCommonData = await ContractDataSetup(requestingContracts)
       dispatch(updateContractData(contractCommonData))
     }
+
+    useEffect(() => {
+      try {
+        if (document.cookie.indexOf(checkingCookieName) > 0) {
+          dispatch(switchToken(config.selectableToken))
+        }
+      } catch (e) {
+        console.log(e.message)
+      }
+    }, [])
     
 
     return(

@@ -174,7 +174,8 @@ const InvestSection = () => {
         if (newValue === "" || newValue === null) {
             newValue = "0"
         }
-        if (newValue <= config.maxInvestments) {
+        if (newValue <= config.maxInvestments &&
+            newValue >= config.minInvestments) {
             dispatch(updateBalanceAction(newValue))
             if (newValue > allowance) {
                 dispatch(selectStage("approve"))
@@ -286,7 +287,7 @@ const InvestSection = () => {
          </div>
          <div className="invest--description">
             <p>
-              You need to approve tokens in amount not smaller than you will buy. When you'll buy it 
+              You need to agree with terms and conditions and then to approve tokens in amount not smaller than you will buy. When you'll buy it 
               you will get it on locked balance. Then it's will unlocked through westing period.
               <a>How to buy?</a>
             </p>

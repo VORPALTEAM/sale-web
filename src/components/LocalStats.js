@@ -68,7 +68,7 @@ const LocalStats = () => {
 
     setInterval(() => {
       SetupLocked()
-    }, 600000)
+    }, 15000)
 
     SetupLocked()
 
