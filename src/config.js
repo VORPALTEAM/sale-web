@@ -42,10 +42,10 @@ export const usdTokens = [{
 	address: "0x0CB9358A182069cf095cb4951E23f26f3545143C"
    }]  // USDC or USDT && BUSD - list of tokens available for using for payment
 
-export const saleContractAddrVRPUSDT = "0xb13051b260c3020CA5f5dACdB8d6D79DbC60C8C2" // Vorpal sale contractы
-export const saleContractAddrVDAOUSDT = "0xd57Ac449E9482a15DE72E62b23Ea79940679aC7d"
-export const saleContractAddrVRPBUSD = "0xDc896B083e188Cf80210113468ed93e989Bb4d0B" 
-export const saleContractAddrVDAOBUSD = "0x249A8E311B8a15295cb4A8581Bd417Cf6e3bE44b" 
+export const saleContractAddrVRPUSDT = "0x61Da487cd03801FeDED97d4B1FD398C6f1523eaf" // Vorpal sale contractы
+export const saleContractAddrVDAOUSDT = "0xdbbf4dde8f2c01D65C353C185863D75Ddc2aeb25"
+export const saleContractAddrVRPBUSD = "0xB319C6b0690b5fEE53F6BbaE251fcb3BEba5EA8d" 
+export const saleContractAddrVDAOBUSD = "0xD255b533B4E7f69A5DB3A7753e5126D0c1E4fC4e" 
 
 
 export const connectOptions = {
@@ -62,8 +62,8 @@ export const connectOptions = {
 
 export const defaultGas = "20000000000" 
 export const handContractData = {
-	saleStart: 	1673702100, // Sale start 15.01.2023 21:00 = 1673805600
-	saleEnd: 	1673702700, // Sale end 15.02.2023 21:00 = 1676484000
+	saleStart: 	1673704800, // Sale start 15.01.2023 21:00 = 1673805600
+	saleEnd: 	1673705400, // Sale end 15.02.2023 21:00 = 1676484000
 	available: "5000000",
 	forCurrentRound: "5000000",
 	maxSupply: "21000000000",
