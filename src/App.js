@@ -12,10 +12,25 @@ import GlobalStats from './components/GlobalStats'
 import LocalStats from './components/LocalStats'
 import BuyButton from './components/BuyButton'
 import ModalContainer from './components/modals'
+import { handContractData } from './config';
 
 function App() {
 
   // <Preloader />
+  const State = useSelector(state => state)
+  const nowD = new Date()
+  const now = nowD.getTime()
+  const [time, setTime] = useState(now)
+  const timeEnd = handContractData.saleEnd * 1000
+  const stageText = time > timeEnd ? "stage: waiting... " :"stage: Seed Round"
+  
+  if (time <= timeEnd) {
+    setInterval(() => {
+      const nowm = new Date()
+      const nowt = nowm.getTime()
+      setTime(nowt)
+    }, (timeEnd - time + 1000))
+  }
 
   return (
     <div className="App">
@@ -34,7 +49,7 @@ function App() {
             </div>
             <AmountInput />
             <div className="stage--heading">
-              stage: Seed Round
+              {stageText}
             </div>
             <GlobalStats />
            </div>
