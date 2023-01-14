@@ -29,23 +29,23 @@ export const windowNames = {
 	selectCurrency: "selectCurrency"
 }
 
-export const VRPToken = "0x0807c60fEE664D57398dBEbA90E837595745112A" // VRP
-export const VDAOToken = "0x0807c60fEE664D57398dBEbA90E837595745112A" // VDAO
+export const VRPToken = "0xd4B0038286BDfadf1a6642e320fb32F056f7C80D" // VRP
+export const VDAOToken = "0xe7aaC5A0213c91fcEC68aEF3f0733D7cBDbfdE04" // VDAO
 
 export const zeroAddress = "0x0000000000000000000000000000000000000000"
 
 export const usdTokens = [{
 	name: defaultCurrency,
-	address: "0x0CB9358A182069cf095cb4951E23f26f3545143C"
+	address: "0x68c17d182Cad0e8b8C1c68B7A00E6dc20BA988A6"
    },{
 	name: selectableCurrency,
 	address: "0x0CB9358A182069cf095cb4951E23f26f3545143C"
    }]  // USDC or USDT && BUSD - list of tokens available for using for payment
 
-export const saleContractAddrVRPUSDT = "0x76E3c2eeD8D18EC03E952Fa76520B0cA9cfE44dE" // Vorpal sale contractы
-export const saleContractAddrVDAOUSDT = "0x76E3c2eeD8D18EC03E952Fa76520B0cA9cfE44dE"
-export const saleContractAddrVRPBUSD = "0x76E3c2eeD8D18EC03E952Fa76520B0cA9cfE44dE" 
-export const saleContractAddrVDAOBUSD = "0x76E3c2eeD8D18EC03E952Fa76520B0cA9cfE44dE" 
+export const saleContractAddrVRPUSDT = "0x369CfA6dE9ED9155e18474C24f190acA7B02A195" // Vorpal sale contractы
+export const saleContractAddrVDAOUSDT = "0x460F9E2A0643b977f656f2cf7F37baC69c9BfF33"
+export const saleContractAddrVRPBUSD = "0xf9993c74bf9AA67b50E877a26bD7eD95B92C31b3" 
+export const saleContractAddrVDAOBUSD = "0xf4fD299AE7423f75a9011aDE431b3fB4709c382a" 
 
 
 export const connectOptions = {
@@ -62,8 +62,8 @@ export const connectOptions = {
 
 export const defaultGas = "20000000000" 
 export const handContractData = {
-	saleStart: 	1673633400, // Sale start 15.01.2023 21:00 = 1673805600
-	saleEnd: 	1673634000, // Sale end 15.02.2023 21:00 = 1676484000
+	saleStart: 	1673698800, // Sale start 15.01.2023 21:00 = 1673805600
+	saleEnd: 	1673693400, // Sale end 15.02.2023 21:00 = 1676484000
 	available: "5000000",
 	forCurrentRound: "5000000",
 	maxSupply: "21000000000",
