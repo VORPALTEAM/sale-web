@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { defaultToken, handContractData } from '../../config'
+import { openInvest  } from '../../state/reducer';
 import InvestSection from './InvestSection'
 
 const BuyButton = () => {
 
-    const [investOpened, openInvest] = useState(false)
+  
     const State = useSelector(state => state)
+    const dispatch = useDispatch()
     const nowD = new Date()
     const now = nowD.getTime()
     const beginMS = handContractData.saleStart * 1000
     const [time, setTime] = useState(now)
+    const investOpened = State.isOpened
 
     const btnAddClass = State.token === defaultToken ? "vrp" : "vdao"
     const btnClassName = `value--subsection confirm--button${(time < beginMS) ? " btn--disabled" : ""} ${btnAddClass}${investOpened ? " invest--opened" : ""}`
@@ -23,9 +26,8 @@ const BuyButton = () => {
         }, (beginMS - time + 1000))
 
     const StartInvest = () => {
-
-        const newState = investOpened ? false : true
-        openInvest(newState)
+        const newState = State.isOpened
+        dispatch(openInvest(!newState))
     }
 
     return(

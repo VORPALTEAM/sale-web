@@ -11,6 +11,7 @@ const SelectToken = ({ pair }) => {
 
     const isCurrency = pair === "currency" ? true : false
     const isDefault = State.token === config.defaultToken
+    const windows = config.windowNames
 
     let currentContract = null
 
@@ -25,17 +26,17 @@ const SelectToken = ({ pair }) => {
         switch (true) {
             case (isCurrency && isPrimary) :
                 dispatch(switchCurrency(config.defaultCurrency))
-                dispatch(selectWindow("none"))
+                dispatch(selectWindow(windows.none))
                 currentContract = isDefault ? config.saleContractAddrVRPUSDT : config.saleContractAddrVDAOUSDT
                 break;
             case (isCurrency && !isPrimary) :
                 dispatch(switchCurrency(config.selectableCurrency))
-                dispatch(selectWindow("none"))
+                dispatch(selectWindow(windows.none))
                 currentContract = isDefault ? config.saleContractAddrVRPBUSD : config.saleContractAddrVDAOBUSD
                 break;
             case (!isCurrency && isPrimary) :
                 dispatch(switchToken(config.defaultToken))
-                dispatch(selectWindow("none"))
+                dispatch(selectWindow(windows.none))
                 updateContract([
                     config.saleContractAddrVRPBUSD,
                     config.saleContractAddrVRPUSDT
@@ -43,7 +44,7 @@ const SelectToken = ({ pair }) => {
                 break;
             case (!isCurrency && !isPrimary) :
                 dispatch(switchToken(config.selectableToken))
-                dispatch(selectWindow("none"))
+                dispatch(selectWindow(windows.none))
                 updateContract([
                     config.saleContractAddrVDAOUSDT,
                     config.saleContractAddrVDAOBUSD

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { switchToken, updateOrderUSDVRP, updateOrderUSDVDAO, selectWindow,
-    updateLockedVRP, updateLockedVDAO,  selectStage, configmBuy } from '../../state/reducer'
+    updateLockedVRP, updateLockedVDAO,  selectStage, openInvest } from '../../state/reducer'
 import { ApproveTokens,  RequestMax, RequestSaleStart, Buy, WithdrawTokens, 
     RequestLockedFunds, AcknowApprovedAmount } from '../../state/hooks'
 import * as config from '../../config'
@@ -137,7 +137,7 @@ const InvestSection = () => {
                 if (res) {
                     if (res > lastLocked) {
                         dispatch(selectWindow(config.windowNames.success))
-                        dispatch(configmBuy(false))
+                        dispatch(openInvest(false))
                     }
                 }
 

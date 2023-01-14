@@ -261,13 +261,6 @@ export async function Buy ( spendingContract, user, amount ) {
 
         await contract.methods.buyTokens(spendingAmount).send({
             from: user
-        }, (res, result) => {
-
-            if (result) {
-                store.dispatch(configmBuy(true))
-            }
-
-            // store.dispatch(selectWindow("success"))
         })
 
         // store.dispatch(selectWindow("success"))

@@ -23,7 +23,7 @@ export const windowNames = {
 	success: "success",
 	nowallet: "nowallet",
 	selectToken: "selectToken",
-	selectCurrenct: "selectCurrency"
+	selectCurrency: "selectCurrency"
 }
 
 export const VRPToken = "0x0807c60fEE664D57398dBEbA90E837595745112A" // VRP

@@ -276,6 +276,7 @@ input::-webkit-input-placeholder{
 .token--vdao {
   background: linear-gradient(2.11deg, #AF15FF 4.13%, #3D217F 147.4%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
@@ -568,7 +569,7 @@ input:checked + .checker:before {
 }
 
 .opened--arrow.active.vdao {
-  background: linear-gradient(2.11deg, #AF15FF 4.13%, #3D217F 147.4%);
+  background: #AF15FF
 }
 
 
