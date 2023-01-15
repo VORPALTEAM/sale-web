@@ -77,10 +77,13 @@ const LocalStats = () => {
       } 
       return true;
     }
+    
+    if (!commonDataRequested) {
+      setInterval(() => {
+        SetupLocked(true)
+      }, config.refreshPeriod)
+    }
 
-    setInterval(() => {
-      SetupLocked(true)
-    }, config.refreshPeriod)
     if (!commonDataRequested) {
       SetupLocked(true)
     }  
