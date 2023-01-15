@@ -4,7 +4,7 @@ import * as config from '../config'
 import Web3 from 'web3';
 
 const env = window.ethereum
-const getterWeb3 = new Web3(config.rpcUrl, config.connectOptions)
+let getterWeb3 = new Web3(config.rpcUrl, config.connectOptions)
 
 export async function RequestWallet () {
 
@@ -52,6 +52,7 @@ export async function RequestPrice (contract) {
         const reqPrice = await ctrct.methods.price().call()
         return parseFloat(reqPrice / config.decimal)
     } catch (e) {
+        getterWeb3 = new Web3(config.reserveRpcs[1], config.connectOptions)
         console.log(e)
         return null
     }
@@ -83,6 +84,7 @@ export async function RequestLockedFunds (contracts = [], user) {
             numberOf += parseInt(shedule.tokensLeft / config.decimal)
         }
     } catch (e) {
+        getterWeb3 = new Web3(config.reserveRpcs[3], config.connectOptions)
         console.log(e.message)
         numberOf += 0
     }
@@ -99,6 +101,7 @@ export async function RequestSaleStart (contract) {
         const ctrct = new getterWeb3.eth.Contract(config.saleABI, contract)
         status = await ctrct.methods.status().call()
     } catch (e) {
+        getterWeb3 = new Web3(config.reserveRpcs[2], config.connectOptions)
         console.log(e.message)
     }
     return status
@@ -145,6 +148,7 @@ export async function RequestUnLockedFunds (contracts = [], user) {
             numberOf += parseInt(shedule / config.decimal)
         }
     } catch (e) {
+        getterWeb3 = new Web3(config.reserveRpcs[2], config.connectOptions)
         console.log(e.message)
         numberOf += 0
     }

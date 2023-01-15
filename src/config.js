@@ -15,7 +15,11 @@ export const reserveRpcs = [
 	"https://bsc-dataseed1.defibit.io/",
 	"https://bsc-dataseed2.defibit.io/",
 	"https://bsc-dataseed3.defibit.io/",
-	"https://bsc-dataseed3.defibit.io/"
+	"https://bsc-dataseed4.defibit.io/",
+    "https://bsc-dataseed1.ninicoin.io/",
+	"https://bsc-dataseed2.ninicoin.io/",
+	"https://bsc-dataseed3.ninicoin.io/",
+	"https://bsc-dataseed4.ninicoin.io/",
 ]
 // export const rpcUrl = "https://data-seed-prebsc-1-s1.binance.org:8545/"
 export const decimal = 1000000000000000000
