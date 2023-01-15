@@ -19,7 +19,6 @@ const StarDiagram = () => {
     const soldPercent = isDefault ? (soldVRP / saleAmountVRP) : 
     (soldVDAO / saleAmountVDAO )
     // const soldPercent = 0.5
-    const baseZindex = 215
     const widthProp = 0.7
 
     const fixedRotateValue = 90 * (1 - soldPercent)
