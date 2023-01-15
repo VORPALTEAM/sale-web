@@ -24,7 +24,7 @@ const LocalStats = () => {
 
     const partOfTotal = ((parseFloat(tokenAmountNumber) / parseFloat(config.handContractData.maxSupply)) * 100).toLocaleString('ua')
 
-    const saleDate = new Date(config.handContractData.saleEnd * 1000).toLocaleString('ua')
+    const saleDate = new Date(config.unLockDate * 1000).toLocaleString('ua')
 
     const requestingContracts = isDefault ? [
       config.saleContractAddrVRPUSDT,
@@ -55,7 +55,7 @@ const LocalStats = () => {
       
       dispatch(updateLeftVRP(Math.round(leftVRPUSDT) + Math.round(leftVRPBUSD)))
       dispatch(updateLeftVDAO(Math.round(leftVDAOUSDT) + Math.round(leftVDAOBUSD)))
-      
+
       if ((VRPDataRequested === true && isDefault) || (VDAOataRequested && !isDefault)) return false;
 
       if (State.account) {
