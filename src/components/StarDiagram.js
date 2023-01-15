@@ -25,16 +25,16 @@ const StarDiagram = () => {
     const fixedRotateValue = 90 * (1 - soldPercent)
     const fixedTransform = `rotate(${fixedRotateValue}deg)`
     const fixedTransformReverse = `rotate(${-fixedRotateValue}deg)`
+    const scr = document.documentElement.clientWidth * 0.025
 
-    const imageMarginLeft = -baseImagePosition.width * (1 - widthProp) - ((baseImagePosition.width * (1 - soldPercent)) / 2) - 20
+    const imageMarginLeft = -baseImagePosition.width * (1 - widthProp) - ((baseImagePosition.width * (1 - soldPercent)) / 2) - scr
 
-    console.log(soldPercent)
 
     const UpdatePosition = () => {
-      console.log("ok")
+
       const baseImage = document.querySelector(".star--image video")
       const basePosition = baseImage.getBoundingClientRect()
-      console.log(basePosition)
+
       setBasePosition({
         top: basePosition.y,
         left: basePosition.x,
@@ -46,7 +46,7 @@ const StarDiagram = () => {
     const SetupPosition = () => {
       setTimeout(() => {
         UpdatePosition()
-      }, 3000)
+      }, 2000)
     }
 
 
