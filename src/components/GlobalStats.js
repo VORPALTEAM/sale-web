@@ -55,7 +55,7 @@ const GlobalStats = () => {
         <p style={{
           paddingBottom: 8
         }}><b>burned:</b>{burnedAmount !== null ? ` ${parseFloat(burnedAmount).toLocaleString('ua')}` : defaultValueText}</p>
-        <p><b>Max supply:</b>{` ${parseFloat(config.handContractData.maxSupply).toLocaleString('ua')}`}</p>
+        <p><b>Max supply:</b>{` ${(isDefault ? config.totalAmountVRP : config.totalAmountVDAO).toLocaleString('ua')}`}</p>
         <p><b>For sale total:</b>{` ${parseFloat(isDefault ? config.saleAmountVRP : config.saleAmountVDAO).toLocaleString('ua')}`}</p>
         <p><b>This round:</b>{` ${parseFloat(isDefault ? config.saleAmountVRP : config.saleAmountVDAO).toLocaleString('ua')}`}</p>
         <p><b>Total sold:</b>{` ${soldAmount.toLocaleString('ua')}`}</p>
