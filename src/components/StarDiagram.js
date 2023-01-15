@@ -43,6 +43,12 @@ const StarDiagram = () => {
       })
     }
 
+    const SetupPosition = () => {
+      setTimeout(() => {
+        UpdatePosition()
+      }, 3000)
+    }
+
 
     useEffect(() => {
       const rz = window.addEventListener('resize', UpdatePosition)
@@ -51,9 +57,7 @@ const StarDiagram = () => {
     // animLoad.src = animImage
 
     return(
-      <div className="star--image" onLoad={setTimeout(() => {
-        UpdatePosition()
-      }, 3000)}>       
+      <div className="star--image" onLoad={SetupPosition}>       
            {isDefault ? 
            <video src="/images/star/sun_1000.mp4" autoPlay loop muted  />  :
             <video src="/images/star/nova_1000.mp4" autoPlay loop muted />
