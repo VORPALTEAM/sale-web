@@ -741,7 +741,7 @@ input:checked + .checker:before {
 }
 
 .final--button {
-  width: 40%;
+  width: 45%;
 }
 
 .btn--disabled {
@@ -999,7 +999,7 @@ input:checked + .checker:before {
   .star--section img,
   .star--section video {
     width: 100%;
-    max-width: 1200px;
+    max-width: 850px;
   }
 
   .value--subsection {
@@ -1011,8 +1011,27 @@ input:checked + .checker:before {
 
   .number--key {
     width: calc(32% - 4px);
-    padding-top: 30px;
-    height: 40px;
+    padding-top: 20px;
+    height: 50px;
+    font-size: 24px;
+  }
+
+  .buy--column--heading,
+  .stage--heading {
+    font-size: 36px;
+  }
+
+  .buy--section input {
+    font-size: 28px;
+    height: 60px;
+  }
+
+  .value--text {
+    font-size: 28px;
+  }
+
+  .stage--stats {
+    font-size: 20px;
   }
 
   .backspace--key {
@@ -1023,12 +1042,21 @@ input:checked + .checker:before {
     max-width: 810px;
   }
 
+  .row--1 {
+    height: 60px
+  }
+
   .row--2 {
-    height: 141.5px;
+    height: 137.5px;
   }
 
   .value--subtitle {
-    margin-top: 40px;
+    margin-top: 36px;
+    font-size: 20px;
+  }
+
+  .value--subtitle.red,
+  .value--subtitle.green {
     font-size: 16px;
   }
 }

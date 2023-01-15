@@ -89,7 +89,9 @@ const InvestSection = () => {
          currentContract(), State.account, orderedBalance).then((res) => {
             // console.log(res)
             AcknowApprovedAmount(usdTokenList.get(currency), currentContract(), State.account ).then((res) => {
+                // console.log("What is known : ")
                 // console.log(res)
+                // console.log(orderedBalance)
                 pendingState(false)
                 if (isDefault) {
                     cacheApprovedValueUSDT(res)
@@ -121,7 +123,6 @@ const InvestSection = () => {
                 return a - orderedBalance 
             })
         }
-        dispatch(selectStage("approve"))
 
           const requestingContracts = isDefault ? [
             config.saleContractAddrVRPUSDT,
@@ -138,6 +139,7 @@ const InvestSection = () => {
                     if (res > lastLocked) {
                         dispatch(selectWindow(config.windowNames.success))
                         dispatch(openInvest(false))
+                        dispatch(selectStage("approve"))
                     }
                 }
 
@@ -304,7 +306,10 @@ const InvestSection = () => {
             <div className="buy--button--section final--button">
                 {btn}
             </div>
-           <button onClick={RequestWithdraw}>Withdraw</button>
+         </div>
+         <div className="withdraw--section">
+            <input type="number" />
+            <button onClick={RequestWithdraw}>Withdraw</button>
          </div>
        </div>
     )
