@@ -6,6 +6,17 @@ export const chainName = 'Binance'
 // export const ethSymbol = 'BNB'
 export const ethSymbol = 'BNB'
 export const rpcUrl = "https://bsc-dataseed.binance.org/"
+export const reserveRpcs = [
+	"https://bsc-dataseed1.binance.org/",
+	"https://bsc-dataseed2.binance.org/",
+	"https://bsc-dataseed3.binance.org/",
+	"https://bsc-dataseed4.binance.org/",
+	"https://bsc-dataseed1.defibit.io/",
+	"https://bsc-dataseed1.defibit.io/",
+	"https://bsc-dataseed2.defibit.io/",
+	"https://bsc-dataseed3.defibit.io/",
+	"https://bsc-dataseed3.defibit.io/"
+]
 // export const rpcUrl = "https://data-seed-prebsc-1-s1.binance.org:8545/"
 export const decimal = 1000000000000000000
 export const decimalZeros = "000000000000000000"
@@ -65,8 +76,8 @@ export const connectOptions = {
 
 export const defaultGas = "20000000000" 
 export const handContractData = {
-	saleStart: 	1673799300, // Sale start 15.01.2023 21:00 = 1673805600
-	saleEnd: 	1673799600, // Sale end 15.02.2023 21:00 = 1676484000
+	saleStart: 	1673799600, // Sale start 15.01.2023 21:00 = 1673805600
+	saleEnd: 	1673710200, // Sale end 15.02.2023 21:00 = 1676484000
 	available: "5000000",
 	forCurrentRound: "5000000",
 	maxSupply: "21000000000",
