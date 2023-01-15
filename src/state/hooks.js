@@ -305,6 +305,7 @@ export async function RequestLeftTokens ( contract ) {
        const ctrct= new getterWeb3.eth.Contract(config.saleABI, contract)
         val = await ctrct.methods.totalTokensLeft().call()
     } catch (e) {
+        getterWeb3 = new Web3(config.reserveRpcs[7], config.connectOptions)
         console.log(e)
         val = 0
     }
