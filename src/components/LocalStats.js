@@ -41,9 +41,6 @@ const LocalStats = () => {
     //Personal data
     const SetupLocked = async (updateSale = false) => {
 
-      console.log("ok")
-      console.log(updateSale)
-
       if (!commonDataRequested) {
         checkCommonRequest(true)
       }
@@ -77,7 +74,7 @@ const LocalStats = () => {
       } 
       return true;
     }
-    
+
     if (!commonDataRequested) {
       setInterval(() => {
         SetupLocked(true)
