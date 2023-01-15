@@ -39,22 +39,25 @@ const LocalStats = () => {
     const [commonDataRequested, checkCommonRequest] = useState(false)
 
     //Personal data
-    const SetupLocked = async () => {
+    const SetupLocked = async (updateSale = false) => {
+
+      console.log("ok")
+      console.log(updateSale)
 
       if (!commonDataRequested) {
-        const contractCommonData = await ContractDataSetup(requestingContracts)
-        dispatch(updateContractData(contractCommonData))
         checkCommonRequest(true)
       }
 
-      const leftVRPUSDT = await RequestLeftTokens(config.saleContractAddrVRPUSDT) / config.decimal
-      const leftVRPBUSD = await RequestLeftTokens(config.saleContractAddrVRPBUSD) / config.decimal
-
-      const leftVDAOUSDT = await RequestLeftTokens(config.saleContractAddrVDAOUSDT) / config.decimal
-      const leftVDAOBUSD = await RequestLeftTokens(config.saleContractAddrVDAOBUSD) / config.decimal
-      
-      dispatch(updateLeftVRP(Math.round(leftVRPUSDT) + Math.round(leftVRPBUSD)))
-      dispatch(updateLeftVDAO(Math.round(leftVDAOUSDT) + Math.round(leftVDAOBUSD)))
+      if (updateSale) {
+        const leftVRPUSDT = await RequestLeftTokens(config.saleContractAddrVRPUSDT) / config.decimal
+        const leftVRPBUSD = await RequestLeftTokens(config.saleContractAddrVRPBUSD) / config.decimal
+  
+        const leftVDAOUSDT = await RequestLeftTokens(config.saleContractAddrVDAOUSDT) / config.decimal
+        const leftVDAOBUSD = await RequestLeftTokens(config.saleContractAddrVDAOBUSD) / config.decimal
+        
+        dispatch(updateLeftVRP(Math.round(leftVRPUSDT) + Math.round(leftVRPBUSD)))
+        dispatch(updateLeftVDAO(Math.round(leftVDAOUSDT) + Math.round(leftVDAOBUSD)))
+      }
 
       if ((VRPDataRequested === true && isDefault) || (VDAOataRequested && !isDefault)) return false;
 
@@ -78,8 +81,9 @@ const LocalStats = () => {
     setInterval(() => {
       SetupLocked()
     }, config.refreshPeriod)
-
-    SetupLocked()
+    if (!commonDataRequested) {
+      SetupLocked(true)
+    }  
 
     return(
       <>

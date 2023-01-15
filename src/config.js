@@ -35,7 +35,7 @@ export const defaultApproveValue = "100000"
 export const priceVRP = 0.0025
 export const priceVDAO = 1.5
 export const tokenCookieName = "LastSelecteDToken"
-export const refreshPeriod = 15000
+export const refreshPeriod = 600000
 
 export const windowNames = {
 	none : "none",
