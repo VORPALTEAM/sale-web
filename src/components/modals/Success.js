@@ -13,9 +13,28 @@ const SuccessNotify = () => {
     const descrClass = `modal--description ${isDefault ? "vrp" : "vdao"}`
     const btnClass =  `window--action-button ${isDefault ? "vrp" : "vdao"}`
 
+    const fixScreen = () => {
+        if (document.body) {
+            document.body.classList.remove("body--unfixed")
+            document.body.classList.add("body--fixed")
+        }
+    }
+
+    const unFixScreen = () => {
+        if (document.body) {
+            document.body.classList.add("body--unfixed")
+            document.body.classList.remove("body--fixed")
+        }
+    }
+
     const CloseWindow = () => {
+        unFixScreen()
         dispatch(selectWindow(config.windowNames.none))
     }
+
+    useEffect(() => {
+        fixScreen()
+    }, [])
     
     return(
         <div className="modal--env success--modal">

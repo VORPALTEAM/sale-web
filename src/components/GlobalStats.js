@@ -18,9 +18,11 @@ const GlobalStats = () => {
     const burnedAmount = isDefault ? burnedAmountVRP : burnedAmountVDAO
     const tokenPrice = isDefault ? cachedPriceVRP : cachedPriceVDAO
     const leftAmount = isDefault ? State.leftVRP : State.leftVDAO
+    const soldVRP = State.leftVRP === null ? defaultValueText : config.saleAmountVRP - State.leftVRP
+    const soldVDAO = State.leftVDAO === null ? defaultValueText : config.saleAmountVDAO - State.leftVDAO
 
-    const soldAmount = isDefault ? (config.saleAmountVRP - State.leftVRP) : 
-    (config.saleAmountVDAO - State.leftVDAO)
+    const soldAmount = isDefault ? soldVRP : 
+    soldVDAO 
 
     const UpdatePrices = async () => {
       const newPriceVRP = await RequestPrice(config.saleContractAddrVRPUSDT)

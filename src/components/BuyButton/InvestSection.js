@@ -12,6 +12,7 @@ const InvestSection = () => {
     const dispatch = useDispatch()
     const [cachedApprovedValueUSDT, cacheApprovedValueUSDT] = useState(0)
     const [cachedApprovedValueBUSD, cacheApprovedValueBUSD] = useState(0)
+    const [withdrawalAmount, setWithdrawal] = useState(0)
     // const activeBalance = State.token === config.defaultToken ? State.amountUSDVRP : State.amountUSDVDAO
     const isDefault = State.token === config.defaultToken
     const orderedBalance = isDefault ? State.orderUSDVRP : State.orderUSDVDAO
@@ -81,6 +82,12 @@ const InvestSection = () => {
             })
         }   
     }, [])
+
+    const UpdateWithdraw = (event) => {
+        if (event.target.value) {
+            setWithdrawal(event.target.value)
+        }
+    }
 
 
     const ApproveToken = async () => {
@@ -186,8 +193,33 @@ const InvestSection = () => {
         }
     }
 
+    const UpdateOrderBYToken = (event) => {
+        let newValue = event.target.value.toString()
+            if (newValue[0] === '0' && newValue.length > 1) {
+              newValue = newValue.substring(1)
+            }
+        const allowance = isDefault ? cachedApprovedValueUSDT : cachedApprovedValueBUSD
+        if (newValue === "" || newValue === null) {
+            newValue = "0"
+        }
+        let updatingValue = parseInt(newValue) * price
+        if (updatingValue > 1) {
+            updatingValue = Math.round(updatingValue)
+        } else {
+            updatingValue = 1
+        }
+        if (updatingValue <= config.maxInvestments ) {
+            dispatch(updateBalanceAction(updatingValue))
+            if (updatingValue > allowance) {
+                dispatch(selectStage("approve"))
+            } else {
+                if (updatingValue > 0) dispatch(selectStage("buy"))
+            }
+        }
+    }
+
     const RequestWithdraw = async () => {
-        const isWithdrawn = await WithdrawTokens(currentContract(), "1100000000000000000000", State.account)
+        const isWithdrawn = await WithdrawTokens(currentContract(), withdrawalAmount * config.decimal, State.account)
         if (isWithdrawn) {
             alert("Tokens must be withdrawn")
         } else {
@@ -271,8 +303,10 @@ const InvestSection = () => {
                 <div className="invest--num--title">
                     to
                 </div>
+                {/* <input type="number" className="order--input" 
+                value={price ? (orderedBalance / price) : 0} onChange={UpdateOrderBYToken} /> */}
                 <div className="invest--num--count">
-                    {price ? (orderedBalance / price) : 0}
+                    {price ? (Math.round(orderedBalance / price)) : 0}
                 </div>
             </div>
             <div className="invest--select">
@@ -308,7 +342,7 @@ const InvestSection = () => {
             </div>
          </div>
          <div className="withdraw--section">
-            <input type="number" />
+            <input type="number" value={withdrawalAmount} onChange={UpdateWithdraw} />
             <button onClick={RequestWithdraw}>Withdraw</button>
          </div>
        </div>

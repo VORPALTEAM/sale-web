@@ -217,7 +217,7 @@ const UpdateUnLockedVRP = (state = investAmountUSDVRP, action) => {
   }
 }
 
-const UpdateLeftVRP = (state = 0, action) => {
+const UpdateLeftVRP = (state = null, action) => {
 
   switch(action.type) {
     case actionNames.amountLeftVRP : 
@@ -227,7 +227,7 @@ const UpdateLeftVRP = (state = 0, action) => {
   }
 }
 
-const UpdateLeftVDAO = (state = 0, action) => {
+const UpdateLeftVDAO = (state = null, action) => {
 
   switch(action.type) {
     case actionNames.amountLeftVDAO : 
