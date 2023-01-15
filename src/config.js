@@ -43,10 +43,10 @@ export const usdTokens = [{
 	address: "0x824D6B09Ac4Bc5f64528ee413f88B3C019CB8F2a"
    }]  // USDC or USDT && BUSD - list of tokens available for using for payment
 
-export const saleContractAddrVRPUSDT = "0x0E05563948FCF2e3B7B2ef37Bc26B3e96A5d4B6C" // Vorpal sale contractы
-export const saleContractAddrVDAOUSDT = "0x84eB121aA8792a6B53BD7E34914887E32765fE5d"
-export const saleContractAddrVRPBUSD = "0xD255b533B4E7f69A5DB3A7753e5126D0c1E4fC4e" 
-export const saleContractAddrVDAOBUSD = "0x9848c628d396c81Fa64CB936B91f557aCEEe72c5" 
+export const saleContractAddrVRPUSDT = "0x495D4E33C4B7D3dDdE40FFAE924f8435658486eA" // Vorpal sale contractы
+export const saleContractAddrVDAOUSDT = "0xa99d9da4e8b7f3f87779b946c3ED044Cc5a2503d"
+export const saleContractAddrVRPBUSD = "0xC2d6c96832983d5a7bADEBa5292253fAC3d5aDFA" 
+export const saleContractAddrVDAOBUSD = "0x0367ADbb71584D8cAE562702cf566b0CAA8C8F12" 
 
 export const saleAmountVRP = 42000000
 export const saleAmountVDAO = 210000
