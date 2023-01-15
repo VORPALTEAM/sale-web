@@ -61,7 +61,7 @@ const StarDiagram = () => {
            <video src="/images/star/sun_1000.mp4" autoPlay loop muted  />  :
             <video src="/images/star/nova_1000.mp4" autoPlay loop muted />
             }     
-           <div className="rise--anim">
+           {/* <div className="rise--anim">
               <img src="/images/rise/1.png" style={{
                  marginTop: baseImagePosition.height * ((1 - widthProp) / 2),
                  marginLeft: imageMarginLeft,
@@ -89,7 +89,7 @@ const StarDiagram = () => {
                  width: baseImagePosition.width * widthProp,
                  height: baseImagePosition.height * widthProp
               }} />
-           </div> 
+           </div> */}
       </div>
     )
 }
