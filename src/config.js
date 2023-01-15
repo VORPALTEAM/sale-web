@@ -48,8 +48,8 @@ export const saleContractAddrVDAOUSDT = "0x836634ce58C151D690dCD457FD38982Bbc974
 export const saleContractAddrVRPBUSD = "0xbB6d67fd94178b66d8A8D7c763608FaD7da7e2D1" 
 export const saleContractAddrVDAOBUSD = "0x91608A6B691098597aC011321253052a69ac1e84" 
 
-export const saleAmountVRP = 5000000
-export const saleAmountVDAO = 5000000
+export const saleAmountVRP = 42000000
+export const saleAmountVDAO = 210000
 
 export const connectOptions = {
     keepAlive: true,
@@ -74,7 +74,7 @@ export const handContractData = {
 }
 
 export const contractDefaultGlobalData = {
-	saleAmount: "5000000000000000000000000",
+	saleAmount: "42000000000000000000000000",
 	saleEnd: "1674329899",
 	status: 0,
 	isDataRequested: false,
