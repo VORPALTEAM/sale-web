@@ -39,7 +39,7 @@ const GlobalStats = () => {
     }
 
     const availableTokens = (leftAmount !== null) ? 
-    (parseFloat(leftAmount / decimal)).toLocaleString('ua') :
+    (leftAmount).toLocaleString('ua') :
     defaultValueText
 
     useEffect(() => {
