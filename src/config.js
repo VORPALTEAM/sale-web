@@ -66,6 +66,8 @@ export const saleContractAddrVDAOBUSD = "0x0367ADbb71584D8cAE562702cf566b0CAA8C8
 export const saleAmountVRP = 42000000
 export const saleAmountVDAO = 210000
 
+export const totalAmountVRP = 21000000000
+
 export const connectOptions = {
     keepAlive: true,
     withCredentials: false,

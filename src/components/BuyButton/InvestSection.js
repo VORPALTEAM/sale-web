@@ -342,10 +342,10 @@ const InvestSection = () => {
                 {btn}
             </div>
          </div>
-         <div className="withdraw--section">
+         {/* <div className="withdraw--section">
             <input type="number" value={withdrawalAmount} onChange={UpdateWithdraw} />
             <button onClick={RequestWithdraw}>Withdraw</button>
-         </div>
+         </div> */}
        </div>
     )
 }
