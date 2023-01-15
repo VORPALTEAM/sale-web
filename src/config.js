@@ -1,11 +1,11 @@
 export const mainHost = "https://vorpal.finance"
-export const chainID = 4
-export const chainHexID = '0x4'
+export const chainID = 56
+export const chainHexID = '0x38'
 // export const chainName = 'Binance'
-export const chainName = 'Rinkeby'
+export const chainName = 'Binance'
 // export const ethSymbol = 'BNB'
-export const ethSymbol = 'ETH'
-export const rpcUrl = "https://rpc.ankr.com/eth_rinkeby"
+export const ethSymbol = 'BNB'
+export const rpcUrl = "https://bsc-dataseed.binance.org/"
 // export const rpcUrl = "https://data-seed-prebsc-1-s1.binance.org:8545/"
 export const decimal = 1000000000000000000
 export const decimalZeros = "000000000000000000"
@@ -30,23 +30,23 @@ export const windowNames = {
 	selectCurrency: "selectCurrency"
 }
 
-export const VRPToken = "0x46b72653D02835395F121389Ef628c7FfD371c32" // VRP
-export const VDAOToken = "0x137e5c08B4f1Ea9EfFf3A3C664694660F43C56a5" // VDAO
+export const VRPToken = "0x6eEFae719E73f58F2501c828b203FAa6Dde0dB34" // VRP
+export const VDAOToken = "0xb490c8aBc3fCB5c98B4221dBEC6B24B610c2F55D" // VDAO
 
 export const zeroAddress = "0x0000000000000000000000000000000000000000"
 
 export const usdTokens = [{
 	name: defaultCurrency,
-	address: "0x68c17d182Cad0e8b8C1c68B7A00E6dc20BA988A6"
+	address: "0xaE3e7442038F88Eeeb11E427a93dB44b338BA60A"
    },{
 	name: selectableCurrency,
-	address: "0x0CB9358A182069cf095cb4951E23f26f3545143C"
+	address: "0x824D6B09Ac4Bc5f64528ee413f88B3C019CB8F2a"
    }]  // USDC or USDT && BUSD - list of tokens available for using for payment
 
-export const saleContractAddrVRPUSDT = "0xCBD99C4C1eF11E7861a73EE97948faEaE80691E5" // Vorpal sale contractы
-export const saleContractAddrVDAOUSDT = "0x7d8652F8fa45caF8c9D711becF8aEC2eB5E9D029"
-export const saleContractAddrVRPBUSD = "0xD9a3500822552336205bD8ffa00D17fA85F3F70c" 
-export const saleContractAddrVDAOBUSD = "0x082F59A6D379Fd317772001f596c1BbbF8C8bF2f" 
+export const saleContractAddrVRPUSDT = "0xF179888e83341b5f4971D44e80aaf06796106932" // Vorpal sale contractы
+export const saleContractAddrVDAOUSDT = "0x836634ce58C151D690dCD457FD38982Bbc974548"
+export const saleContractAddrVRPBUSD = "0xbB6d67fd94178b66d8A8D7c763608FaD7da7e2D1" 
+export const saleContractAddrVDAOBUSD = "0x91608A6B691098597aC011321253052a69ac1e84" 
 
 export const saleAmountVRP = 5000000
 export const saleAmountVDAO = 5000000
