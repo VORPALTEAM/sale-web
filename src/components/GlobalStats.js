@@ -56,7 +56,7 @@ const GlobalStats = () => {
           paddingBottom: 8
         }}><b>burned:</b>{burnedAmount !== null ? ` ${parseFloat(burnedAmount).toLocaleString('ua')}` : defaultValueText}</p>
         <p><b>Max supply:</b>{` ${(isDefault ? config.totalAmountVRP : config.totalAmountVDAO).toLocaleString('ua')}`}</p>
-        <p><b>For sale total:</b>{` ${parseFloat(isDefault ? config.saleAmountVRP : config.saleAmountVDAO).toLocaleString('ua')}`}</p>
+        <p><b>For sale total:</b>{` ${(isDefault ? config.totalSaleVRP : config.totalSaleVDAO).toLocaleString('ua')}`}</p>
         <p><b>This round:</b>{` ${parseFloat(isDefault ? config.saleAmountVRP : config.saleAmountVDAO).toLocaleString('ua')}`}</p>
         <p><b>Total sold:</b>{` ${soldAmount.toLocaleString('ua')}`}</p>
         <p><b>Total burned:</b>{burnedAmount !== null ? ` ${parseFloat(burnedAmount).toLocaleString('ua')}` : defaultValueText}</p>
