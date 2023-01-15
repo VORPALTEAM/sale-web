@@ -284,8 +284,7 @@ export async function RequestMax ( token, user ) {
     if (!user && user !== config.zeroAddress) user = await RequestWallet ()
     
     try {
-        const w3 = new Web3(config.rpcUrl, config.connectOptions)
-        const contract = new w3.eth.Contract(config.erc20ABI, token)
+        const contract = new getterWeb3.eth.Contract(config.erc20ABI, token)
         val = await contract.methods.balanceOf(user).call()
     } catch (e) {
         console.log(e)
@@ -293,4 +292,17 @@ export async function RequestMax ( token, user ) {
     }
 
     return val / config.decimal
+}
+
+export async function RequestLeftTokens ( contract ) {
+    let val = 0
+    try {     
+       const ctrct= new getterWeb3.eth.Contract(config.saleABI, contract)
+        val = await ctrct.methods.totalTokensLeft().call()
+    } catch (e) {
+        console.log(e)
+        val = 0
+    }
+
+    return val
 }

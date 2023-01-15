@@ -20,6 +20,7 @@ export const defaultApproveValue = "100000"
 export const priceVRP = 0.0025
 export const priceVDAO = 1.5
 export const tokenCookieName = "LastSelecteDToken"
+export const refreshPeriod = 15000
 
 export const windowNames = {
 	none : "none",
@@ -47,6 +48,8 @@ export const saleContractAddrVDAOUSDT = "0x7d8652F8fa45caF8c9D711becF8aEC2eB5E9D
 export const saleContractAddrVRPBUSD = "0xD9a3500822552336205bD8ffa00D17fA85F3F70c" 
 export const saleContractAddrVDAOBUSD = "0x082F59A6D379Fd317772001f596c1BbbF8C8bF2f" 
 
+export const saleAmountVRP = 5000000
+export const saleAmountVDAO = 5000000
 
 export const connectOptions = {
     keepAlive: true,
@@ -71,7 +74,6 @@ export const handContractData = {
 }
 
 export const contractDefaultGlobalData = {
-	owner: "0x0f2d11eb3b6d4e220360bce6f7253282ccc6d12e",
 	saleAmount: "5000000000000000000000000",
 	saleEnd: "1674329899",
 	status: 0,
@@ -79,6 +81,8 @@ export const contractDefaultGlobalData = {
 	totalTokensLeft: null,
 	tokensLeftSecond: null,
 }
+
+
 
 export const erc20ABI = [
 	{

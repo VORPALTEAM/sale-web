@@ -33,7 +33,9 @@ export const actionNames = {
     amountVRPunLocked: "AMOUNT_VRP_UNLOCKED",
     amountVDAOunLocked: "AMOUNT_VDAO_UNLOCKED",
     selectStage: "SELECT_STAGE",
-    openInvest: "OPEN_INVEST"
+    openInvest: "OPEN_INVEST",
+    amountLeftVRP: "AMOUNT_LEFT_VRP",
+    amountLeftVDAO: "AMOUNT_LEFT_VDAO"
 }
 
 export const switchToken = createAction(actionNames.switchToken)
@@ -55,6 +57,8 @@ export const updateUnLockedVRP = createAction(actionNames.amountVRPunLocked)
 export const updateUnLockedVDAO = createAction(actionNames.amountVDAOunLocked)
 export const selectStage = createAction(actionNames.selectStage)
 export const openInvest = createAction(actionNames.openInvest)
+export const updateLeftVRP = createAction(actionNames.amountLeftVRP)
+export const updateLeftVDAO = createAction(actionNames.amountLeftVDAO)
 
 const SwitchToken = (state = config.defaultToken, action) => {
 
@@ -213,6 +217,26 @@ const UpdateUnLockedVRP = (state = investAmountUSDVRP, action) => {
   }
 }
 
+const UpdateLeftVRP = (state = 0, action) => {
+
+  switch(action.type) {
+    case actionNames.amountLeftVRP : 
+      return (action.payload || action.payload === 0) ? action.payload : state
+    default :
+      return state
+  }
+}
+
+const UpdateLeftVDAO = (state = 0, action) => {
+
+  switch(action.type) {
+    case actionNames.amountLeftVDAO : 
+      return (action.payload || action.payload === 0) ? action.payload : state
+    default :
+      return state
+  }
+}
+
 const UpdateUnLockedVDAO = (state = investAmountUSDVDAO, action) => {
 
   switch(action.type) {
@@ -264,5 +288,7 @@ export const RootReducer = combineReducers ({
     unLockedVRP: UpdateUnLockedVRP,
     unLockedVDAO: UpdateUnLockedVDAO,
     stage: SelectStage,
-    isOpened: IsInvestOpened
+    isOpened: IsInvestOpened,
+    leftVRP: UpdateLeftVRP,
+    leftVDAO: UpdateLeftVDAO
 })

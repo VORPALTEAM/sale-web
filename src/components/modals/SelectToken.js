@@ -16,10 +16,10 @@ const SelectToken = ({ pair }) => {
     let currentContract = null
 
 
-    const updateContract = async (requestingContracts) => {
+    /* const updateContract = async (requestingContracts) => {
         const contractCommonData = await ContractDataSetup(requestingContracts)
         dispatch(updateContractData(contractCommonData))
-      }
+      } */
 
     const SetupValue = (value) => {
         const isPrimary = value === "primary" ? true : false
@@ -34,21 +34,13 @@ const SelectToken = ({ pair }) => {
                 dispatch(selectWindow(windows.none))
                 currentContract = isDefault ? config.saleContractAddrVRPBUSD : config.saleContractAddrVDAOBUSD
                 break;
-            case (!isCurrency && isPrimary) :
+            case (!isCurrency && isPrimary) :               
                 dispatch(switchToken(config.defaultToken))
                 dispatch(selectWindow(windows.none))
-                updateContract([
-                    config.saleContractAddrVRPBUSD,
-                    config.saleContractAddrVRPUSDT
-                ])
                 break;
             case (!isCurrency && !isPrimary) :
                 dispatch(switchToken(config.selectableToken))
                 dispatch(selectWindow(windows.none))
-                updateContract([
-                    config.saleContractAddrVDAOUSDT,
-                    config.saleContractAddrVDAOBUSD
-                ])
                 break;
         }
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-import { RequestLockedFunds, RequestUnLockedFunds, ContractDataSetup } from '../state/hooks'
-import { updateLockedVRP, updateLockedVDAO, 
+import { RequestLockedFunds, RequestUnLockedFunds, ContractDataSetup, RequestLeftTokens } from '../state/hooks'
+import { updateLockedVRP, updateLockedVDAO, updateLeftVRP, updateLeftVDAO,
   updateUnLockedVRP, updateUnLockedVDAO, updateContractData } from '../state/reducer'
 import * as config from "../config"
 
@@ -47,6 +47,15 @@ const LocalStats = () => {
         checkCommonRequest(true)
       }
 
+      const leftVRPUSDT = await RequestLeftTokens(config.saleContractAddrVRPUSDT) / config.decimal
+      const leftVRPBUSD = await RequestLeftTokens(config.saleContractAddrVRPBUSD) / config.decimal
+
+      const leftVDAOUSDT = await RequestLeftTokens(config.saleContractAddrVDAOUSDT) / config.decimal
+      const leftVDAOBUSD = await RequestLeftTokens(config.saleContractAddrVDAOBUSD) / config.decimal
+      
+      dispatch(updateLeftVRP(Math.round(leftVRPUSDT) + Math.round(leftVRPBUSD)))
+      dispatch(updateLeftVDAO(Math.round(leftVDAOUSDT) + Math.round(leftVDAOBUSD)))
+      
       if ((VRPDataRequested === true && isDefault) || (VDAOataRequested && !isDefault)) return false;
 
       if (State.account) {
@@ -68,7 +77,7 @@ const LocalStats = () => {
 
     setInterval(() => {
       SetupLocked()
-    }, 15000)
+    }, config.refreshPeriod)
 
     SetupLocked()
 

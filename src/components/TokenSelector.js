@@ -13,7 +13,6 @@ const TokenSelector = () => {
     const checkBox = (event) => {
 
       const actualToken = State.token === config.defaultToken ? config.selectableToken : config.defaultToken
-      dispatch(switchToken(actualToken))
 
       const requestingContracts = (actualToken === config.defaultToken) ? [
         config.saleContractAddrVRPUSDT,
@@ -22,13 +21,9 @@ const TokenSelector = () => {
         config.saleContractAddrVDAOUSDT,
         config.saleContractAddrVDAOBUSD
       ]
-      updateContract(requestingContracts)
-      return !event.target.checked
-    }
 
-    const updateContract = async (requestingContracts) => {
-      const contractCommonData = await ContractDataSetup(requestingContracts)
-      dispatch(updateContractData(contractCommonData))
+      dispatch(switchToken(actualToken))
+      return !event.target.checked
     }
 
     useEffect(() => {
