@@ -12,26 +12,28 @@ const ConnectWalletBtn = () => {
     const State = useSelector(state => state)
     const isDefault = State.token === config.defaultToken
 
-    const requestingContracts = isDefault ? [
+    const requestingContractsVRP = [
       config.saleContractAddrVRPUSDT,
       config.saleContractAddrVRPBUSD
-    ] : [
+    ] 
+    const requestingContractsVAO = [
       config.saleContractAddrVDAOUSDT,
       config.saleContractAddrVDAOBUSD
     ]
 
     const SetupLockedCustom = async ( wallet ) => {
 
-        const locked = await RequestLockedFunds(requestingContracts, wallet)
-        const unLocked = await RequestUnLockedFunds(requestingContracts, wallet)
+        const lockedVRP = await RequestLockedFunds(requestingContractsVRP, wallet)
+        const unLockedVRP = await RequestUnLockedFunds(requestingContractsVRP, wallet)
+        const lockedVAO = await RequestLockedFunds(requestingContractsVAO, wallet)
+        const unLockedVAO = await RequestUnLockedFunds(requestingContractsVAO, wallet)
 
-        if (isDefault) {
-          dispatch(updateLockedVRP(locked))
-          dispatch(updateUnLockedVRP(unLocked))
-        } else {         
-          dispatch(updateLockedVDAO(locked))
-          dispatch(updateUnLockedVDAO(unLocked))
-        }
+
+          dispatch(updateLockedVRP(lockedVRP))
+          dispatch(updateUnLockedVRP(unLockedVRP))    
+          dispatch(updateLockedVDAO(lockedVAO))
+          dispatch(updateUnLockedVDAO(unLockedVAO))
+
 
       return true;
     }
