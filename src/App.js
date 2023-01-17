@@ -26,13 +26,14 @@ function App() {
   
   const StartTimer = () => {
     if (time <= timeEnd) {
-      setInterval(() => {
+      setTimeout(() => {
         const nowm = new Date()
         const nowt = nowm.getTime()
         setTime(nowt)
       }, (timeEnd - time + 1000))
     } 
   }
+
   return (
     <div className="App" onLoad={StartTimer}>
       <Header />
