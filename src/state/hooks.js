@@ -1,10 +1,14 @@
 import store from './store'
-import { selectWindow, configmBuy } from './reducer'
+import { selectWindow, configmBuy, loadAccount } from './reducer'
 import * as config from '../config'
 import Web3 from 'web3';
 
 const env = window.ethereum
 let getterWeb3 = new Web3(config.rpcUrl, config.connectOptions)
+
+export function IsTrueNetwork () {
+    return env.chainId === config.chainHexID
+}
 
 export async function RequestWallet () {
 
@@ -14,7 +18,7 @@ export async function RequestWallet () {
         const accs = await env.request({ method: "eth_requestAccounts" }, config.connectOptions)
         const network = env.chainId
     
-        if (network != config.chainHexID) {
+        if (network !== config.chainHexID) {
           await env.request({
             method: 'wallet_addEthereumChain',
             params: [{ 
@@ -29,6 +33,7 @@ export async function RequestWallet () {
           }]
         })
         }
+        store.dispatch(loadAccount(accs[0]))
         return accs[0]
     }
 
@@ -62,7 +67,8 @@ export async function RequestPrice (contract) {
 export async function RequestLockedFunds (contracts = [], user) {
 
     let numberOf = 0
-    if (!user) return numberOf
+
+    if (!user || !IsTrueNetwork ()) return numberOf
 
     try {
         const ctrct = new getterWeb3.eth.Contract(config.saleABI, contracts[0])
@@ -198,10 +204,12 @@ export async function WithdrawTokens (contract, amount = "100000000000000000000"
 }
 
 export async function AcknowApprovedAmount (token, spender, user) {
-    if (!token || !spender || !user){ 
+    if (!token || !spender){ 
         Promise.reject(0)
         return 0
     }
+
+    if (!user) user = await RequestWallet ()
     
     try {
         const w3 = new getterWeb3.eth.Contract(config.erc20ABI, token)
@@ -227,7 +235,7 @@ export async function ApproveTokens ( spendingToken, spendingContract, user, amo
 
     const usingAmount = `${amount}${config.decimalZeros}`
 
-    if (!user) user = await RequestWallet ()
+    if (!user || !IsTrueNetwork ()) user = await RequestWallet ()
     
     if (!env) {
         Promise.reject(0)
@@ -261,7 +269,7 @@ export async function Buy ( spendingContract, user, amount ) {
     if (!env) {
         return false
     }
-    if (!user) user = await RequestWallet ()
+    if (!user || !IsTrueNetwork ()) user = await RequestWallet ()
 
     try {
         const w3 = new Web3(env, config.connectOptions)
