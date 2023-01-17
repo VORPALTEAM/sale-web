@@ -1,28 +1,61 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-import { actionNames, switchToken, updateContractData } from '../state/reducer'
+import { actionNames, switchToken, updateApproved } from '../state/reducer'
 import * as config from '../config'
-import { ContractDataSetup } from '../state/hooks'
+import { ContractDataSetup, AcknowApprovedAmount } from '../state/hooks'
 
 const TokenSelector = () => {
 
     const dispatch = useDispatch()
     const State = useSelector(state => state)
     const checkingCookieName = `${config.tokenCookieName}=${config.selectableToken}`
+
+    const isDefault = State.token === config.defaultToken
+    const currencyIsDefault = State.currency === config.defaultCurrency
+
+    const CurrentContractCustom = (token) => {
+
+      const localIsDefault = token === config.defaultToken
+
+      switch (true) {
+          case (currencyIsDefault && localIsDefault) :
+          return config.saleContractAddrVRPUSDT
+          case (currencyIsDefault && !localIsDefault) :
+          return config.saleContractAddrVDAOUSDT
+          case (!currencyIsDefault && localIsDefault) :
+          return config.saleContractAddrVRPBUSD
+          case (!currencyIsDefault && !localIsDefault) :
+          return config.saleContractAddrVDAOBUSD
+          default : 
+          return null
+      }
+    }
+
+    function CurrentAllowanceSetupCustom (value, currency, token) {
+
+      const localIsDefault = token === config.defaultToken
+      const localCurrencyIsDefault = currency === config.defaultCurrency
+
+      const newAllowance = {
+         VRPUSDT: (localCurrencyIsDefault && localIsDefault) ? value : State.approvedValues.VRPUSDT,
+         VAOUSDT: (localCurrencyIsDefault && !localIsDefault) ? value : State.approvedValues.VAOUSDT,
+         VRPBUSD: (!localCurrencyIsDefault && localIsDefault) ? value : State.approvedValues.VRPBUSD,
+         VAOBUSD: (!localCurrencyIsDefault && !localIsDefault) ? value : State.approvedValues.VAOBUSD
+      }
+      dispatch(updateApproved(newAllowance))
+   }
     
     const checkBox = (event) => {
 
       const actualToken = State.token === config.defaultToken ? config.selectableToken : config.defaultToken
 
-      const requestingContracts = (actualToken === config.defaultToken) ? [
-        config.saleContractAddrVRPUSDT,
-        config.saleContractAddrVRPBUSD
-      ] : [
-        config.saleContractAddrVDAOUSDT,
-        config.saleContractAddrVDAOBUSD
-      ]
-
       dispatch(switchToken(actualToken))
+      const currencyAddr =  currencyIsDefault ? config.usdTokens[0].address : config.usdTokens[1].address
+      AcknowApprovedAmount(currencyAddr, CurrentContractCustom(actualToken), State.account).then((res) => {
+
+        CurrentAllowanceSetupCustom (res, State.currency, actualToken)
+      })
+
       return !event.target.checked
     }
 

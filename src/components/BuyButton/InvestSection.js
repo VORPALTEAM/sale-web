@@ -30,7 +30,7 @@ const InvestSection = () => {
     const [isStarted, startSale] = useState(0)
     const [isStatusRequested, isRequest] = useState(0)
 
-    const disabledState = (isPending || !userAgreed || !isStarted ) ? " btn--disabled" : ""
+    const disabledState = (isPending || !userAgreed || !isStarted || orderedBalance < 1 ) ? " btn--disabled" : ""
 
 
     const currentContract = () => {
@@ -201,7 +201,7 @@ const InvestSection = () => {
         if (newValue === "" || newValue === null) {
             newValue = "0"
         }
-        if (newValue <= config.maxInvestments ) {
+        if (newValue <= config.maxInvestments  && newValue >= 0) {
             dispatch(updateBalanceAction(newValue))
         }
     }
