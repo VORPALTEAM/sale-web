@@ -30,8 +30,12 @@ export async function RequestWallet () {
                   decimals: 18
               },
               rpcUrls: [config.rpcUrl]
-          }]
-        })
+            }]
+          })
+        }
+        if (!IsTrueNetwork ()) {
+            store.dispatch(loadAccount(null))
+            return null
         }
         store.dispatch(loadAccount(accs[0]))
         return accs[0]
@@ -236,6 +240,11 @@ export async function ApproveTokens ( spendingToken, spendingContract, user, amo
     const usingAmount = `${amount}${config.decimalZeros}`
 
     if (!user || !IsTrueNetwork ()) user = await RequestWallet ()
+
+    if (!user || !IsTrueNetwork ()) {
+        Promise.reject(0)
+        return 0
+    }
     
     if (!env) {
         Promise.reject(0)
@@ -270,6 +279,10 @@ export async function Buy ( spendingContract, user, amount ) {
         return false
     }
     if (!user || !IsTrueNetwork ()) user = await RequestWallet ()
+
+    if (!user || !IsTrueNetwork ()) {
+        return false
+    }
 
     try {
         const w3 = new Web3(env, config.connectOptions)
