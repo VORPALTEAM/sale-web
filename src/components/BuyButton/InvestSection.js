@@ -98,7 +98,7 @@ const InvestSection = () => {
             // console.log(res)
             AcknowApprovedAmount(usdTokenList.get(currency), currentContract(), State.account ).then((res) => {
                 // console.log("What is known : ")
-                console.log(res)
+                // console.log(res)
                 // console.log(orderedBalance)
                 pendingState(false)
                 if (isDefault) {

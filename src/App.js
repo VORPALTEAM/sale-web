@@ -24,16 +24,17 @@ function App() {
   const timeEnd = handContractData.saleEnd * 1000
   const stageText = time > timeEnd ? "stage: waiting... " :"stage: Seed Round"
   
-  if (time <= timeEnd) {
-    setInterval(() => {
-      const nowm = new Date()
-      const nowt = nowm.getTime()
-      setTime(nowt)
-    }, (timeEnd - time + 1000))
+  const StartTimer = () => {
+    if (time <= timeEnd) {
+      setInterval(() => {
+        const nowm = new Date()
+        const nowt = nowm.getTime()
+        setTime(nowt)
+      }, (timeEnd - time + 1000))
+    } 
   }
-
   return (
-    <div className="App">
+    <div className="App" onLoad={StartTimer}>
       <Header />
       <div className="presale--body">
         <div className="star--section">
