@@ -55,6 +55,10 @@ input::-webkit-input-placeholder{
   margin-top: 4px;
 }
 
+video::-webkit-media-controls {
+  display:none !important;
+}
+
 .body--unfixed {
   min-height: 160vh;
 }
@@ -993,6 +997,20 @@ input:checked + .checker:before {
 @media screen and (max-width : 556px) {
    .logo--section img {
      width: 120px;
+   }
+
+   .star--image {
+      margin-top: -60px;
+      z-index: -1;
+      width: 90%;
+   }
+
+   .sale--timer {
+     margin-top: -40px;
+   }
+
+   .value--subsection {
+     margin-top: -140px;
    }
 
    .connectWallet--btn,
