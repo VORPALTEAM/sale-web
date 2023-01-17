@@ -11,7 +11,6 @@ const buyingStage = "approve"
 const defaultAmount = 100
 const investAmountUSDVRP  = 0 // user's buying amount in USDT
 const investAmountUSDVDAO  = 0 
-const approvedAmountDefault = 0
 const contractGlobalData = config.contractDefaultGlobalData
 
 export const actionNames = {
@@ -26,7 +25,7 @@ export const actionNames = {
     orderUSDVDAO: "ORDER_USDVDAO",
     connectedState: "CONNECTED_STATE_CHANGE",
     updateContractData: "UPDATE_CONTRACT_DATA",
-    updateApprovedUSDT: "UPDATE_APPROVED_USDT",
+    updateApproved: "UPDATE_APPROVED_USDT",
     updateApprovedBUSD: "UPDATE_APPROVED_BUSD",
     amountVRPLocked: "AMOUNT_VRP_LOCKED",
     amountVDAOLocked: "AMOUNT_VDAO_LOCKED",
@@ -47,7 +46,7 @@ export const updateUSDVDAO = createAction(actionNames.updateUSDVDAO)
 export const seitchToConnected = createAction(actionNames.connectedState)
 export const updateEnv = createAction(actionNames.updateEnv)
 export const updateContractData = createAction(actionNames.updateContractData)
-export const updateApprovedUSDT = createAction(actionNames.updateApprovedUSDT)
+export const updateApproved = createAction(actionNames.updateApproved)
 export const updateApprovedBUSD = createAction(actionNames.updateApprovedBUSD)
 export const updateOrderUSDVRP = createAction(actionNames.orderUSDVRP)
 export const updateOrderUSDVDAO = createAction(actionNames.orderUSDVDAO)
@@ -145,26 +144,16 @@ const ContractDataState = (state = contractGlobalData, action) => {
   }
 }
 
-const UpdateApprovedUSDT = (state = approvedAmountDefault, action) => {
+const UpdateApprovedUSDT = (state = config.pairs, action) => {
 
   switch(action.type) {
-    case actionNames.updateApprovedUSDT : 
-      return (action.payload || action.payload === 0) ? action.payload : state
+    case actionNames.updateApproved : 
+      return (typeof(action.payload) === 'object' && 
+      action.payload.VRPUSDT !== 'undefined' ) ? action.payload : state
     default :
       return state
   }
 }
-
-const UpdateApprovedBUSD = (state = approvedAmountDefault, action) => {
-
-  switch(action.type) {
-    case actionNames.updateApprovedBUSD : 
-      return (action.payload || action.payload === 0) ? action.payload : state
-    default :
-      return state
-  }
-}
-
 
 const OrderUSDVRP = (state = config.defaultInvestments, action) => {
 
@@ -281,8 +270,7 @@ export const RootReducer = combineReducers ({
     orderUSDVRP: OrderUSDVRP,
     orderUSDVDAO: OrderUSDVDAO,
     contractData: ContractDataState,
-    approvedUSDT: UpdateApprovedUSDT,
-    approvedBUSD: UpdateApprovedBUSD,
+    approvedValues: UpdateApprovedUSDT,
     lockedVRP: UpdateLockedVRP,
     lockedVDAO: UpdateLockedVDAO,
     unLockedVRP: UpdateUnLockedVRP,

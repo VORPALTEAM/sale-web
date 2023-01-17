@@ -45,6 +45,21 @@ export const windowNames = {
 	selectCurrency: "selectCurrency"
 }
 
+export const buyStages = {
+	install: "installWallet",
+	connect: "connectWallet",
+	insufficient: "insufficientAmount",
+	approve: "approve",
+	buy: "buy"
+}
+
+export const pairs = {
+	VRPUSDT: 0,
+	VRPBUSD: 0,
+	VAOUSDT: 0,
+	VAOBUSD: 0
+}
+
 export const VRPToken = "0xF6C220E1a9a2aE516b46477480228e481D6dfF5c" // VRP
 export const VDAOToken = "0x415cD4AB2F5574EE8391dC4E15D360eae7C101cf" // VDAO
 

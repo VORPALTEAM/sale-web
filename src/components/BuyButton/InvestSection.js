@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { switchToken, updateOrderUSDVRP, updateOrderUSDVDAO, selectWindow,
-    updateLockedVRP, updateLockedVDAO,  selectStage, updateApproved, openInvest } from '../../state/reducer'
+import { updateOrderUSDVRP, updateOrderUSDVDAO, selectWindow,
+    updateLockedVRP, updateLockedVDAO,  updateApproved, openInvest } from '../../state/reducer'
 import { ApproveTokens,  RequestMax, RequestSaleStart, Buy, WithdrawTokens, 
     RequestLockedFunds, AcknowApprovedAmount } from '../../state/hooks'
 import * as config from '../../config'
@@ -10,8 +10,7 @@ const InvestSection = () => {
 
     const State = useSelector(state => state)
     const dispatch = useDispatch()
-    const [cachedApprovedValueUSDT, cacheApprovedValueUSDT] = useState(0)
-    const [cachedApprovedValueBUSD, cacheApprovedValueBUSD] = useState(0)
+
     const [withdrawalAmount, setWithdrawal] = useState(0)
     // const activeBalance = State.token === config.defaultToken ? State.amountUSDVRP : State.amountUSDVDAO
     const isDefault = State.token === config.defaultToken
@@ -19,14 +18,13 @@ const InvestSection = () => {
 
     const orderedBalance = isDefault ? State.orderUSDVRP : State.orderUSDVDAO
     // "installWallet" || "connectWallet" || "insufficientAmount" || "approve" || "buy"
-    const stage = State.stage
     const currency  = State.currency // USDT || BUSD
     const btnAddClass = isDefault ? "vrp" : "vdao"
     const price  = isDefault ? config.priceVRP : config.priceVDAO
     const usdTokenList = new Map()
     const updateBalanceAction = isDefault ? updateOrderUSDVRP : updateOrderUSDVDAO
     // const cacheApprovedAction = currencyIsDefault ? updateApprovedUSDT : updateApprovedBUSD
-    const approvedAmount = currencyIsDefault ? State.approvedUSDT : State.approvedBUSD
+
     const [userAgreed, userAgree] = useState(false)
     const [isPending, pendingState] = useState(false)
     const [isStarted, startSale] = useState(0)
@@ -37,17 +35,45 @@ const InvestSection = () => {
 
     const currentContract = () => {
         switch (true) {
-            case (currency === config.defaultCurrency && State.token === config.defaultToken) :
+            case (currencyIsDefault && isDefault) :
             return config.saleContractAddrVRPUSDT
-            case (currency === config.defaultCurrency && State.token === config.selectableToken) :
+            case (currencyIsDefault && !isDefault) :
             return config.saleContractAddrVDAOUSDT
-            case (currency === config.selectableCurrency && State.token === config.defaultToken) :
+            case (!currencyIsDefault && isDefault) :
             return config.saleContractAddrVRPBUSD
-            case (currency === config.selectableCurrency && State.token === config.selectableToken) :
+            case (!currencyIsDefault && !isDefault) :
             return config.saleContractAddrVDAOBUSD
             default : 
             return null
         }
+    }
+
+    const currentAllowance = () => {
+        switch (true) {
+            case (currencyIsDefault && isDefault) :
+            return State.approvedValues.VRPUSDT
+            case (currencyIsDefault && !isDefault) :
+            return State.approvedValues.VAOUSDT
+            case (!currencyIsDefault && isDefault) :
+            return State.approvedValues.VRPBUSD
+            case (!currencyIsDefault && !isDefault) :
+            return State.approvedValues.VAOBUSD
+            default : 
+            return null
+        }
+    }
+
+    const currentStage = (currentAllowance() >= orderedBalance &&
+    orderedBalance > 0) ? config.buyStages.buy : config.buyStages.approve
+
+    function CurrentAllowanceSetup (value) {
+       const newAllowance = {
+          VRPUSDT: (currencyIsDefault && isDefault) ? value : State.approvedValues.VRPUSDT,
+          VAOUSDT: (currencyIsDefault && !isDefault) ? value : State.approvedValues.VAOUSDT,
+          VRPBUSD: (!currencyIsDefault && isDefault) ? value : State.approvedValues.VRPBUSD,
+          VAOBUSD: (!currencyIsDefault && !isDefault) ? value : State.approvedValues.VAOBUSD
+       }
+       dispatch(updateApproved(newAllowance))
     }
 
     async function IsSaleStart () {
@@ -75,16 +101,8 @@ const InvestSection = () => {
         if (State.account) {
             AcknowApprovedAmount(usdTokenList.get(currency), currentContract(), State.account ).then((res) => {
                 // console.log(res)
-                // dispatch(cacheApprovedAction(res))
-                if (isDefault) {
-                    cacheApprovedValueUSDT(res)
-                } else {
-                    cacheApprovedValueBUSD(res)
-                }
-                dispatch(selectStage("approve"))
-                // if (res > 0) dispatch(selectStage("buy"))
-            }, (rej) => {
-                dispatch(selectStage("approve"))
+                CurrentAllowanceSetup(res)
+
             })
         }   
     }, [])
@@ -102,21 +120,15 @@ const InvestSection = () => {
          currentContract(), State.account, orderedBalance).then((res) => {
             // console.log(res)
             AcknowApprovedAmount(usdTokenList.get(currency), currentContract(), State.account ).then((res) => {
-                // console.log("What is known : ")
-                // console.log(res)
-                // console.log(orderedBalance)
+
                 pendingState(false)
-                // dispatch(cacheApprovedAction(res))
-                if (isDefault) {
-                    cacheApprovedValueUSDT(res)
-                } else {
-                    cacheApprovedValueBUSD(res)
-                }
-                if (res >= orderedBalance) dispatch(selectStage("buy"))
+                
+                CurrentAllowanceSetup(res)
+
             })
          }, (rej) => {
             pendingState(false)
-            dispatch(selectStage("approve"))
+           // dispatch(selectStage("approve"))
          }) // orderedBalance
          /* if (amount >= orderedBalance && amount > 0) {
             dispatch(selectStage("buy"))
@@ -128,15 +140,14 @@ const InvestSection = () => {
         await Buy(currentContract(), State.account, orderedBalance)
 
           dispatch(updateBalanceAction(0))
-        if (isDefault) {
-            cacheApprovedValueUSDT((a) => {
-                return a - orderedBalance 
-            })
-        } else {
-            cacheApprovedValueBUSD((a) => {
-                return a - orderedBalance 
-            })
-        }
+
+        await AcknowApprovedAmount(usdTokenList.get(currency), currentContract(), State.account ).then((res) => {
+
+            pendingState(false)
+            
+            CurrentAllowanceSetup(res)
+
+        })
 
           const requestingContracts = isDefault ? [
             config.saleContractAddrVRPUSDT,
@@ -145,6 +156,7 @@ const InvestSection = () => {
             config.saleContractAddrVDAOUSDT,
             config.saleContractAddrVDAOBUSD
           ]
+
           const lastLocked = isDefault ? State.lockedVRP : State.lockedVDAO
           setTimeout(() => {
             RequestLockedFunds(requestingContracts, State.account).then((res, rej) => {
@@ -153,7 +165,6 @@ const InvestSection = () => {
                     if (res > lastLocked) {
                         dispatch(selectWindow(config.windowNames.success))
                         dispatch(openInvest(false))
-                        dispatch(selectStage("approve"))
                     }
                 }
 
@@ -163,7 +174,7 @@ const InvestSection = () => {
                     dispatch(updateLockedVDAO(res))
                   }
             })
-          }, 1000)
+          }, 2000)
 
         pendingState(false)
     }
@@ -186,17 +197,12 @@ const InvestSection = () => {
             if (newValue[0] === '0' && newValue.length > 1) {
               newValue = newValue.substring(1)
             }
-        const allowance = isDefault ? cachedApprovedValueUSDT : cachedApprovedValueBUSD
+
         if (newValue === "" || newValue === null) {
             newValue = "0"
         }
         if (newValue <= config.maxInvestments ) {
             dispatch(updateBalanceAction(newValue))
-            if (newValue > allowance) {
-                dispatch(selectStage("approve"))
-            } else {
-                if (newValue > 0) dispatch(selectStage("buy"))
-            }
         }
     }
 
@@ -205,7 +211,7 @@ const InvestSection = () => {
             if (newValue[0] === '0' && newValue.length > 1) {
               newValue = newValue.substring(1)
             }
-        const allowance = isDefault ? cachedApprovedValueUSDT : cachedApprovedValueBUSD
+
         if (newValue === "" || newValue === null) {
             newValue = "0"
         }
@@ -217,11 +223,6 @@ const InvestSection = () => {
         }
         if (updatingValue <= config.maxInvestments ) {
             dispatch(updateBalanceAction(updatingValue))
-            if (updatingValue > allowance) {
-                dispatch(selectStage("approve"))
-            } else {
-                if (updatingValue > 0) dispatch(selectStage("buy"))
-            }
         }
     }
 
@@ -239,29 +240,29 @@ const InvestSection = () => {
 
     function mainBtn () {
         btn = []
-        switch (stage) {
-            case "installWallet" :
+        switch (currentStage) {
+            case config.buyStages.install :
             btn.push(
                 <div key="stage0" className={`confirm--button ${btnAddClass} install--stage${disabledState}`}>
                     {isPending? "Pending..." : "Install wallet to start investing"}
                 </div>
             )
             break;
-            case "connectWallet" :
+            case config.buyStages.connect :
             btn.push(
                     <div key="stage1" className={`confirm--button ${btnAddClass} connect--stage${disabledState}`}>
                          {isPending? "Pending..." : "Connect Wallet"}
                     </div>
                 )
             break;
-            case "insufficientAmount" :
+            case config.buyStages.insufficient :
             btn.push(
                 <div key="stage2" className={`confirm--button ${btnAddClass}${disabledState}`}>
                     {isPending? "Pending..." : "Not enough currency"}
                 </div>
             )
             break;
-            case "approve" : 
+            case config.buyStages.approve : 
             btn.push(
                 <div key="stage3" className={`confirm--button ${btnAddClass}${disabledState}`}
                  onClick={ApproveToken}>
@@ -269,7 +270,7 @@ const InvestSection = () => {
                 </div>
             )
             break;
-            case "buy" :
+            case config.buyStages.buy :
             btn.push(
                 <div key="stage4" onClick={Invest}
                 className={`confirm--button ${btnAddClass}${disabledState}`}>
