@@ -332,7 +332,7 @@ const InvestSection = () => {
             <p>
               You need to agree with terms and conditions and then to approve tokens in amount not smaller than you will buy. When you'll buy it 
               you will get it on locked balance. Then it's will unlocked through westing period.
-              <a href={config.howToUrl}>How to buy?</a>
+              <a href={config.howToUrl} target="_blank">How to buy?</a>
             </p>
          </div>
          <div className="buy--confirm--section">
@@ -342,7 +342,7 @@ const InvestSection = () => {
                    <span className={`agree--checker${userAgreed ? " agreed" : ""}`} />
                 </label>
                 <p>
-                   <a href={config.policyUrl}>I accept all terms and conditions</a>
+                   <a href={config.policyUrl} target="_blank">I accept all terms and conditions</a>
                 </p>
             </div>
             <div className="buy--button--section final--button">
