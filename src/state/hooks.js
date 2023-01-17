@@ -91,7 +91,7 @@ export async function RequestLockedFunds (contracts = [], user) {
         const shedule = await ctrct.methods.getSchedule(user).call()
         // console.log(shedule)
         if (shedule) {
-            numberOf += parseInt(shedule.tokensLeft / config.decimal)
+            numberOf += Math.round(parseFloat(shedule.tokensLeft / config.decimal))
         }
     } catch (e) {
         getterWeb3 = new Web3(config.reserveRpcs[3], config.connectOptions)
