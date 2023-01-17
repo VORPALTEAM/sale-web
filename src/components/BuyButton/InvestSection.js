@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { switchToken, updateOrderUSDVRP, updateOrderUSDVDAO, selectWindow,
-    updateLockedVRP, updateLockedVDAO,  selectStage, openInvest } from '../../state/reducer'
+    updateLockedVRP, updateLockedVDAO,  selectStage, updateApproved, openInvest } from '../../state/reducer'
 import { ApproveTokens,  RequestMax, RequestSaleStart, Buy, WithdrawTokens, 
     RequestLockedFunds, AcknowApprovedAmount } from '../../state/hooks'
 import * as config from '../../config'
@@ -15,6 +15,8 @@ const InvestSection = () => {
     const [withdrawalAmount, setWithdrawal] = useState(0)
     // const activeBalance = State.token === config.defaultToken ? State.amountUSDVRP : State.amountUSDVDAO
     const isDefault = State.token === config.defaultToken
+    const currencyIsDefault = State.currency === config.defaultCurrency
+
     const orderedBalance = isDefault ? State.orderUSDVRP : State.orderUSDVDAO
     // "installWallet" || "connectWallet" || "insufficientAmount" || "approve" || "buy"
     const stage = State.stage
@@ -23,6 +25,8 @@ const InvestSection = () => {
     const price  = isDefault ? config.priceVRP : config.priceVDAO
     const usdTokenList = new Map()
     const updateBalanceAction = isDefault ? updateOrderUSDVRP : updateOrderUSDVDAO
+    // const cacheApprovedAction = currencyIsDefault ? updateApprovedUSDT : updateApprovedBUSD
+    const approvedAmount = currencyIsDefault ? State.approvedUSDT : State.approvedBUSD
     const [userAgreed, userAgree] = useState(false)
     const [isPending, pendingState] = useState(false)
     const [isStarted, startSale] = useState(0)
@@ -70,7 +74,8 @@ const InvestSection = () => {
     useEffect(() => {
         if (State.account) {
             AcknowApprovedAmount(usdTokenList.get(currency), currentContract(), State.account ).then((res) => {
-                console.log(res)
+                // console.log(res)
+                // dispatch(cacheApprovedAction(res))
                 if (isDefault) {
                     cacheApprovedValueUSDT(res)
                 } else {
@@ -101,6 +106,7 @@ const InvestSection = () => {
                 // console.log(res)
                 // console.log(orderedBalance)
                 pendingState(false)
+                // dispatch(cacheApprovedAction(res))
                 if (isDefault) {
                     cacheApprovedValueUSDT(res)
                 } else {

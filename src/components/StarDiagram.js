@@ -10,9 +10,10 @@ const StarDiagram = () => {
     const [ baseImagePosition, setBasePosition] = useState({
        top: 0,
        left: 0,
-       width: '100%',
-       height : '100%'
+       width: 500,
+       height : 500
     })
+    const [showRise, toShowRise] = useState(false)
     const soldVRP = saleAmountVRP - State.leftVRP
     const soldVDAO = saleAmountVDAO - State.leftVDAO
 
@@ -25,8 +26,10 @@ const StarDiagram = () => {
     const fixedTransform = `rotate(${fixedRotateValue}deg)`
     const fixedTransformReverse = `rotate(${-fixedRotateValue}deg)`
     const scr = document.documentElement.clientWidth * 0.025
+    const scrH = document.documentElement.clientHeight
 
     const imageMarginLeft = -baseImagePosition.width * (1 - widthProp) - ((baseImagePosition.width * (1 - soldPercent)) / 2) - scr
+    const imageMarginTop = baseImagePosition.height * ((1 - widthProp) / 2)
 
 
     const UpdatePosition = () => {
@@ -40,6 +43,8 @@ const StarDiagram = () => {
         width: basePosition.width,
         height : basePosition.height
       })
+
+      toShowRise(true)
     }
 
     const SetupPosition = () => {
@@ -61,35 +66,35 @@ const StarDiagram = () => {
            <video src="/images/star/sun_1000.mp4" autoPlay loop muted  />  :
             <video src="/images/star/nova_1000.mp4" autoPlay loop muted />
             }     
-           {<div className="rise--anim">
+           {/* <div className={showRise ? "rise--anim" : "rise--anim __hidden"}>
               <img src="/images/rise/1.png" style={{
-                 marginTop: baseImagePosition.height * ((1 - widthProp) / 2),
+                 marginTop: imageMarginTop,
                  marginLeft: imageMarginLeft,
                  width: baseImagePosition.width * widthProp,
                  height: baseImagePosition.height * widthProp,
                  transform : fixedTransform
               }} />
               <img src="/images/rise/2.png" style={{
-                 marginTop: baseImagePosition.height * ((1 - widthProp) / 2),
+                 marginTop: imageMarginTop,
                  marginLeft: imageMarginLeft,
                  width: -baseImagePosition.width * widthProp,
                  height: -baseImagePosition.height * widthProp,
                  transform : fixedTransformReverse
               }} />
               <img src="/images/rise/3.png" style={{
-                 marginTop: baseImagePosition.height * ((1 - widthProp) / 2),
+                 marginTop: imageMarginTop,
                  marginLeft: imageMarginLeft,
                  width: baseImagePosition.width * widthProp,
                  height: baseImagePosition.height * widthProp,
                  transform : fixedTransform
               }} />
               <img className="rotate--anim" src="/images/rise/4.png"  style={{
-                 marginTop: baseImagePosition.height * ((1 - widthProp) / 2),
+                 marginTop: imageMarginTop,
                  marginLeft: imageMarginLeft,
                  width: baseImagePosition.width * widthProp,
                  height: baseImagePosition.height * widthProp
               }} />
-           </div>}
+           </div> */}
       </div>
     )
 }

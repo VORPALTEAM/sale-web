@@ -218,11 +218,11 @@ export async function AcknowApprovedAmount (token, spender, user) {
     try {
         const w3 = new getterWeb3.eth.Contract(config.erc20ABI, token)
         const allowance = await w3.methods.allowance(user, spender).call()
-        console.log(allowance)
+
         const allowanceStr = allowance.toString()
-        console.log(allowanceStr)
+
         const processedStr = allowance > 0 ? allowanceStr.substring(0, allowanceStr.length - 18) : "0"
-        console.log(processedStr)
+
         const result = parseInt(processedStr)
 
         Promise.resolve(result)

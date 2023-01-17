@@ -10,6 +10,10 @@ body {
   font-family: 'Roboto';
 }
 
+.__hidden {
+  visibility: hidden;
+}
+
 @keyframes rounding {
   from {
     transform: rotate(359deg);
