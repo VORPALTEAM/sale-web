@@ -1,26 +1,48 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-import Web3 from 'web3';
-import { selectWindow, loadAccount } from '../../state/reducer'
-import { connectOptions, chainID, chainHexID, rpcUrl } from '../../config'
-import { RequestWallet, CheckIsConnected } from '../../state/hooks'
+import { loadAccount } from '../../state/reducer'
+import * as config from '../../config'
+import { updateLockedVRP, updateLockedVDAO,
+  updateUnLockedVRP, updateUnLockedVDAO } from '../../state/reducer'
+import { RequestWallet, CheckIsConnected, RequestLockedFunds, RequestUnLockedFunds } from '../../state/hooks'
 
 const ConnectWalletBtn = () => {
 
     const dispatch = useDispatch()
     const State = useSelector(state => state)
+    const isDefault = State.token === config.defaultToken
+
+    const requestingContracts = isDefault ? [
+      config.saleContractAddrVRPUSDT,
+      config.saleContractAddrVRPBUSD
+    ] : [
+      config.saleContractAddrVDAOUSDT,
+      config.saleContractAddrVDAOBUSD
+    ]
+
+    const SetupLockedCustom = async ( wallet ) => {
+
+        const locked = await RequestLockedFunds(requestingContracts, wallet)
+        const unLocked = await RequestUnLockedFunds(requestingContracts, wallet)
+
+        if (isDefault) {
+          dispatch(updateLockedVRP(locked))
+          dispatch(updateUnLockedVRP(unLocked))
+        } else {         
+          dispatch(updateLockedVDAO(locked))
+          dispatch(updateUnLockedVDAO(unLocked))
+        }
+
+      return true;
+    }
 
     const ConnectWallet  = async () => {
       
       try {
         const wallet = await RequestWallet()
-        if (!wallet) {
-          /* if (!window.ethereum) {
-            dispatch(selectWindow("nowallet"))
-          } */
-         // dispatch(selectWindow("nowallet"))
-        } else {
+        if (wallet) {
           document.cookie = "saleWalletConnected=true"
+          SetupLockedCustom (wallet)
         }
         dispatch(loadAccount(wallet))
       } catch (e) {

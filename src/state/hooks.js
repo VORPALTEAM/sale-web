@@ -1,5 +1,5 @@
 import store from './store'
-import { selectWindow, configmBuy, loadAccount } from './reducer'
+import {loadAccount } from './reducer'
 import * as config from '../config'
 import Web3 from 'web3';
 
