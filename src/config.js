@@ -36,6 +36,8 @@ export const priceVRP = 0.0025
 export const priceVDAO = 1.5
 export const tokenCookieName = "LastSelecteDToken"
 export const refreshPeriod = 30000
+export const policyUrl = "https://docs.google.com/document/d/14eaTBBxqFKAwuJIEhs6UbFpR47I4hsbhV29PuiyYhmU/edit?usp=sharing"
+export const howToUrl = "https://teletype.in/@vorpaldao"
 
 export const windowNames = {
 	none : "none",

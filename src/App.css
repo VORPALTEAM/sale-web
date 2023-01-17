@@ -782,6 +782,7 @@ input:checked + .checker:before {
 .invest--description a,
 .agree--dot a {
   color:#AAF765;
+  text-decoration: none;
 }
 
 
