@@ -44,7 +44,8 @@ export const windowNames = {
 	success: "success",
 	nowallet: "nowallet",
 	selectToken: "selectToken",
-	selectCurrency: "selectCurrency"
+	selectCurrency: "selectCurrency",
+    mobile: "mobile"
 }
 
 export const buyStages = {

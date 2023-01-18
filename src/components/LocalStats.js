@@ -109,11 +109,7 @@ const LocalStats = () => {
               </div>
             </div>
             <div className="buy--column--cell">
-              <div className="stage--heading row--1" style={{
-                paddingTop: 5,
-                borderBottom: 'none',
-                height: 36
-              }}>
+              <div className="stage--heading row--1 balance--row">
                 Balance
               </div>
             </div>
