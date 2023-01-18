@@ -54,10 +54,10 @@ input::-webkit-input-placeholder{
   font-weight: 300;
   margin-top: 4px;
 }
-
+/*
 video::-webkit-media-controls {
   display:none !important;
-}
+} */
 
 .body--unfixed {
   min-height: 160vh;
@@ -257,7 +257,7 @@ video::-webkit-media-controls {
 .star--section video {
   width: 100%;
   max-width: 620px;
-  pointer-events: none;
+ /* pointer-events: none; */
 }
 
 .token--selector {
