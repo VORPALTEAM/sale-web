@@ -22,7 +22,10 @@ const MenuSection = ({ isMobile = false}) => {
       return(
         <div className={itemClass} key={"mainmenu"+index}>
          <a href={item.url} target="_blank">{item.name}</a>
-         {hasSubs ? <div key={"submenu_"+index} className={`main--submenu${isMobile ? " mobile--sub" : ""}`}>
+         {hasSubs ? <div key={"submenu_"+index} className={`main--submenu${isMobile ? " mobile--sub" : ""}`}
+         style={isMobile ? {
+            marginLeft: -1 * (20 + (12*index))
+         } : null}>
             {item.submenu.map((subitem, ind) => {
                const siClass = `submenu--item${(ind === 0) ? 
               " submenu--item--first" :((ind === item.submenu.length - 1) ?

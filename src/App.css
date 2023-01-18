@@ -257,6 +257,7 @@ video::-webkit-media-controls {
 .star--section video {
   width: 100%;
   max-width: 620px;
+  pointer-events: none;
 }
 
 .token--selector {
@@ -1013,6 +1014,11 @@ input:checked + .checker:before {
      margin-top: -140px;
    }
 
+   .value--subsection.confirm--button {
+    margin-top: 0px;
+  }
+
+
    .connectWallet--btn,
    .wallet--connected {
       width: 120px;
@@ -1056,6 +1062,22 @@ input:checked + .checker:before {
      width: 60%;
      top: 15%;
    }
+
+   .sale--timer--heading {
+     font-size: 15px;
+  }
+
+  .timer--clock {
+    margin-top: 0px;
+  }
+
+  .invest--section {
+    margin-top: 30px;
+  }
+
+  .buy--section input {
+    width: calc(100% - 32px);
+  }
 
 }
 
