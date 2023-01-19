@@ -12,6 +12,10 @@ export function IsTrueNetwork () {
 
 export async function RequestWallet () {
 
+    alert("pressed")
+
+    document.location.href = "https://metamask.app.link/dapp/sale.vorpal.finance/"
+
     if (!env) {
         let isMobile = navigator.userAgentData.mobile
         if (isMobile) {
