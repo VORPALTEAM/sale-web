@@ -188,8 +188,8 @@ const InvestSection = () => {
     const MaxUSD = async () => {
         const MaxTokens = await RequestMax(usdTokenList.get(currency), State.account)
         State.token === config.defaultToken ?
-         dispatch(updateOrderUSDVRP(Math.round(MaxTokens))) :
-         dispatch(updateOrderUSDVDAO(Math.round(MaxTokens))) 
+         dispatch(updateOrderUSDVRP(Math.floor(MaxTokens))) :
+         dispatch(updateOrderUSDVDAO(Math.floor(MaxTokens))) 
     }
 
     const UpdateOrderUSD = (event) => {
