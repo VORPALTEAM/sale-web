@@ -1007,16 +1007,16 @@ input:checked + .checker:before {
    }
 
    .row--1 {
-     height: 42px;
+     height: 44px;
    }
 
    .row--2 {
-      height: 78px;
+      height: 79px;
    }
 
    .balance--row {
      padding: 8px 0;
-     height: 38px;
+     height: 39px;
    }
 
    .star--image {
