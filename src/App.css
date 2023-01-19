@@ -1020,13 +1020,13 @@ input:checked + .checker:before {
    }
 
    .star--image {
-      margin-top: -45px;
+      margin-top: -32px;
       z-index: -1;
       width: 90%;
    }
 
    .sale--timer {
-     margin-top: -20px;
+     margin-top: -28px;
    }
 
    .value--subsection {
