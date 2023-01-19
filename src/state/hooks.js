@@ -13,7 +13,8 @@ export function IsTrueNetwork () {
 export async function RequestWallet () {
 
     alert("pressed")
-    alert(env === "undefined")
+    alert(env)
+    alert(!env)
 
     if (env === "undefined") {
         let isMobile = navigator.userAgentData.mobile
