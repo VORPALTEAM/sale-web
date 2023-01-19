@@ -18,6 +18,10 @@ export async function RequestWallet () {
 
     if (!env) {
         alert("Not env")
+        if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
+            // true for mobile device
+            document.write("mobile device");
+        }
         let isMobile = navigator.userAgentData.mobile
         if (isMobile) {
             document.location.href = "https://metamask.app.link/dapp/sale.vorpal.finance/"
