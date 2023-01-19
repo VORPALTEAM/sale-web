@@ -14,13 +14,15 @@ export async function RequestWallet () {
 
     alert("pressed")
 
-    alert(env)
+    if (env === "undefined") {
+        let isMobile = navigator.userAgentData.mobile
+        alert(isMobile)
+    }
 
     // document.location.href = "https://metamask.app.link/dapp/sale.vorpal.finance/"
 
     if (!env) {
         let isMobile = navigator.userAgentData.mobile
-        alert("Is Mobile : " + navigator.userAgentData.mobile)
         if (isMobile) {
             document.location.href = "https://metamask.app.link/dapp/sale.vorpal.finance/"
         }
