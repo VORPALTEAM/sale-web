@@ -314,7 +314,7 @@ const InvestSection = () => {
                 {/* <input type="number" className="order--input" 
                 value={price ? (orderedBalance / price) : 0} onChange={UpdateOrderBYToken} /> */}
                 <div className="invest--num--count">
-                    {price ? (Math.round(orderedBalance / price)) : 0}
+                    {price ? (Math.floor(orderedBalance / price)) : 0}
                 </div>
             </div>
             <div className="invest--select">
