@@ -17,6 +17,7 @@ export async function RequestWallet () {
     alert(!env)
 
     if (!env) {
+        alert("Not env")
         let isMobile = navigator.userAgentData.mobile
         alert(isMobile)
     }
