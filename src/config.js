@@ -1,4 +1,5 @@
 export const mainHost = "https://vorpal.finance"
+export const mobileUrl = "https://metamask.app.link/dapp/sale.vorpal.finance/"
 export const chainID = 56
 export const chainHexID = '0x38'
 // export const chainName = 'Binance'
