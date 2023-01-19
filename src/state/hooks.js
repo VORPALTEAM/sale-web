@@ -13,9 +13,9 @@ export function IsTrueNetwork () {
 export async function RequestWallet () {
 
     if (!env) {
-        // alert("Not env")
+        // Checking mobile device
         if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
-            // true for mobile device
+
             document.location.href = config.mobileUrl
         }
         return null;
