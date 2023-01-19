@@ -1016,7 +1016,7 @@ input:checked + .checker:before {
 
    .balance--row {
      padding: 8px 0;
-     height: 37px;
+     height: 38px;
    }
 
    .star--image {

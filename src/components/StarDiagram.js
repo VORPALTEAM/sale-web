@@ -63,8 +63,10 @@ const StarDiagram = () => {
     return(
       <div className="star--image" onLoad={SetupPosition}>       
            {isDefault ? 
-           <video src="/images/star/sun_1000.mp4" autoPlay={true} loop muted playsInline />  :
-            <video src="/images/star/nova_1000.mp4" autoPlay={true} loop muted playsInline />
+           <video src="/images/star/sun_1000.mp4" preload="metadata" alt="VRP Star" 
+           autoPlay={true} loop muted playsInline />  :
+            <video src="/images/star/nova_1000.mp4" preload="metadata" alt="VAO Star" 
+            aautoPlay={true} loop muted playsInline />
             }     
            {/* <div className={showRise ? "rise--anim" : "rise--anim __hidden"}>
               <img src="/images/rise/1.png" style={{
