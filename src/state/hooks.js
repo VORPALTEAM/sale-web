@@ -11,8 +11,13 @@ export function IsTrueNetwork () {
 }
 
 export async function RequestWallet () {
-
+    console.log("looking for ...")
+    console.log(env)
     if (!env) {
+        let isMobile = true
+        if (isMobile) {
+            alert("https://metamask.app.link/dapp/sale.vorpal.finance/")
+        }
         return null;
     } else {
         const accs = await env.request({ method: "eth_requestAccounts" }, config.connectOptions)
