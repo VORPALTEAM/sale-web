@@ -213,8 +213,8 @@ export async function WithdrawTokens (contract, amount = "100000000000000000000"
 }
 
 export async function AcknowApprovedAmount (token, spender, user) {
-    if (!token || !spender){ 
-        Promise.reject(0)
+    if (!token || !spender || !user){ 
+        Promise.resolve(0)
         return 0
     }
 
