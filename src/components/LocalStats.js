@@ -46,23 +46,44 @@ const LocalStats = () => {
 
     
     const ColumnHeightSetup = () => {
-      console.log("ok")
+      console.log(document.documentElement)
        const LeftOne = document.querySelector(".amount--input")
        const leftTwo = document.querySelector(".amount--calculator")
        const RightOne = document.querySelector(".row--1")
        const RightTwoS = document.querySelectorAll(".row--2")
        const LeftThree = document.querySelector(".buy--column--left .stage--heading") 
        const RightThree = document.querySelector(".left--stage--heading")
-       if (LeftOne && RightOne) {
+
+       if (LeftOne && RightOne && document.documentElement) {
         const columnOne = LeftOne.getBoundingClientRect().height
         const columnTwo = (leftTwo.getBoundingClientRect().height / 2)
         const columnThree = LeftThree.getBoundingClientRect().height
+        const scr = document.documentElement.clientWidth
 
-        RightOne.style.height = (columnOne - 2) + 'px'
-        RightTwoS.forEach((e) => {
-          e.style.height = (columnTwo - 16)+ 'px'
-        })
-        RightThree.style.height = columnThree + 'px'
+        switch (true) {
+           case scr < 768 : 
+           updateDynamicStyles({
+            rightOne: (columnOne - 2),
+            rightTwo: (columnTwo - 16),
+            rightThree: (columnThree - 9)
+           })
+           break;
+           case (scr >= 769 && scr < 1920) :
+           updateDynamicStyles({
+              rightOne: (columnOne - 4),
+              rightTwo: (columnTwo - 17),
+              rightThree: (columnThree - 8)
+            })
+           break;
+           case (scr >= 1920) :
+           updateDynamicStyles({
+              rightOne: (columnOne - 4),
+              rightTwo: (columnTwo - 19),
+              rightThree: (columnThree - 8)
+            })
+           break;
+        }
+
         console.log(columnOne)
        }
 
@@ -71,9 +92,7 @@ const LocalStats = () => {
     useEffect(() => {
       if (!isCompared) {
         ColumnHeightSetup()
-        window.addEventListener('resize', () => {
-          ColumnHeightSetup()
-        })
+        window.addEventListener('resize', ColumnHeightSetup)
         CompareStyle(true)
       }
     }, [])
@@ -127,12 +146,16 @@ const LocalStats = () => {
 
     return(
       <>
-        <div className="buy--column--cell row--1">
+        <div className="buy--column--cell row--1" style={{
+           height: dynamicStyles.rightOne
+        }}>
               <div className="value--text">
                 {`${tokenAmount} ${State.token}`}
               </div>
             </div>
-            <div className="buy--column--cell row--2">
+            <div className="buy--column--cell row--2" style={{
+               height: dynamicStyles.rightTwo
+            }}>
               <div className="value--subtitle">
                 Title
               </div>
@@ -140,7 +163,9 @@ const LocalStats = () => {
               {`${partOfAvailable} %`}
               </div>
             </div>
-            <div className="buy--column--cell row--2">
+            <div className="buy--column--cell row--2" style={{
+               height: dynamicStyles.rightTwo
+            }}>
               <div className="value--subtitle">
                 Title
               </div>
@@ -148,8 +173,10 @@ const LocalStats = () => {
               {`${partOfTotal} %`}
               </div>
             </div>
-            <div className="buy--column--cell left--stage--heading">
-              <div className="stage--heading row--1 balance--row">
+            <div className="buy--column--cell left--stage--heading" style={{
+               height: dynamicStyles.rightThree
+            }}>
+              <div className="stage--heading row--1 balance--row left--balance--row">
                 Balance
               </div>
             </div>

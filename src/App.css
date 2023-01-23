@@ -1001,6 +1001,12 @@ input:checked + .checker:before {
   }
 }
 
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  .buy--column--heading, .stage--heading {
+     font-size: 20px;
+  }
+}
+
 @media screen and (max-width : 556px) {
    .logo--section img {
      width: 120px;
@@ -1181,5 +1187,14 @@ input:checked + .checker:before {
   .value--subtitle.red,
   .value--subtitle.green {
     font-size: 16px;
+  }
+
+  .stage--heading {
+    padding: 16px 0;
+    height: 52px;
+  }
+
+  .left--balance--row {
+    padding: 10px 0;
   }
 }
