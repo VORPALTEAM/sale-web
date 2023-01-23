@@ -38,15 +38,31 @@ const LocalStats = () => {
     const [VDAOataRequested, checkVDAORequest] = useState(false)
     const [commonDataRequested, checkCommonRequest] = useState(false)
     const [isCompared, CompareStyle] = useState(false)
+    const [dynamicStyles, updateDynamicStyles] = useState({
+       rightOne: 41,
+       rightTwo: 79.5,
+       rightThree: 37
+    })
 
     
     const ColumnHeightSetup = () => {
       console.log("ok")
        const LeftOne = document.querySelector(".amount--input")
+       const leftTwo = document.querySelector(".amount--calculator")
        const RightOne = document.querySelector(".row--1")
+       const RightTwoS = document.querySelectorAll(".row--2")
+       const LeftThree = document.querySelector(".buy--column--left .stage--heading") 
+       const RightThree = document.querySelector(".left--stage--heading")
        if (LeftOne && RightOne) {
         const columnOne = LeftOne.getBoundingClientRect().height
+        const columnTwo = (leftTwo.getBoundingClientRect().height / 2)
+        const columnThree = LeftThree.getBoundingClientRect().height
+
         RightOne.style.height = (columnOne - 2) + 'px'
+        RightTwoS.forEach((e) => {
+          e.style.height = (columnTwo - 16)+ 'px'
+        })
+        RightThree.style.height = columnThree + 'px'
         console.log(columnOne)
        }
 
@@ -132,7 +148,7 @@ const LocalStats = () => {
               {`${partOfTotal} %`}
               </div>
             </div>
-            <div className="buy--column--cell">
+            <div className="buy--column--cell left--stage--heading">
               <div className="stage--heading row--1 balance--row">
                 Balance
               </div>
