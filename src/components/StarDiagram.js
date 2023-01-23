@@ -16,6 +16,7 @@ const StarDiagram = () => {
     const [showRise, toShowRise] = useState(false)
     const soldVRP = saleAmountVRP - State.leftVRP
     const soldVDAO = saleAmountVDAO - State.leftVDAO
+    const [sessionCode, updateSession] = useState(false)
 
     const soldPercent = isDefault ? (soldVRP / saleAmountVRP) : 
     (soldVDAO / saleAmountVDAO )
@@ -55,6 +56,9 @@ const StarDiagram = () => {
 
 
     useEffect(() => {
+      if (!sessionCode) {
+        updateSession(Math.round(Math.random() * 100000))
+      }
       const rz = window.addEventListener('resize', UpdatePosition)
     }, [])
     
@@ -63,7 +67,7 @@ const StarDiagram = () => {
     return(
       <div className="star--image" onLoad={SetupPosition}>       
 
-           <video src={isDefault ?"/images/star/sun_1000.mp4" : "/images/star/nova_1000.mp4" } alt="VRP Star" 
+           <video src={isDefault ?`/images/star/sun_1000.mp4?${sessionCode}` : `/images/star/nova_1000.mp4?${sessionCode}` } alt="VRP Star" 
            autoPlay={true} loop muted playsInline type="video/mp4" />  
            {/* <div className={showRise ? "rise--anim" : "rise--anim __hidden"}>
               <img src="/images/rise/1.png" style={{

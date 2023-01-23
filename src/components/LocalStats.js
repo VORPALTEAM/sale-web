@@ -46,7 +46,6 @@ const LocalStats = () => {
 
     
     const ColumnHeightSetup = () => {
-      console.log(document.documentElement)
        const LeftOne = document.querySelector(".amount--input")
        const leftTwo = document.querySelector(".amount--calculator")
        const RightOne = document.querySelector(".row--1")
@@ -84,7 +83,6 @@ const LocalStats = () => {
            break;
         }
 
-        console.log(columnOne)
        }
 
     }
