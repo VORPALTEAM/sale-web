@@ -6,6 +6,8 @@ import Web3 from 'web3';
 const env = window.ethereum
 let getterWeb3 = new Web3(config.rpcUrl, config.connectOptions)
 
+let isFirstRequestAccount = false
+
 export function IsTrueNetwork () {
     return env.chainId === config.chainHexID
 }
@@ -42,8 +44,22 @@ export async function RequestWallet () {
             store.dispatch(loadAccount(null))
             return null
         }
+
+        if (!isFirstRequestAccount) {
+            env.on('accountsChanged', function (accounts) {
+                RequestWallet ()
+              })
+              
+            env.on('networkChanged', function (networkId) {
+                RequestWallet ()
+             })
+
+             isFirstRequestAccount = true
+        }
+        
         store.dispatch(loadAccount(accs[0]))
         return accs[0]
+
     }
 
   }
