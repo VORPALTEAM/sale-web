@@ -81,9 +81,9 @@ const ConnectWalletBtn = () => {
               Connect wallet
             </div> : 
              <div className="btn wallet--connected">
-               {VisibleName(State.account)}
+               <div>{VisibleName(State.account)}</div>
                <div className="user--menu">
-                <p onClick={DisconnectUser}>Disconnect</p>
+                <div className="dsc--btn" onClick={DisconnectUser}>Disconnect</div>
               </div>
               </div>
               }

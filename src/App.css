@@ -196,6 +196,8 @@ video::-webkit-media-controls {
   padding-top: 7px;
   background: #ACF800;
   color: #1E1E1E;
+  cursor: pointer;
+  user-select: none;
 }
 
 .wallet--connected {
@@ -900,6 +902,15 @@ input:checked + .checker:before {
   padding-top: 5px;
   border-bottom: none;
   height: 36px;
+}
+
+
+.dsc--btn {
+  position: absolute;
+  top: 48px;
+  margin-left: 32px;
+  padding: 8px;
+  cursor: pointer;
 }
 /* Mobile version */
 
