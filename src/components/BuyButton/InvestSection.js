@@ -29,6 +29,7 @@ const InvestSection = () => {
     const [isPending, pendingState] = useState(false)
     const [isStarted, startSale] = useState(0)
     const [isStatusRequested, isRequest] = useState(0)
+    const walletConnectionTimeLimit = 12000
 
     const disabledState = (isPending || !userAgreed || !isStarted || orderedBalance < 1 ) ? " btn--disabled" : ""
 
@@ -116,8 +117,22 @@ const InvestSection = () => {
 
     const ApproveToken = async () => {
          pendingState(true)
-         const amount = await ApproveTokens(usdTokenList.get(currency),
-         currentContract(), State.account, orderedBalance).then((res) => {
+         const RequestTimeLimit = new Promise((resolve, reject) => {
+            setTimeout(() => {
+                AcknowApprovedAmount(usdTokenList.get(currency), currentContract(), State.account ).then((res) => {
+
+                    pendingState(false)
+                    
+                    CurrentAllowanceSetup(res)
+    
+                })
+            }, walletConnectionTimeLimit, 0)
+        })
+    
+        const ApprovalFunction = new Promise((resolve, reject) => {
+            ApproveTokens(usdTokenList.get(currency), currentContract(), State.account, orderedBalance)
+        })
+        const amount = await Promise.race([RequestTimeLimit, ApprovalFunction]).then((res) => {
             // console.log(res)
             AcknowApprovedAmount(usdTokenList.get(currency), currentContract(), State.account ).then((res) => {
 
