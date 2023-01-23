@@ -64,7 +64,7 @@ const StarDiagram = () => {
       <div className="star--image" onLoad={SetupPosition}>       
 
            <video src={isDefault ?"/images/star/sun_1000.mp4" : "/images/star/nova_1000.mp4" } alt="VRP Star" 
-           autoPlay={true} loop muted playsInline />  
+           autoPlay={true} loop muted playsInline type="video/mp4" />  
            {/* <div className={showRise ? "rise--anim" : "rise--anim __hidden"}>
               <img src="/images/rise/1.png" style={{
                  marginTop: imageMarginTop,
