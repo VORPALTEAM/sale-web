@@ -37,6 +37,30 @@ const LocalStats = () => {
     const [VRPDataRequested, checkVRPRequest] = useState(false)
     const [VDAOataRequested, checkVDAORequest] = useState(false)
     const [commonDataRequested, checkCommonRequest] = useState(false)
+    const [isCompared, CompareStyle] = useState(false)
+
+    
+    const ColumnHeightSetup = () => {
+      console.log("ok")
+       const LeftOne = document.querySelector(".amount--input")
+       const RightOne = document.querySelector(".row--1")
+       if (LeftOne && RightOne) {
+        const columnOne = LeftOne.getBoundingClientRect().height
+        RightOne.style.height = (columnOne - 2) + 'px'
+        console.log(columnOne)
+       }
+
+    }
+
+    useEffect(() => {
+      if (!isCompared) {
+        ColumnHeightSetup()
+        window.addEventListener('resize', () => {
+          ColumnHeightSetup()
+        })
+        CompareStyle(true)
+      }
+    }, [])
 
     //Personal data
     const SetupLocked = async (updateSale = false) => {
