@@ -165,7 +165,7 @@ const LocalStats = () => {
                height: dynamicStyles.rightTwo
             }}>
               <div className="value--subtitle">
-                All round share
+                All rounds share
               </div>
               <div className="value--text">
               {`${partOfTotal} %`}
