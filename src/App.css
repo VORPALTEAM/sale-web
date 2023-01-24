@@ -1145,6 +1145,10 @@ input:checked + .checker:before {
     text-decoration: none !important;
   }
 
+  .value--subtitle {
+    font-size: 10px;
+  }
+
 
   .dsc--btn {
     top: 42px;
