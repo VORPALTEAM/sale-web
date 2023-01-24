@@ -65,9 +65,6 @@ const LocalStats = () => {
         const columnThree = LeftThree.getBoundingClientRect().height
         const scr = document.documentElement.clientWidth
 
-        console.log(rowTwoBegin)
-        console.log(rowTwoEnd)
-
         switch (true) {
            case scr < 768 : 
            updateDynamicStyles({
