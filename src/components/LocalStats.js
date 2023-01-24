@@ -76,9 +76,9 @@ const LocalStats = () => {
            break;
            case (scr >= 1920) :
            updateDynamicStyles({
-              rightOne: (columnOne - 7),
+              rightOne: (columnOne - 10),
               rightTwo: (columnTwo - 18),
-              rightThree: (columnThree - 8)
+              rightThree: (columnThree - 11)
             })
            break;
         }
