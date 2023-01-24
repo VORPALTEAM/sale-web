@@ -32,6 +32,7 @@ export const selectableCurrency = 'BUSD'
 export const minInvestments = 10
 export const defaultInvestments = 100
 export const maxInvestments = 1000000
+export const maxDisplayInvestments = 9999999
 export const defaultApproveValue = "100000"
 export const priceVRP = 0.0025
 export const priceVDAO = 1.5

@@ -698,7 +698,7 @@ input:checked + .checker:before {
   max-width: none;
   max-width: 486px;
   margin-top: 2px;
-  margin-left: -1px;
+  /* margin-left: -1px; */
 }
 
 .invest--section.opened {
@@ -912,6 +912,10 @@ input:checked + .checker:before {
   padding: 8px;
   cursor: pointer;
 }
+
+.value--row {
+  padding-top: 10px;
+}
 /* Mobile version */
 
 @media screen and (max-width : 768px) {
@@ -1010,11 +1014,25 @@ input:checked + .checker:before {
   .modal--description {
     margin-top: 0;
   }
+
+  .dsc--btn {
+    margin-left: 30px;
+  }
+
+  .value--row {
+    padding-top: 12px;
+  }
 }
 
 @media screen and (min-width: 769px) and (max-width: 1024px) {
   .buy--column--heading, .stage--heading {
      font-size: 20px;
+  }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1919px) {
+  .main--submenu {
+    margin-left: -67px;
   }
 }
 
@@ -1121,6 +1139,12 @@ input:checked + .checker:before {
     text-decoration: none !important;
   }
 
+
+  .dsc--btn {
+    top: 42px;
+    margin-left: 21px;
+  }
+
 }
 
 @media screen and (max-width: 361px) {
@@ -1207,5 +1231,13 @@ input:checked + .checker:before {
 
   .left--balance--row {
     padding: 10px 0;
+  }
+
+  .value--row {
+    padding-top: 15px;
+  }
+
+  .main--submenu {
+    margin-left: -75px;
   }
 }

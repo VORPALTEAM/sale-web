@@ -18,11 +18,11 @@ const LocalStats = () => {
     const activeBalance = isDefault ? 
     State.amountUSDVRP : State.amountUSDVDAO
     const tokenAmountNumber = tokenPrice !== 0 ? parseFloat(activeBalance / tokenPrice) : 0
-    const tokenAmount = tokenAmountNumber.toLocaleString('ua')
-
-    const partOfAvailable = ((parseFloat(tokenAmountNumber) / parseFloat(config.handContractData.available)) * 100).toLocaleString('ua')
-
-    const partOfTotal = ((parseFloat(tokenAmountNumber) / parseFloat(config.handContractData.maxSupply)) * 100).toLocaleString('ua')
+    const tokenAmount = Math.floor(tokenAmountNumber).toLocaleString('ua')
+    const availableThisRound = isDefault ? config.saleAmountVRP : config.saleAmountVDAO
+    const partOfAvailable = (Math.round((parseFloat(tokenAmountNumber) / parseFloat(availableThisRound)) * 10000) / 100).toLocaleString('ua')
+    const totalForSale = isDefault ? config.totalSaleVRP : config.totalSaleVDAO
+    const partOfTotal = (Math.round((parseFloat(tokenAmountNumber) / parseFloat(totalForSale)) * 10000) / 100).toLocaleString('ua')
 
     const saleDate = new Date(config.unLockDate * 1000).toLocaleString('ua')
 
@@ -63,21 +63,21 @@ const LocalStats = () => {
            case scr < 768 : 
            updateDynamicStyles({
             rightOne: (columnOne - 2),
-            rightTwo: (columnTwo - 16),
-            rightThree: (columnThree - 9)
+            rightTwo: (columnTwo - 15.5),
+            rightThree: (columnThree - 10)
            })
            break;
            case (scr >= 769 && scr < 1920) :
            updateDynamicStyles({
-              rightOne: (columnOne - 4),
-              rightTwo: (columnTwo - 17),
-              rightThree: (columnThree - 8)
+              rightOne: (columnOne - 5),
+              rightTwo: (columnTwo - 15),
+              rightThree: (columnThree - 10)
             })
            break;
            case (scr >= 1920) :
            updateDynamicStyles({
-              rightOne: (columnOne - 4),
-              rightTwo: (columnTwo - 19),
+              rightOne: (columnOne - 7),
+              rightTwo: (columnTwo - 18),
               rightThree: (columnThree - 8)
             })
            break;
@@ -144,7 +144,7 @@ const LocalStats = () => {
 
     return(
       <>
-        <div className="buy--column--cell row--1" style={{
+        <div className="buy--column--cell row--1 value--row" style={{
            height: dynamicStyles.rightOne
         }}>
               <div className="value--text">
@@ -155,7 +155,7 @@ const LocalStats = () => {
                height: dynamicStyles.rightTwo
             }}>
               <div className="value--subtitle">
-                Title
+                This round share
               </div>
               <div className="value--text">
               {`${partOfAvailable} %`}
@@ -165,7 +165,7 @@ const LocalStats = () => {
                height: dynamicStyles.rightTwo
             }}>
               <div className="value--subtitle">
-                Title
+                All round share
               </div>
               <div className="value--text">
               {`${partOfTotal} %`}
