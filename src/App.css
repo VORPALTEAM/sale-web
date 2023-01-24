@@ -1028,7 +1028,7 @@ input:checked + .checker:before {
   }
 
   .value--row {
-    padding-top: 12px;
+    padding-top: 15px;
   }
 }
 

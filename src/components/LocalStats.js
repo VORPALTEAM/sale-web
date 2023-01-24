@@ -68,7 +68,7 @@ const LocalStats = () => {
         switch (true) {
            case scr < 768 : 
            updateDynamicStyles({
-            rightOne: (columnOne - 2),
+            rightOne: (columnOne + 1),
             rightTwo: (columnTwo - 13.5),
             rightThree: (columnThree - 1)
            })
