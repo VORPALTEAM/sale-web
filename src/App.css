@@ -899,7 +899,7 @@ input:checked + .checker:before {
 }
 
 .balance--row {
-  padding-top: 5px;
+  padding-top: 0px;
   border-bottom: none;
   height: 36px;
 }
@@ -915,6 +915,14 @@ input:checked + .checker:before {
 
 .value--row {
   padding-top: 10px;
+}
+
+.left--stage--heading {
+  padding-top: 3px;
+}
+
+.left--balance--row {
+  margin-top: 12px;
 }
 /* Mobile version */
 
@@ -1050,7 +1058,7 @@ input:checked + .checker:before {
    }
 
    .balance--row {
-     padding: 8px 0;
+     padding: 4px 0;
      height: 39px;
    }
 
@@ -1230,7 +1238,7 @@ input:checked + .checker:before {
   }
 
   .left--balance--row {
-    padding: 10px 0;
+    padding: 5px 0;
   }
 
   .value--row {

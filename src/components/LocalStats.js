@@ -54,31 +54,47 @@ const LocalStats = () => {
        const RightThree = document.querySelector(".left--stage--heading")
 
        if (LeftOne && RightOne && document.documentElement) {
+        const rowTwoBeginningElm = document.querySelectorAll(".number--key")[0]
+        const rowTwoBegin = rowTwoBeginningElm ? rowTwoBeginningElm.getBoundingClientRect().y : 0
+        const rowTwoEndElm = document.querySelector(".backspace--key")
+        const rowTwoEnd = rowTwoEndElm ? rowTwoEndElm.getBoundingClientRect().bottom : 0
         const columnOne = LeftOne.getBoundingClientRect().height
-        const columnTwo = (leftTwo.getBoundingClientRect().height / 2)
+
+        // const columnTwo = (leftTwo.getBoundingClientRect().height / 2)
+        const columnTwo = ((rowTwoEnd - rowTwoBegin) / 2)
         const columnThree = LeftThree.getBoundingClientRect().height
         const scr = document.documentElement.clientWidth
+
+        console.log(rowTwoBegin)
+        console.log(rowTwoEnd)
 
         switch (true) {
            case scr < 768 : 
            updateDynamicStyles({
             rightOne: (columnOne - 2),
-            rightTwo: (columnTwo - 15.5),
-            rightThree: (columnThree - 10)
+            rightTwo: (columnTwo - 13.5),
+            rightThree: (columnThree - 1)
            })
            break;
            case (scr >= 769 && scr < 1920) :
            updateDynamicStyles({
               rightOne: (columnOne - 5),
-              rightTwo: (columnTwo - 15),
-              rightThree: (columnThree - 10)
+              rightTwo: (columnTwo - 13),
+              rightThree: (columnThree - 1)
             })
            break;
-           case (scr >= 1920) :
+           case (scr >= 1920 && scr < 2739) :
            updateDynamicStyles({
               rightOne: (columnOne - 10),
-              rightTwo: (columnTwo - 18),
-              rightThree: (columnThree - 11)
+              rightTwo: (columnTwo - 14),
+              rightThree: (columnThree - 3)
+            })
+           break;
+           case (scr > 2739) :
+           updateDynamicStyles({
+              rightOne: (columnOne - 10),
+              rightTwo: (columnTwo - 16),
+              rightThree: (columnThree - 3)
             })
            break;
         }
