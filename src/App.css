@@ -807,6 +807,11 @@ input:checked + .checker:before {
  margin-left: 4px;
 }
 
+.rise--anim, 
+.rise--anim img {
+  user-select: none;
+}
+
 .agree--label input {
   display: none;
 }
@@ -1194,7 +1199,7 @@ input:checked + .checker:before {
 
 /* HD scale */
 
-@media screen and (min-width: 1920px) {
+@media screen and (min-width: 1921px) {
   .presale--body {
      min-width: 1900px;
   }
