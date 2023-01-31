@@ -7,7 +7,7 @@ export const styles = {
 }
 
 export const menu = [
-    {
+    /* {
         name: "Trade",
         url: `${mainHost}/swap`,
         style: styles.default,
@@ -24,7 +24,7 @@ export const menu = [
         url: `${mainHost}/farms`,
         style: styles.default,
         submenu: []
-    },
+    }, */
     {
         name: "Starmap",
         url: `https://starmap.vorpal.finance/`,
@@ -38,7 +38,7 @@ export const menu = [
         submenu: []
     },
     {
-        name: "...",
+        name: "Socials",
         url: null,
         style: styles.default,
         submenu: [{

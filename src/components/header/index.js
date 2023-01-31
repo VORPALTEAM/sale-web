@@ -8,7 +8,8 @@ const MenuSection = ({ isMobile = false}) => {
     <div className={isMobile ? "menu--section mobile--menu--ctnr" : "menu--section"}>
     {menu.map((item ,index) => {
       const hasSubs = item.submenu.length > 0 ? true : false
-      let itemClass = "menu--item"
+      let itemClass = "menu--item" + (index === 0 ? " menu--item--first" : (
+        (index === menu.length - 1) ? " menu--item--last" : ""))
       if (hasSubs) {
         itemClass += " has--submenu"
       }
@@ -24,7 +25,7 @@ const MenuSection = ({ isMobile = false}) => {
          <a href={item.url} target="_blank">{item.name}</a>
          {hasSubs ? <div key={"submenu_"+index} className={`main--submenu${isMobile ? " mobile--sub" : ""}`}
          style={isMobile ? {
-            marginLeft: -1 * (20 + (12*index))
+            marginLeft: -1 * (20 + (4*index))
          } : null}>
             {item.submenu.map((subitem, ind) => {
                const siClass = `submenu--item${(ind === 0) ? 
