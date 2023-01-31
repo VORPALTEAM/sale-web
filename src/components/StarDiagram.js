@@ -19,8 +19,8 @@ const StarDiagram = () => {
     const [sessionCode, updateSession] = useState(false)
 
     const soldPercent = isDefault ? (soldVRP / saleAmountVRP) : 
-    (soldVDAO / saleAmountVDAO ) 
-    // const soldPercent = 1
+    (soldVDAO / saleAmountVDAO )
+    // const soldPercent = 0.5
 
     const fixedRotateValue = 90 * (1 - soldPercent)
     const fixedTransformFirst = `rotate(${(353 * (1 - soldPercent))}deg)`
@@ -43,7 +43,7 @@ const StarDiagram = () => {
        }
     }
 
-    const imageMarginLeft = -baseImagePosition.width * (1 - widthProp()) - ((baseImagePosition.width * (1 - soldPercent)) / 2) - scr
+    const imageMarginLeft = -baseImagePosition.width * (1 - widthProp()) - ((baseImagePosition.width * (1 - soldPercent)) / 2) - scr - (140 * (1 - soldPercent))
     const imageMarginTop = baseImagePosition.height * ((1 - widthProp()) / 2)
 
 

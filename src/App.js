@@ -47,7 +47,7 @@ function App() {
           <div className="value--subsection">
            <div className="buy--column--left">
             <div className="buy--column--heading">
-              Investments, $
+              Calculator, $
             </div>
             <AmountInput />
             <div className="stage--heading">
