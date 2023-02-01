@@ -43,7 +43,11 @@ const StarDiagram = () => {
        }
     }
 
-    const imageMarginLeft = -baseImagePosition.width * (1 - widthProp()) - ((baseImagePosition.width * (1 - soldPercent)) / 2) - scr - (79 * (1 - soldPercent))
+    function widthQue () {
+      return scrW > 768 ? 1 : (scrW / 768)
+    }
+
+    const imageMarginLeft = -baseImagePosition.width * (1 - widthProp()) - ((baseImagePosition.width * (1 - soldPercent)) / 2) - scr - (79 * (1 - soldPercent) * widthQue ())
     const imageMarginTop = baseImagePosition.height * ((1 - widthProp()) / 2)
 
 
