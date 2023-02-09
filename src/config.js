@@ -78,7 +78,7 @@ export const usdTokens = [{
 	address: "0xe9e7cea3dedca5984780bafc599bd69add087d56"
    }]  // USDC or USDT && BUSD - list of tokens available for using for payment
 
-export const saleContractAddrVRPUSDT = "0xeEe35c13d297E7f3E9b5445B8f808299128D3428" // Vorpal sale contractы
+export const saleContractAddrVRPUSDT = "0xeEe35c13d297E7f3E9b5445B8f808299128D3428" // Vorpal sale contracts
 export const saleContractAddrVDAOUSDT = "0xC1F18D08Bc23C276EBAa5eE1c047bCbC1715fC4f"
 export const saleContractAddrVRPBUSD = "0x860D93B0a4d7Ae930aA966714F4f94dB05a6A2E8" 
 export const saleContractAddrVDAOBUSD = "0x625597d48bf529181d2fF31dF4a22A49dd267209" 

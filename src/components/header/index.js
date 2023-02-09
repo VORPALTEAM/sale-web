@@ -51,7 +51,7 @@ const Header = () => {
     return(
        <header className="dex--header">
         <div className="logo--section">
-          <a href={''}><img src="images/logo.svg" /></a>
+          <a href={'https://vorpal.finance/'}><img src="images/logo.svg" /></a>
         </div>
            <MenuSection />
         <div className="wallet--section">
