@@ -1,6 +1,7 @@
 import store from './store'
 import {loadAccount } from './reducer'
 import * as config from '../config'
+import * as ABI from '../abi'
 import Web3 from 'web3';
 
 const env = window.ethereum
@@ -10,6 +11,34 @@ let isFirstRequestAccount = false
 
 export function IsTrueNetwork () {
     return env.chainId === config.chainHexID
+}
+
+export async function AddReferral ( linkParam  = document.location.search, account ) {
+    if (!linkParam || !account) return false
+
+    try {
+        const urlParams = new URLSearchParams(linkParam);
+        const ref = urlParams.get('ref')
+        if (!ref) return false
+
+      const linkData = await fetch(`${config.referralApiUrl}`,
+      {
+       headers: {
+         'Accept': 'application/json',
+         'Content-Type': 'application/json'
+       },
+       method: "POST",
+       body: JSON.stringify({
+              action: "RegisterReferral",
+              client: account,
+              link: ref
+           })
+      })
+      return true
+    } catch (e) {
+        console.log(e.message)
+        return false
+    }
 }
 
 export async function RequestWallet () {
@@ -58,6 +87,10 @@ export async function RequestWallet () {
         }
         
         store.dispatch(loadAccount(accs[0]))
+        const queryData = document.location.search
+        if (queryData) {
+            AddReferral(queryData, accs[0])
+        }
         return accs[0]
 
     }
@@ -78,7 +111,7 @@ export function CheckIsConnected () {
 export async function RequestPrice (contract) {
     
     try {
-        const ctrct = new getterWeb3.eth.Contract(config.saleABI, contract)
+        const ctrct = new getterWeb3.eth.Contract(ABI.saleABI, contract)
         const reqPrice = await ctrct.methods.price().call()
         return parseFloat(reqPrice / config.decimal)
     } catch (e) {
@@ -96,7 +129,7 @@ export async function RequestLockedFunds (contracts = [], user) {
     if (!user || !IsTrueNetwork ()) return numberOf
 
     try {
-        const ctrct = new getterWeb3.eth.Contract(config.saleABI, contracts[0])
+        const ctrct = new getterWeb3.eth.Contract(ABI.saleABI, contracts[0])
         const shedule = await ctrct.methods.getSchedule(user).call()
         
         if (shedule) {
@@ -108,7 +141,7 @@ export async function RequestLockedFunds (contracts = [], user) {
     }
 
     try {
-        const ctrct = new getterWeb3.eth.Contract(config.saleABI, contracts[1])
+        const ctrct = new getterWeb3.eth.Contract(ABI.saleABI, contracts[1])
         const shedule = await ctrct.methods.getSchedule(user).call()
         // console.log(shedule)
         if (shedule) {
@@ -129,7 +162,7 @@ export async function RequestSaleStart (contract) {
 
     let status = 0
     try {
-        const ctrct = new getterWeb3.eth.Contract(config.saleABI, contract)
+        const ctrct = new getterWeb3.eth.Contract(ABI.saleABI, contract)
         status = await ctrct.methods.status().call()
     } catch (e) {
         getterWeb3 = new Web3(config.reserveRpcs[2], config.connectOptions)
@@ -141,9 +174,9 @@ export async function RequestSaleStart (contract) {
 export async function ContractDataSetup (contracts = []) {
     // console.log("contract")
     // console.log(contracts)
-    const tokenContract = new getterWeb3.eth.Contract(config.saleABI, contracts[0])
+    const tokenContract = new getterWeb3.eth.Contract(ABI.saleABI, contracts[0])
     
-    const tokenSecondContract = new getterWeb3.eth.Contract(config.saleABI, contracts[1])
+    const tokenSecondContract = new getterWeb3.eth.Contract(ABI.saleABI, contracts[1])
 
     const saleAmount = await tokenContract.methods.saleAmount().call()
     // const saleEnd = await tokenContract.methods.saleEnd().call()
@@ -172,7 +205,7 @@ export async function RequestUnLockedFunds (contracts = [], user) {
     if (!user) return numberOf
 
     try {
-        const ctrct = new getterWeb3.eth.Contract(config.saleABI, contracts[0])
+        const ctrct = new getterWeb3.eth.Contract(ABI.saleABI, contracts[0])
         const shedule = await ctrct.methods.getUnlockedTokens(user).call()
         
         if (shedule) {
@@ -185,7 +218,7 @@ export async function RequestUnLockedFunds (contracts = [], user) {
     }
 
     try {
-        const ctrct = new getterWeb3.eth.Contract(config.saleABI, contracts[1])
+        const ctrct = new getterWeb3.eth.Contract(ABI.saleABI, contracts[1])
         const shedule = await ctrct.methods.getUnlockedTokens(user).call()
         // console.log(shedule)
         if (shedule) {
@@ -211,7 +244,7 @@ export async function WithdrawTokens (contract, amount = "100000000000000000000"
     if (!user) user = await RequestWallet ()
     try {
         const w3 = new Web3(env, config.connectOptions)
-        const ctr = new w3.eth.Contract(config.saleABI, contract)
+        const ctr = new w3.eth.Contract(ABI.saleABI, contract)
         const withdraw = await ctr.methods.withdrawTokens(amount).send({
             from: user
         }).then((res) => {
@@ -237,7 +270,7 @@ export async function AcknowApprovedAmount (token, spender, user) {
     if (!user) user = await RequestWallet ()
     
     try {
-        const w3 = new getterWeb3.eth.Contract(config.erc20ABI, token)
+        const w3 = new getterWeb3.eth.Contract(ABI.erc20ABI, token)
         const allowance = await w3.methods.allowance(user, spender).call()
 
         const allowanceStr = allowance.toString()
@@ -273,7 +306,7 @@ export async function ApproveTokens ( spendingToken, spendingContract, user, amo
     } else {
         try {
            const w3 = new Web3(env, config.connectOptions)
-           const contract = new w3.eth.Contract(config.erc20ABI, spendingToken)
+           const contract = new w3.eth.Contract(ABI.erc20ABI, spendingToken)
            const approving = await contract.methods.approve(spendingContract, usingAmount).send({
              from: user
            }).then((res) => {
@@ -307,7 +340,7 @@ export async function Buy ( spendingContract, user, amount ) {
 
     try {
         const w3 = new Web3(env, config.connectOptions)
-        const contract = new w3.eth.Contract(config.saleABI, spendingContract)
+        const contract = new w3.eth.Contract(ABI.saleABI, spendingContract)
 
         const spendingAmount = `0x${(amount * config.decimal).toString(16)}`
 
@@ -331,7 +364,7 @@ export async function RequestMax ( token, user ) {
     if (!user && user !== config.zeroAddress) user = await RequestWallet ()
     
     try {
-        const contract = new getterWeb3.eth.Contract(config.erc20ABI, token)
+        const contract = new getterWeb3.eth.Contract(ABI.erc20ABI, token)
         val = await contract.methods.balanceOf(user).call()
     } catch (e) {
         getterWeb3 = new Web3(config.reserveRpcs[6], config.connectOptions)
@@ -345,7 +378,7 @@ export async function RequestMax ( token, user ) {
 export async function RequestLeftTokens ( contract ) {
     let val = 0
     try {     
-       const ctrct= new getterWeb3.eth.Contract(config.saleABI, contract)
+       const ctrct= new getterWeb3.eth.Contract(ABI.saleABI, contract)
         val = await ctrct.methods.totalTokensLeft().call()
     } catch (e) {
         getterWeb3 = new Web3(config.reserveRpcs[7], config.connectOptions)
