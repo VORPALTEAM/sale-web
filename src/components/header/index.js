@@ -4,6 +4,12 @@ import { menu, styles } from './MenuConfig'
 import { mainHost } from '../../config'
 
 const MenuSection = ({ isMobile = false}) => {
+
+  const ExecUrl = (event) => {
+      const url = event.target.dataset.url
+      window.open(url, "blank")
+  }
+
   return(
     <div className={isMobile ? "menu--section mobile--menu--ctnr" : "menu--section"}>
     {menu.map((item ,index) => {
@@ -32,7 +38,8 @@ const MenuSection = ({ isMobile = false}) => {
               " submenu--item--first" :((ind === item.submenu.length - 1) ?
             " submenu--item--last" : "")}`
                return(
-                <div key={"subs_"+index+"_"+ind} className={siClass}>
+                <div key={"subs_"+index+"_"+ind} className={siClass} 
+                data-url={subitem.url} onClick={ExecUrl}>
                    <a href={subitem.url} target="_blank">{subitem.name}</a>
                 </div>
                )
