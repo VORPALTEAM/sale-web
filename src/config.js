@@ -8,19 +8,19 @@ export const chainName = 'Binance'
 export const ethSymbol = 'BNB'
 export const rpcUrl = "https://data-seed-prebsc-1-s1.binance.org:8545/"
 export const reserveRpcs = [
-	"https://bsc-dataseed1.binance.org/",
-	"https://bsc-dataseed2.binance.org/",
-	"https://bsc-dataseed3.binance.org/",
-	"https://bsc-dataseed4.binance.org/",
-	"https://bsc-dataseed1.defibit.io/",
-	"https://bsc-dataseed1.defibit.io/",
-	"https://bsc-dataseed2.defibit.io/",
-	"https://bsc-dataseed3.defibit.io/",
-	"https://bsc-dataseed4.defibit.io/",
-    "https://bsc-dataseed1.ninicoin.io/",
-	"https://bsc-dataseed2.ninicoin.io/",
-	"https://bsc-dataseed3.ninicoin.io/",
-	"https://bsc-dataseed4.ninicoin.io/",
+	"https://data-seed-prebsc-1-s1.binance.org:8545/",
+	"https://data-seed-prebsc-2-s1.binance.org:8545/",
+	"http://data-seed-prebsc-1-s2.binance.org:8545/",
+	"http://data-seed-prebsc-2-s2.binance.org:8545/",
+	"https://data-seed-prebsc-1-s3.binance.org:8545/",
+	"https://data-seed-prebsc-2-s3.binance.org:8545/",
+	"https://data-seed-prebsc-1-s1.binance.org:8545/",
+	"https://data-seed-prebsc-2-s1.binance.org:8545/",
+	"http://data-seed-prebsc-1-s2.binance.org:8545/",
+	"http://data-seed-prebsc-2-s2.binance.org:8545/",
+	"https://data-seed-prebsc-1-s3.binance.org:8545/",
+	"https://data-seed-prebsc-2-s3.binance.org:8545/",
+	"http://data-seed-prebsc-2-s2.binance.org:8545/"
 ]
 // export const rpcUrl = "https://data-seed-prebsc-1-s1.binance.org:8545/"
 export const decimal = 1000000000000000000
@@ -66,23 +66,23 @@ export const pairs = {
 	VAOBUSD: 0
 }
 
-export const VRPToken = "0xF6C220E1a9a2aE516b46477480228e481D6dfF5c" // VRP
-export const VDAOToken = "0x415cD4AB2F5574EE8391dC4E15D360eae7C101cf" // VDAO
+export const VRPToken = "0x7c9D9b99cD40ac20F59F9fe228ebB3e2483e970d" // VRP
+export const VDAOToken = "0x0049b0e734Ae8eabee364326FbFeFb273B5f0b7e" // VDAO
 
 export const zeroAddress = "0x0000000000000000000000000000000000000000"
 
 export const usdTokens = [{
 	name: defaultCurrency,
-	address: "0x55d398326f99059ff775485246999027b3197955"
+	address: "0xCDf4F354596e68671dB43AcB64f2da14862e8403"
    },{
 	name: selectableCurrency,
-	address: "0xe9e7cea3dedca5984780bafc599bd69add087d56"
+	address: "0xAd8a6e033cbaCD0910234c596f15ef8326B7cDF1"
    }]  // USDC or USDT && BUSD - list of tokens available for using for payment
 
-export const saleContractAddrVRPUSDT = "0xeEe35c13d297E7f3E9b5445B8f808299128D3428" // Vorpal sale contracts
-export const saleContractAddrVDAOUSDT = "0xC1F18D08Bc23C276EBAa5eE1c047bCbC1715fC4f"
-export const saleContractAddrVRPBUSD = "0x860D93B0a4d7Ae930aA966714F4f94dB05a6A2E8" 
-export const saleContractAddrVDAOBUSD = "0x625597d48bf529181d2fF31dF4a22A49dd267209" 
+export const saleContractAddrVRPUSDT = "0x30aEF32c9590B060D43877eD19047E58cC75015b" // Vorpal sale contracts
+export const saleContractAddrVDAOUSDT = "0xbAf4fBBD6a6A962FA36c5F2Bb5aa36929D7Fe14C"
+export const saleContractAddrVRPBUSD = "0x6b3aD5fD39CcE379702a296d8318b3faB4b6F7B6" 
+export const saleContractAddrVDAOBUSD = "0x0E181a04c06b81828651501b2F5B955d3d0A8d18" 
 
 export const saleAmountVRP = 42000000
 export const saleAmountVDAO = 210000
