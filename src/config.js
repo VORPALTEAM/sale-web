@@ -1,12 +1,12 @@
 export const mainHost = "https://vorpal.finance"
 export const mobileUrl = "https://metamask.app.link/dapp/sale.vorpal.finance/"
-export const chainID = 56
-export const chainHexID = '0x38'
+export const chainID = 97
+export const chainHexID = '0x61'
 // export const chainName = 'Binance'
 export const chainName = 'Binance'
 // export const ethSymbol = 'BNB'
 export const ethSymbol = 'BNB'
-export const rpcUrl = "https://bsc-dataseed.binance.org/"
+export const rpcUrl = "https://data-seed-prebsc-1-s1.binance.org:8545/"
 export const reserveRpcs = [
 	"https://bsc-dataseed1.binance.org/",
 	"https://bsc-dataseed2.binance.org/",
