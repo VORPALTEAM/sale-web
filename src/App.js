@@ -41,7 +41,7 @@ function App() {
         <div className="star--section">
           <TokenSelector />
           <StarDiagram />
-          <StarTimer />
+          {/* <StarTimer /> */}
         </div>
         <div className="buy--section">
           <div className="value--subsection">
