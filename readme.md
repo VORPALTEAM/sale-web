@@ -1,3 +1,5 @@
+This page using for token sales on presale and private sale stages
+
 # Getting Started 
 
   yarn install / npm i 
