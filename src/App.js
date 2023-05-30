@@ -22,8 +22,8 @@ function App() {
   const now = nowD.getTime()
   const [time, setTime] = useState(now)
   const timeEnd = handContractData.saleEnd * 1000
-  const stageText = time > timeEnd ? "stage: waiting... " :"stage: Seed Round"
-  
+  // const stageText = time > timeEnd ? "stage: waiting... " :"stage: Seed Round"
+  const stageText = "stage: Seed Round"
   const StartTimer = () => {
     if (time <= timeEnd) {
       setTimeout(() => {
