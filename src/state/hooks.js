@@ -1,8 +1,10 @@
+import Web3 from 'web3';
 import store from './store'
 import {loadAccount } from './reducer'
 import * as config from '../config'
 import * as ABI from '../abi'
-import Web3 from 'web3';
+
+/* global BigInt */
 
 const env = window.ethereum
 let getterWeb3 = new Web3(config.rpcUrl, config.connectOptions)
@@ -111,9 +113,9 @@ export function CheckIsConnected () {
 export async function RequestPrice (contract) {
     
     try {
-        const ctrct = new getterWeb3.eth.Contract(ABI.saleABI, contract)
+        const ctrct = new getterWeb3.eth.Contract(ABI.saleABI, String(contract))
         const reqPrice = await ctrct.methods.price().call()
-        return parseFloat(reqPrice / config.decimal)
+        return parseFloat(BigInt(reqPrice) / BigInt(config.decimal))
     } catch (e) {
         getterWeb3 = new Web3(config.reserveRpcs[1], config.connectOptions)
         console.log(e)
@@ -372,7 +374,7 @@ export async function RequestMax ( token, user ) {
         val = 0
     }
 
-    return val / config.decimal
+    return BigInt(val) / BigInt(config.decimal)
 }
 
 export async function RequestLeftTokens ( contract ) {
