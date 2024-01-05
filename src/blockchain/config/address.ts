@@ -1,0 +1,4 @@
+export const VRPToken = "0xed68c7D783E40caAe86aA3a3BCDca0481330ee41";
+export const VAOToken = "0x4807Aa82d46501F284AB2512e69e95b7F71681FB";
+export const USDToken = "0xCDf4F354596e68671dB43AcB64f2da14862e8403";
+export const saleContract = "0x78c15F5aC2E459A258Bb7ee250b9AF3F2Ad94a45";

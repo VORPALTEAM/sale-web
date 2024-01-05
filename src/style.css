@@ -1,0 +1,100 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: #141414;
+}
+
+#renderZone,
+.render--zone,
+.renderBkg,
+.content {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  width: 98vw;
+  height: 98vh;
+  background: transparent;
+}
+
+.renderBkg {
+  z-index: 2;
+  /* background-image: url('../public/model/stars-hero.jpg'); */
+  width: 200vw;
+  background-size: 100%;
+  transform: translateX(0);
+  transition-property: transform; 
+  transition-duration: 1s;
+  transition-timing-function: ease-in-out;
+}
+
+.content {
+  z-index: 3;
+}
+
+.Menu {
+  position: fixed;
+  top: 100px;
+  left: 100px;
+  min-width: 100px;
+  z-index: 24;
+  background: rgba(73, 32, 161, 0.7);
+}
+
+.MenuInner {
+  padding: 0 20px 20px;
+}
+
+.menuItem {
+  color: #e5e5e5;
+  text-transform: uppercase;
+  margin-top: 20px;
+  cursor: pointer;
+  transition-property: all;
+  transition-duration: 0.4s;
+  transition-timing-function: linear;
+}
+
+.menuItem:hover {
+  transform: scale(1.1);
+}
+
+.hidden {
+  display: none;
+}
+
+.rightMenu {
+  position: fixed;
+  z-index: 999;
+  top: 300px;
+  right: 50px;
+  width: 200px;
+  height: 200px;
+  border-radius: 20px;
+  background: rgba(165, 57, 201, 0.7);
+}
+
+.rmInner {
+  color: #fff;
+  padding: 20px;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.selectBtnCtnr {
+   position: fixed;
+   z-index: 999;
+   top: 150px;
+   left: 100px;
+   padding: 20px;
+   color: #FFF;
+}
+
+.selectBtn {
+  padding: 20px;
+  border-radius: 100px;
+}
+
+.selectBtn.selected {
+  border: 1px solid #fff;
+}

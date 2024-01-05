@@ -1,28 +1,56 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
-    <!-- Google tag (gtag.js) --> 
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-86DGWJ0YG6"></script> 
-    <script> 
-      window.dataLayer = window.dataLayer || []; 
-      function gtag(){dataLayer.push(arguments);} 
-      gtag('js', new Date()); 
- 
-      gtag('config', 'G-86DGWJ0YG6'); 
-    </script>
     <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>WebGL Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <title>Buy VRP and VDAO token</title>
-    <link rel="shortcut icon" href="images/favicon.ico">
-    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
-    <link rel="preload stylesheet" type="text/css" href="fonts/roboto.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <script src="main.js"></script>
   </head>
-  <body class="body--unfixed">
-    <noscript>You need to enable JavaScript to run this app.</noscript>
+  <body>
     <div id="root"></div>
+    <style>
+      section {
+        width: 100vw;
+        height: 100vh;
+      }
 
+      section h1 {
+        color: #fff;
+        font-size: 72px;
+        margin-top: 100px;
+        margin-left: 100px;
+      }
+
+      .centerCtnr {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 1px;
+        height: 1px;
+        z-index: 999;
+        display: grid;
+        place-items: center;
+      }
+
+      .targeter {
+        position: fixed;
+        top: calc(50% - 50px);
+        left: calc(50% - 50px);
+        transform: rotate(0deg);
+        z-index: 899;
+      }
+    </style>
+      <div class="targeter">
+        <svg width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+          <line x1="0" y1="50" x2="100" y2="50" stroke="green" stroke-width="2" />
+          <line x1="50" y1="0" x2="50" y2="100" stroke="green" stroke-width="2" />
+        </svg> 
+      </div> 
+      <div class="selectBtnCtnr">
+        <div id="selectVRP" class="selectBtn selected">VRP</div>   
+        <div id="selectVAO" class="selectBtn">VAO</div>   
+      </div>
   </body>
 </html>
