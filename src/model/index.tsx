@@ -269,10 +269,10 @@ const ModelSetup = (gltf: any) => {
       if (child.name === "Planet") {
         child.material.color.set(0x141414); // 0x007fff
         const textureLoader = new THREE.TextureLoader();
-        const nightTexture = textureLoader.load('model/enight.jpg');
+        const nightTexture = textureLoader.load('model/textures/enight.jpg');
         const materialClouds = new THREE.MeshLambertMaterial( {
 
-					map: textureLoader.load( 'model/enight.jpg' ),
+					map: textureLoader.load( 'model/textures/enight.jpg' ),
 					transparent: true
 
 				} );
