@@ -77,7 +77,7 @@ export class Settings {
         radiusMax: 1000,
         scaleMin: 8,
         scaleMax: 10,
-        starSize: 1.5,
+        starSize: 5,
         starAlpha: 0.5,
 
         galaxiesCount: 5,

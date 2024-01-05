@@ -223,12 +223,14 @@ function ScaleItem (name: string) {
 const stars = new FarStars({
   starsCount: 6000
 })
+
 let bigStar : BigStar;
 
 const ModelSetup = (gltf: any) => {
   console.log(gltf)
   const model = gltf.scene;
   rotatable = new THREE.Group();
+  rotatable.name="PlanetGroup";
   const container = document.querySelector(".render--zone");
   const clicker = document.querySelector(".planetClicker");
   const ev = new Event('click');
@@ -339,10 +341,11 @@ const SelectVRP = () => {
       ease: 'power1.inOut',  // Linear easing
       onUpdate: () => {
         frameCount++
-        const delAngle = Math.PI * (frameCount / 140)
-        console.log(delAngle)
+        const delAngle = target1?.rotation.y || 0;
+        // console.log(delAngle)
         stars.azimutAngle = delAngle;
-        stars.polarAngle = delAngle;
+        console.log(stars.azimutAngle)
+        // stars.polarAngle = delAngle;
       }
     })
   }
