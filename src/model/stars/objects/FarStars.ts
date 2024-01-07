@@ -3,9 +3,98 @@ import { IBaseClass } from "../interfaces/IBaseClass";
 import { MyMath } from "../utils/MyMath";
 import { Settings } from "../data/Settings";
 
-import vsFarStars from '../shaders/farStars/vs.glsl';
-import fsFarStars from '../shaders/farStars/fs.glsl';
+// import vsFarStars from '../shaders/farStars/vs.glsl';
+// import fsFarStars from '../shaders/farStars/fs.glsl';
 
+const vsFarStars = `
+uniform float radiusMin;
+uniform float radiusMax;
+uniform float scaleMin;
+uniform float scaleMax;
+
+varying vec3 vPosition;
+
+void main() {
+
+    vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
+	gl_Position = mvPosition * projectionMatrix;
+    vPosition = position;
+
+    float _radiusMin = 2.;
+    float _radiusMax = 500.;
+    float _scaleMin = 1.;
+    float _scaleMax = 10.;
+    _radiusMin = radiusMin;
+    _radiusMax = radiusMax;
+    _scaleMin = scaleMin;
+    _scaleMax = scaleMax;
+
+    // float dist = distance(position, vec3(0.5, 0.5, 0.5));
+    float dist = distance(position, vec3(0., 0., 0.));
+
+    float distFactor = (dist - _radiusMin) / (_radiusMax - _radiusMin);
+    if (distFactor < 0.) distFactor = 0.;
+    if (distFactor > 1.) distFactor = 1.;
+    gl_PointSize = _scaleMin + distFactor * (_scaleMax - _scaleMin);
+
+}`
+
+const fsFarStars = `
+precision highp float;
+
+uniform vec2 cameraMovmentPower;
+uniform float starSize;
+uniform float starColor;
+uniform float starAlpha;
+
+varying vec3 vPosition;
+
+float line(vec2 uv, vec2 pt1, vec2 pt2, float aPointSize, float aTensionPower) {
+    float clrFactor = 0.0;
+    float r = distance(uv, pt1) / distance(pt1, pt2);
+    
+    if (r <= aTensionPower) {
+        vec2 ptc = mix(pt1, pt2, r); 
+        float dist = distance(ptc, uv);
+        if (dist < aPointSize / 1.) {
+            clrFactor = 1.0;
+        }
+    }
+
+    if (distance(uv, vec2(0.5, 0.5)) < aPointSize) {
+        // gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
+        clrFactor = 1.0;
+    }
+
+    return clrFactor;
+}
+
+
+void main() {
+    float pointSize = starSize * 0.05;
+    float tension = 5.0;
+    float tensionPower = 2.0;
+
+    float pDist = distance(vPosition, vec3(0., 0., 0.));
+    tension = pDist * 0.001;
+
+    // float minDistance = 0.0001;
+
+    // if (abs(cameraMovmentPower.x) > minDistance || abs(cameraMovmentPower.y) > minDistance) {
+    float clr = line(
+        gl_PointCoord.xy, 
+        (cameraMovmentPower.xy * tension) + .5, 
+        vec2(0.5, 0.5), 
+        // vec2(0., 0.),
+        pointSize, 
+        tensionPower
+        ) * 1.0;
+    gl_FragColor = vec4(clr, clr, clr, starAlpha);
+    // }
+    
+    // gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
+
+}`
 
 export type FarStarsParams = {
     starsCount: number;

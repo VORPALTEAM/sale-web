@@ -73,11 +73,11 @@ export class Settings {
 
     static skyData = {
         starsCount: 2000,
-        radiusMin: 200,
-        radiusMax: 1000,
-        scaleMin: 8,
+        radiusMin: 3,
+        radiusMax: 50,
+        scaleMin: 5,
         scaleMax: 10,
-        starSize: 5,
+        starSize: 2.5,
         starAlpha: 0.5,
 
         galaxiesCount: 5,

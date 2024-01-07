@@ -1,8 +1,11 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 module.exports = {
+  mode: 'development',
   entry: './src/index.tsx',
+
   output: {
     path: path.join(__dirname, '/dist'),
     filename: 'bundle.js',
@@ -18,6 +21,10 @@ module.exports = {
         exclude: /node_modules/,
       },
       {
+        test: /\.(glsl|vs|fs)$/,
+        loader: 'ts-shader-loader'
+      },
+      {
         test: /\.css$/,
         use: ['style-loader', 'css-loader'],
       },
@@ -25,13 +32,18 @@ module.exports = {
         test: /\.(glsl|vs|fs|vert|frag)$/,
         exclude: /node_modules/,
         use: [
-          'raw-loader',
-          'glslify-loader',
+          'ts-shader-loader'
         ],
       },
     ],
   },
   resolve: {
+    plugins: [
+      new TsconfigPathsPlugin({
+        baseUrl: __dirname,
+        configFile: path.join(__dirname, 'tsconfig.json')
+      })
+    ],
     extensions: ['.tsx', '.ts', '.js', '.glsl', '.vs', '.fs', '.vert', '.frag'],
   },
   plugins: [

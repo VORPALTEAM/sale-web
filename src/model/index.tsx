@@ -9,12 +9,49 @@ import { camObject, pointVector } from "./types";
 import * as config from "./config";
 import { FarStars } from "./stars/objects/FarStars";
 import { BigStar } from "./stars/objects/BigStar";
+import { BigStar2 } from "./stars/objects/BigStar2";
+
+// import vsStarPoints from './stars/shaders/pointstar/vertex.glsl';
+// import fgStarPoints from './stars/shaders/pointstar/fragment.glsl';
+
+const vsStarPoints = `
+varying vec3 vNormal;
+varying vec3 vViewPosition;
+
+void main() {
+    vNormal = normalize(normalMatrix * normal); // Нормаль вершины
+    vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+    vViewPosition = -mvPosition.xyz; // Позиция вершины относительно камеры
+    gl_Position = projectionMatrix * mvPosition;
+}
+`
+
+const fgStarPoints = `
+varying vec3 vNormal;
+varying vec3 vViewPosition;
+
+void main() {
+    // Расчет угла между нормалью и направлением на камеру
+    float intensity = dot(normalize(vViewPosition), vNormal);
+    float edgeFactor = smoothstep(0.0, 1.0, intensity);
+
+    // Цвет и прозрачность сферы
+    vec4 color = vec4(1.0, 1.0, 0.0, edgeFactor); // Белый цвет с учетом прозрачности
+
+    gl_FragColor = color;
+}`
 
 let isCamMoving = false;
 
 const loader = new GLTFLoader();
 const scene = new THREE.Scene();
 const defaultMaterials = new Map<string, THREE.Material>();
+
+const pointMaterial = new THREE.ShaderMaterial({
+  vertexShader: vsStarPoints,
+  fragmentShader: fgStarPoints,
+  transparent: true
+});
 
 const camera = new THREE.PerspectiveCamera(
   45,
@@ -63,10 +100,16 @@ const interactionManager = new InteractionManager(
   renderer.domElement
 );
 
+
+const stars = new FarStars({
+  starsCount: 6000
+})
+
 function animate() {
   requestAnimationFrame(animate);
   renderer.render(scene, camera);
   interactionManager.update();
+  stars.update(1 / 60);
 }
 
 animate();
@@ -220,11 +263,7 @@ function ScaleItem (name: string) {
   }
 }
 
-const stars = new FarStars({
-  starsCount: 6000
-})
-
-let bigStar : BigStar;
+let bigStar: BigStar2;
 
 const ModelSetup = (gltf: any) => {
   console.log(gltf)
@@ -251,7 +290,6 @@ const ModelSetup = (gltf: any) => {
         console.log("Position sun")
         console.log(child.position)
         // child.material = material;
-        bigStar = new BigStar(child.position, camera, { starSize: 320 });
         const material = new THREE.MeshStandardMaterial({
           color: 0xffff00, // основной цвет объекта
           emissive: 0xffff00 // цвет самосветящегося эффекта
@@ -266,6 +304,12 @@ const ModelSetup = (gltf: any) => {
             // shading: THREE.SmoothShading
           });
         child.material = sunMaterial;
+        /* const sunLight = new THREE.Mesh(child.geometry, pointMaterial);
+        sunLight.scale.x *= 1.1;
+        sunLight.scale.y *= 1.1;
+        sunLight.scale.z *= 1.1;
+        rotatable.add(sunLight); */
+        // child.material = pointMaterial;
       }
 
       if (child.name === "Planet") {
@@ -278,9 +322,7 @@ const ModelSetup = (gltf: any) => {
 					transparent: true
 
 				} );
-        if (materialClouds && materialClouds.map) {
-          materialClouds.map.colorSpace = THREE.SRGBColorSpace;
-        }
+
         const material = new THREE.MeshPhongMaterial({
           map: nightTexture,
           emissiveMap: nightTexture,
@@ -301,6 +343,10 @@ const ModelSetup = (gltf: any) => {
       /* if (child.name !== "Sun") {
         rotatable.add(child.clone());
       } else {
+        bigStar = new BigStar2(child.position, camera, 3, {starSize: 1, galaxyColor: {r: 0, g: 0, b: 0}});
+        bigStar.rotateX(camera.rotation.x);
+        bigStar.rotateY(camera.rotation.y);
+        bigStar.rotateZ(camera.rotation.z);
         rotatable.add(bigStar);
       } */
       child.visible = false;
@@ -312,6 +358,7 @@ const ModelSetup = (gltf: any) => {
 
   scene.add(rotatable);
 
+  stars.update(1);
   // ScaleItem("Sun");
   // ScaleItem("Planet");
 
@@ -331,6 +378,7 @@ const ModelSetup = (gltf: any) => {
   return true;
 };
 
+
 const SelectVRP = () => {
   const target1 = scene.getObjectByName("StarSky");
   if (rotatable) {
@@ -344,7 +392,12 @@ const SelectVRP = () => {
         const delAngle = target1?.rotation.y || 0;
         // console.log(delAngle)
         stars.azimutAngle = delAngle;
-        console.log(stars.azimutAngle)
+        console.log(delAngle);
+        stars.update(1000 / 140);
+        if (bigStar) {
+          bigStar.rotateY(delAngle);
+          bigStar.update(1/140);
+        }
         // stars.polarAngle = delAngle;
       }
     })
@@ -353,6 +406,7 @@ const SelectVRP = () => {
 
 const SelectVAO = () => {
   // rotatable.rotation.y = Math.PI / 2
+  const target1 = scene.getObjectByName("StarSky");
     let frameCount = 0;
     if (rotatable) {
       gsap.to(rotatable.rotation, {
@@ -362,10 +416,13 @@ const SelectVAO = () => {
         ease: 'power1.inOut',  // Linear easing
         onUpdate: () => {
           frameCount++
-          const delAngle = Math.PI * (frameCount / 140)
-          console.log(delAngle)
+          const delAngle = target1?.rotation.y || 0;
+          console.log(rotatable.rotation.x)
           stars.azimutAngle = delAngle;
-          stars.polarAngle = delAngle;
+          if (bigStar) {
+            bigStar.rotateY(bigStar.rotation.y + Math.PI * (frameCount / 140));
+            bigStar.update(1/140);
+          }
         }
       })
     }

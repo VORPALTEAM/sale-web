@@ -1,3 +1,5 @@
+precision highp float;
+
 uniform vec2 cameraMovmentPower;
 uniform float starSize;
 uniform float starColor;
