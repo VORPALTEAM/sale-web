@@ -1,0 +1,32 @@
+.pageCtnr {
+    position:absolute;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    z-index: 5;
+    color: #00FFFF;
+    font-family: Inter;
+}
+
+
+.header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.mainMenu {
+    display: flex;
+
+    .mainMenuItem {
+        margin: 20px;
+
+        a {
+            color: #FFF;
+            text-decoration: none;
+        }
+
+        &.active {
+            border-bottom: 2px solid #00FFFF;
+        }
+    }
+}

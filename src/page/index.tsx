@@ -1,11 +1,12 @@
 import React from "react";
+import Header from "./components/header";
 
 const Page = () => {
 
     return(
         <div className="pageCtnr">
             <div className="vorpalPage">
-                Page
+                <Header />
             </div>
         </div>
     )

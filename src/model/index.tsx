@@ -394,10 +394,10 @@ const SelectVRP = () => {
         stars.azimutAngle = delAngle;
         console.log(delAngle);
         stars.update(1000 / 140);
-        if (bigStar) {
+        /* if (bigStar) {
           bigStar.rotateY(delAngle);
           bigStar.update(1/140);
-        }
+        } */
         // stars.polarAngle = delAngle;
       }
     })
@@ -419,10 +419,10 @@ const SelectVAO = () => {
           const delAngle = target1?.rotation.y || 0;
           console.log(rotatable.rotation.x)
           stars.azimutAngle = delAngle;
-          if (bigStar) {
+          /* if (bigStar) {
             bigStar.rotateY(bigStar.rotation.y + Math.PI * (frameCount / 140));
             bigStar.update(1/140);
-          }
+          } */
         }
       })
     }

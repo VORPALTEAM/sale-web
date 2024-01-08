@@ -1,0 +1,8 @@
+@import './render';
+@import './page';
+@import './mobile';
+@import './pc';
+
+._hidden {
+    display: none !important;
+}

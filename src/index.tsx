@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import Model3D from './model';
-import './style.css'
+import './style/app.scss'
 import Page from './page';
 
 const root = ReactDOM.createRoot(

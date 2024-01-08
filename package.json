@@ -29,6 +29,7 @@
     "react-dom": "^18.2.0",
     "react-redux": "^9.0.4",
     "sass": "^1.69.7",
+    "sass-loader": "^13.3.3",
     "three": "^0.160.0",
     "three.interactive": "^1.7.0",
     "ts-shader-loader": "^2.0.2",
