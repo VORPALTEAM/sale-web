@@ -9,6 +9,57 @@
   <body>
     <div id="root"></div>
     <style>
+      @font-face {
+        font-family: "Inter";
+        src: local("Inter Thin"), local("Inter-Thin"),
+          url("/fonts/Inter-Thin.ttf") format("truetype");
+        font-weight: 100;
+        font-style: normal;
+      }
+
+      @font-face {
+        font-family: "Inter";
+        src: url("/fonts/Inter-Regular.ttf") format("truetype");
+        font-weight: 200;
+        font-style: normal;
+      }
+
+      @font-face {
+        font-family: "Inter";
+        src: url("/fonts/Inter-Regular.ttf") format("truetype");
+        font-weight: 300;
+        font-style: normal;
+      }
+
+      @font-face {
+        font-family: "Inter";
+        src: url("/fonts/Inter-Regular.ttf") format("truetype");
+        font-weight: 400;
+        font-style: normal;
+      }
+
+      @font-face {
+        font-family: "Inter";
+        src: url("/fonts/Inter-SemiBold.ttf") format("truetype");
+        font-weight: 500;
+        font-style: normal;
+      }
+
+      @font-face {
+        font-family: "Inter";
+        src: url("/fonts/Inter-Bold.ttf") format("truetype");
+        font-weight: 600;
+        font-style: normal;
+      }
+
+      @font-face {
+        font-family: "Inter";
+        src: url("/fonts/Inter-ExtraBold.ttf") format("truetype");
+        font-weight: 700;
+        font-style: normal;
+      }
+    </style>
+    <style>
       section {
         width: 100vw;
         height: 100vh;
@@ -40,15 +91,15 @@
         z-index: 899;
       }
     </style>
-      <div class="targeter">
-        <svg width="100" height="100" xmlns="http://www.w3.org/2000/svg">
-          <line x1="0" y1="50" x2="100" y2="50" stroke="green" stroke-width="2" />
-          <line x1="50" y1="0" x2="50" y2="100" stroke="green" stroke-width="2" />
-        </svg> 
-      </div> 
-      <div class="selectBtnCtnr">
-        <div id="selectVRP" class="selectBtn selected">VRP</div>   
-        <div id="selectVAO" class="selectBtn">VAO</div>   
-      </div>
+    <div class="targeter">
+      <svg width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+        <line x1="0" y1="50" x2="100" y2="50" stroke="green" stroke-width="2" />
+        <line x1="50" y1="0" x2="50" y2="100" stroke="green" stroke-width="2" />
+      </svg>
+    </div>
+    <div class="selectBtnCtnr">
+      <div id="selectVRP" class="selectBtn selected">VRP</div>
+      <div id="selectVAO" class="selectBtn">VAO</div>
+    </div>
   </body>
 </html>

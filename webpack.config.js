@@ -35,6 +35,15 @@ module.exports = {
           'ts-shader-loader'
         ],
       },
+      {
+        test: /\.(ttf|eot|woff|woff2)$/,
+        use: {
+          loader: 'file-loader',
+          options: {
+            name: 'fonts/[name].[ext]',
+          },
+        },
+      },
     ],
   },
   resolve: {
@@ -44,7 +53,7 @@ module.exports = {
         configFile: path.join(__dirname, 'tsconfig.json')
       })
     ],
-    extensions: ['.tsx', '.ts', '.js', '.glsl', '.vs', '.fs', '.vert', '.frag'],
+    extensions: ['.tsx', '.ttf', '.ts', '.js', '.glsl', '.vs', '.fs', '.vert', '.frag'],
   },
   plugins: [
     new HtmlWebpackPlugin({

@@ -1,7 +1,17 @@
+/* @import './fonts'; */
 @import './render';
 @import './page';
 @import './mobile';
 @import './pc';
+
+body {
+    font-family: 'Inter';
+    font-weight: 400;
+}
+
+a, div {
+    transition: all .3s ease-in-out;
+}
 
 ._hidden {
     display: none !important;
