@@ -1,7 +1,7 @@
 @font-face {
     font-family: "Inter";
     src: local("Inter Thin"), local("Inter-Thin"),
-      url("../../public/fonts/Inter-Thin.otf") format("otf");
+      url("../../public/fonts/Inter-Thin.ttf") format("truetype");
     font-weight: 100;
     font-style: normal;
   }
@@ -9,7 +9,7 @@
   @font-face {
     font-family: "Inter";
     src: local("Inter"), local("Inter-Regular"),
-      url("../../public/fonts/Inter-Regular.otf") format("otf");
+      url("../../public/fonts/Inter-Regular.ttf") format("truetype");
     font-weight: 200;
     font-style: normal;
   }
@@ -17,7 +17,7 @@
   @font-face {
     font-family: "Inter";
     src: local("Inter"), local("Inter-Regular"),
-      url("../../public/fonts/Inter-Regular.otf") format("otf");
+      url("../../public/fonts/Inter-Regular.ttf") format("truetype");
     font-weight: 300;
     font-style: normal;
   }
@@ -25,7 +25,7 @@
   @font-face {
     font-family: "Inter";
     src: local("Inter"), local("Inter-Regular"),
-      url("../../public/fonts/Inter-Regular.otf") format("otf");
+      url("../../public/fonts/Inter-Regular.ttf") format("truetype");
     font-weight: 400;
     font-style: normal;
   }
@@ -33,7 +33,7 @@
   @font-face {
     font-family: "Inter";
     src: local("Inter bold"), local("Inter-bold"),
-      url("../../public/fonts/Inter-SemiBold.otf") format("otf");
+      url("../../public/fonts/Inter-SemiBold.ttf") format("truetype");
     font-weight: 500;
     font-style: normal;
   }
@@ -41,7 +41,7 @@
   @font-face {
     font-family: "Inter";
     src: local("Inter bold"), local("Inter-bold"),
-      url("../../public/fonts/Inter-Bold.otf") format("otf");
+      url("../../public/fonts/Inter-Bold.ttf") format("truetype");
     font-weight: 600;
     font-style: normal;
   }
@@ -49,7 +49,7 @@
   @font-face {
     font-family: "Inter";
     src: local("Inter bold"), local("Inter-bold"),
-      url("../../public/fonts/Inter-ExtraBold.otf") format("otf");
+      url("../../public/fonts/Inter-ExtraBold.ttf") format("truetype");
     font-weight: 700;
     font-style: normal;
   }
