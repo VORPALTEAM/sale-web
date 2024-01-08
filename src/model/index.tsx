@@ -50,7 +50,8 @@ const defaultMaterials = new Map<string, THREE.Material>();
 const pointMaterial = new THREE.ShaderMaterial({
   vertexShader: vsStarPoints,
   fragmentShader: fgStarPoints,
-  transparent: true
+  transparent: true,
+  side: THREE.DoubleSide
 });
 
 const camera = new THREE.PerspectiveCamera(
@@ -263,6 +264,24 @@ function ScaleItem (name: string) {
   }
 }
 
+const labelMaterial = new THREE.SpriteMaterial({
+  color: 0xff00000,
+  side: THREE.DoubleSide,
+  transparent: true,
+});
+const labelMaterial2 = new THREE.SpriteMaterial({
+  color: 0x00000ff,
+  side: THREE.DoubleSide,
+  transparent: true,
+});
+
+const root = new THREE.Object3D();
+root.position.x = 1;
+const label = new THREE.Sprite(labelMaterial);
+const label2 = new THREE.Sprite(labelMaterial2);
+label.position.x = 1;
+label2.position.x = 1;
+label2.position.z = -1;
 let bigStar: BigStar2;
 
 const ModelSetup = (gltf: any) => {
@@ -304,11 +323,6 @@ const ModelSetup = (gltf: any) => {
             // shading: THREE.SmoothShading
           });
         child.material = sunMaterial;
-        /* const sunLight = new THREE.Mesh(child.geometry, pointMaterial);
-        sunLight.scale.x *= 1.1;
-        sunLight.scale.y *= 1.1;
-        sunLight.scale.z *= 1.1;
-        rotatable.add(sunLight); */
         // child.material = pointMaterial;
       }
 
@@ -344,9 +358,10 @@ const ModelSetup = (gltf: any) => {
         rotatable.add(child.clone());
       } else {
         bigStar = new BigStar2(child.position, camera, 3, {starSize: 1, galaxyColor: {r: 0, g: 0, b: 0}});
-        bigStar.rotateX(camera.rotation.x);
+        // bigStar.rotateX(camera.rotation.x);
         bigStar.rotateY(camera.rotation.y);
-        bigStar.rotateZ(camera.rotation.z);
+        // bigStar.rotateZ(camera.rotation.z);
+        console.log(bigStar.rotation);
         rotatable.add(bigStar);
       } */
       child.visible = false;
@@ -355,6 +370,8 @@ const ModelSetup = (gltf: any) => {
   });
   
   rotatable.add(stars)
+  rotatable.add(label)
+  rotatable.add(label2)
 
   scene.add(rotatable);
 
@@ -380,7 +397,7 @@ const ModelSetup = (gltf: any) => {
 
 
 const SelectVRP = () => {
-  const target1 = scene.getObjectByName("StarSky");
+  const target1 = bigStar;
   if (rotatable) {
     gsap.to(rotatable.rotation, {
       duration: 1,  // Animation duration in seconds
@@ -389,16 +406,22 @@ const SelectVRP = () => {
       ease: 'power1.inOut',  // Linear easing
       onUpdate: () => {
         frameCount++
-        const delAngle = target1?.rotation.y || 0;
+        const delAngle = Math.PI - target1?.rotation.y || 0;
         // console.log(delAngle)
         stars.azimutAngle = delAngle;
         console.log(delAngle);
         stars.update(1000 / 140);
-        /* if (bigStar) {
+        if (bigStar) {
           bigStar.rotateY(delAngle);
           bigStar.update(1/140);
-        } */
+        }
         // stars.polarAngle = delAngle;
+      },
+      onComplete: () => {
+        if (bigStar) {
+          bigStar.rotateY(0);
+          bigStar.update(1/140);
+        }
       }
     })
   }
@@ -406,7 +429,7 @@ const SelectVRP = () => {
 
 const SelectVAO = () => {
   // rotatable.rotation.y = Math.PI / 2
-  const target1 = scene.getObjectByName("StarSky");
+  const target1 = bigStar;
     let frameCount = 0;
     if (rotatable) {
       gsap.to(rotatable.rotation, {
@@ -416,13 +439,19 @@ const SelectVAO = () => {
         ease: 'power1.inOut',  // Linear easing
         onUpdate: () => {
           frameCount++
-          const delAngle = target1?.rotation.y || 0;
+          const delAngle = Math.PI - target1?.rotation.y || 0;
           console.log(rotatable.rotation.x)
           stars.azimutAngle = delAngle;
-          /* if (bigStar) {
+          if (bigStar) {
             bigStar.rotateY(bigStar.rotation.y + Math.PI * (frameCount / 140));
             bigStar.update(1/140);
-          } */
+          }
+        },
+        onComplete: () => {
+          if (bigStar) {
+            bigStar.rotateY(-Math.PI);
+            bigStar.update(1/140);
+          }
         }
       })
     }
