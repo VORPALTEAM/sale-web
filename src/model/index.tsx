@@ -353,8 +353,8 @@ const ModelSetup = (gltf: any) => {
         // child.material = material;
         child.visible = false;
       }
-      rotatable.add(child.clone());
-      /* if (child.name !== "Sun") {
+      // rotatable.add(child.clone());
+      if (child.name !== "Sun") {
         rotatable.add(child.clone());
       } else {
         bigStar = new BigStar2(child.position, camera, 3, {starSize: 1, galaxyColor: {r: 0, g: 0, b: 0}});
@@ -363,15 +363,15 @@ const ModelSetup = (gltf: any) => {
         // bigStar.rotateZ(camera.rotation.z);
         console.log(bigStar.rotation);
         rotatable.add(bigStar);
-      } */
+      }
       child.visible = false;
     }
     counter++;
   });
   
   rotatable.add(stars)
-  rotatable.add(label)
-  rotatable.add(label2)
+  // rotatable.add(label)
+  // rotatable.add(label2)
 
   scene.add(rotatable);
 
@@ -409,18 +409,19 @@ const SelectVRP = () => {
         const delAngle = Math.PI - target1?.rotation.y || 0;
         // console.log(delAngle)
         stars.azimutAngle = delAngle;
-        console.log(delAngle);
-        stars.update(1000 / 140);
+        console.log(camera.quaternion)
+        // console.log(delAngle);
+        stars.update(1 / 140);
         if (bigStar) {
-          bigStar.rotateY(delAngle);
-          bigStar.update(1/140);
+          bigStar.lookAt(camera.position);
+          // bigStar.update(1/60);
         }
         // stars.polarAngle = delAngle;
       },
       onComplete: () => {
         if (bigStar) {
-          bigStar.rotateY(0);
-          bigStar.update(1/140);
+          bigStar.lookAt(camera.position);
+          // bigStar.update(1/60);
         }
       }
     })
@@ -440,17 +441,18 @@ const SelectVAO = () => {
         onUpdate: () => {
           frameCount++
           const delAngle = Math.PI - target1?.rotation.y || 0;
-          console.log(rotatable.rotation.x)
+          // console.log(rotatable.rotation.x)
+          console.log(camera.quaternion)
           stars.azimutAngle = delAngle;
           if (bigStar) {
-            bigStar.rotateY(bigStar.rotation.y + Math.PI * (frameCount / 140));
-            bigStar.update(1/140);
+            bigStar.lookAt(camera.position);
+            // bigStar.update(1/60);
           }
         },
         onComplete: () => {
           if (bigStar) {
-            bigStar.rotateY(-Math.PI);
-            bigStar.update(1/140);
+            bigStar.lookAt(camera.position);
+            // bigStar.update(1/60);
           }
         }
       })
