@@ -43,7 +43,8 @@ export class BigStar2 extends THREE.Group {
         let coronaClr = this._params.coronaColor;
 
         let loader = ThreeLoader.getInstance();
-        let tSun = loader.getTexture('sun_surf');
+        let txLoader = new THREE.TextureLoader()
+        let tSun = txLoader.load('/assets/sun/surfTexture.jpg');
 
         this._uniforms = {
             tSun: { value: tSun },
