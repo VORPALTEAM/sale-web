@@ -4,7 +4,7 @@ import {loadAccount } from './reducer'
 import * as config from '../config'
 import * as ABI from '../abi'
 
-/* global BigInt */
+/* global Number */
 
 const env = window.ethereum
 let getterWeb3 = new Web3(config.rpcUrl, config.connectOptions)
@@ -81,7 +81,7 @@ export async function RequestWallet () {
                 RequestWallet ()
               })
               
-            env.on('networkChanged', function (networkId) {
+            env.on('chainChanged', function (networkId) {
                 RequestWallet ()
              })
 
@@ -115,7 +115,7 @@ export async function RequestPrice (contract) {
     try {
         const ctrct = new getterWeb3.eth.Contract(ABI.saleABI, String(contract))
         const reqPrice = await ctrct.methods.price().call()
-        return parseFloat(BigInt(reqPrice) / BigInt(config.decimal))
+        return parseFloat(Number(reqPrice) / Number(config.decimal))
     } catch (e) {
         getterWeb3 = new Web3(config.reserveRpcs[1], config.connectOptions)
         console.log(e)
@@ -293,8 +293,9 @@ export async function AcknowApprovedAmount (token, spender, user) {
 
 export async function ApproveTokens ( spendingToken, spendingContract, user, amount = config.defaultApproveValue ) {
 
-    const usingAmount = `${amount}${config.decimalZeros}`
-
+    const usingAmount = amount * config.decimal
+    console.log("spendingToken : ")
+    console.log(spendingToken)
     if (!user || !IsTrueNetwork ()) user = await RequestWallet ()
 
     if (!user || !IsTrueNetwork ()) {
@@ -307,14 +308,27 @@ export async function ApproveTokens ( spendingToken, spendingContract, user, amo
         return 0
     } else {
         try {
-           const w3 = new Web3(env, config.connectOptions)
+           const w3 = new Web3(env, config.connectOptions);
            const contract = new w3.eth.Contract(ABI.erc20ABI, spendingToken)
-           const approving = await contract.methods.approve(spendingContract, usingAmount).send({
-             from: user
+           /* const transactionObject = {
+            from: user,
+            to: spendingToken,
+            data: contract.methods.approve(spendingContract, String(usingAmount)).encodeABI(),
+           }; */
+           const gasPrice = await w3.eth.getGasPrice();
+           // const gasLimit = await w3.eth.estimateGas(transactionObject);
+           console.log(gasPrice)
+           // console.log(gasLimit)
+           const approving = await contract.methods.approve(spendingContract, String(usingAmount)).send({
+             from: user,
+             gasPrice
            }).then((res) => {
+            console.log(res)
             Promise.resolve(1)
             return 1
-           }, (rej) => {
+           }).catch((rej) => {
+            console.log("Rejected")
+            console.log(rej)
             Promise.reject(0)
             return 0
            })
@@ -344,16 +358,34 @@ export async function Buy ( spendingContract, user, amount ) {
         const w3 = new Web3(env, config.connectOptions)
         const contract = new w3.eth.Contract(ABI.saleABI, spendingContract)
 
-        const spendingAmount = `0x${(amount * config.decimal).toString(16)}`
-
-        await contract.methods.buyTokens(spendingAmount).send({
-            from: user
+        const spendingAmount = amount * config.decimal
+        const gasPrice = await w3.eth.getGasPrice();
+        const transactionObject = {
+            from: user,
+            to: spendingContract,
+            data: contract.methods.buyTokens(String(spendingAmount)).encodeABI(),
+           };
+        console.log(gasPrice)
+        console.log(transactionObject)
+        const gasLimit = await w3.eth.estimateGas(transactionObject);
+        console.log(gasLimit)
+        contract.methods.buyTokens(String(spendingAmount)).send({
+            from: user,
+            gasPrice,
+            gasLimit
+        }).then((res) => {
+            console.log(res)
+            Promise.resolve(true)
+        }).catch((err) => {
+            console.log(err)
+            Promise.reject(false)
         })
 
         // store.dispatch(selectWindow("success"))
 
     } catch (e) {
         console.log(e.code)
+        console.log(e)
         Promise.reject(false)
         return false
     }
@@ -374,7 +406,7 @@ export async function RequestMax ( token, user ) {
         val = 0
     }
 
-    return BigInt(val) / BigInt(config.decimal)
+    return Number(val) / Number(config.decimal)
 }
 
 export async function RequestLeftTokens ( contract ) {

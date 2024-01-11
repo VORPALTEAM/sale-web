@@ -5,7 +5,7 @@ import { updateLockedVRP, updateLockedVDAO, updateLeftVRP, updateLeftVDAO,
   updateUnLockedVRP, updateUnLockedVDAO, updateContractData } from '../state/reducer'
 import * as config from "../config"
 
-/* global BigInt */
+/* global Number */
 
 const LocalStats = () => {
 
@@ -118,14 +118,14 @@ const LocalStats = () => {
       }
 
       if (updateSale) {
-        const leftVRPUSDT = BigInt(await RequestLeftTokens(String(config.saleContractAddrVRPUSDT))) / config.decimal
-        const leftVRPBUSD = BigInt(await RequestLeftTokens(String(config.saleContractAddrVRPBUSD))) / config.decimal
+        const leftVRPUSDT = Number(await RequestLeftTokens(String(config.saleContractAddrVRPUSDT))) / Number(config.decimal)
+        const leftVRPBUSD = Number(await RequestLeftTokens(String(config.saleContractAddrVRPBUSD))) / Number(config.decimal)
   
-        const leftVDAOUSDT = BigInt(await RequestLeftTokens(String(config.saleContractAddrVDAOUSDT))) / config.decimal
-        const leftVDAOBUSD = BigInt(await RequestLeftTokens(String(config.saleContractAddrVDAOBUSD))) / config.decimal
+        const leftVDAOUSDT = Number(await RequestLeftTokens(String(config.saleContractAddrVDAOUSDT))) / Number(config.decimal)
+        const leftVDAOBUSD = Number(await RequestLeftTokens(String(config.saleContractAddrVDAOBUSD))) / Number(config.decimal)
         
-        dispatch(updateLeftVRP(Math.round(BigInt(leftVRPUSDT)) + Math.round(BigInt(leftVRPBUSD))))
-        dispatch(updateLeftVDAO(Math.round(BigInt(leftVDAOUSDT)) + Math.round(BigInt(leftVDAOBUSD))))
+        dispatch(updateLeftVRP(Number(leftVRPUSDT) + Number(leftVRPBUSD)))
+        dispatch(updateLeftVDAO(Number(leftVDAOUSDT) + Number(leftVDAOBUSD)))
       }
 
       if ((VRPDataRequested === true && isDefault) || (VDAOataRequested && !isDefault)) return false;
