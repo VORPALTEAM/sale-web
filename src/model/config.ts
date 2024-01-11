@@ -6,8 +6,8 @@ export const inactiveNameSelector: string = "inactive";
 
 export const wireframeColor = 0xe5e5e5;
 export const colorBlack = 0x000000;
-export const baseLightIntense = 0xc6c6c6;
-export const lightStrength = 6.9;
+export const baseLightIntense = 0xfdfcf0;
+export const lightStrength = 9;
 export const baseCamDistance = 25000;
 export const animDuration = 300;
 export const animFrames = 20;
@@ -15,19 +15,13 @@ export const animFps = 120;
 
 export const defaultCam: camObject = {
   position: {
-    x: 3.857034975598514,
-    y: 0.5083150515609893,
-    z: 4.308252704756184,
+    x: 4.162671473134066, y: 0.4196273812798987, z: 3.9894729623442213 
   },
   rotation: {
-    _x: -0.16445568850327394,
-    _y: 0.7994961803842151,
-    _z: 0.11843335312183353,
+    _x: -0.15128983435038482, _y: 0.9141115624499687, _z: 0.12016555953791716
   },
   target: {
-    x: -0.717004985363,
-    y: -0.11412076434773373,
-    z: -0.6876629276828099,
+    x: -0.7920205133080184, y: -0.09200967311074568, z: -0.6035211069659095
   },
 };
 

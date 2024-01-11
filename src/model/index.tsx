@@ -10,48 +10,48 @@ import * as config from "./config";
 import { FarStars } from "./stars/objects/FarStars";
 import { BigStar } from "./stars/objects/BigStar";
 import { BigStar2 } from "./stars/objects/BigStar2";
+import { StarSky } from "./stars/objects/StarsSphere";
+import {
+  planetFragmentShader,
+  planetVertexShader,
+  starFragment,
+  starVertex,
+} from "./stars/strshaders";
 
-// import vsStarPoints from './stars/shaders/pointstar/vertex.glsl';
-// import fgStarPoints from './stars/shaders/pointstar/fragment.glsl';
+const nightVector = new THREE.Vector3(0.05, 0, -0.1);
+const dayVector = new THREE.Vector3(0.9, 0, 0.6);
+const textureLoader = new THREE.TextureLoader();
 
-const vsStarPoints = `
-varying vec3 vNormal;
-varying vec3 vViewPosition;
+const planetMaterial = (vector: THREE.Vector3) => {
+  const uniforms = {
+    sunDirection: { value: vector },
+    dayTexture: { value: textureLoader.load("/model/textures/globusday.jpg") },
+    nightTexture: {
+      value: textureLoader.load("/model/textures/globusnight.jpg"),
+    },
+  };
 
-void main() {
-    vNormal = normalize(normalMatrix * normal); // Нормаль вершины
-    vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
-    vViewPosition = -mvPosition.xyz; // Позиция вершины относительно камеры
-    gl_Position = projectionMatrix * mvPosition;
-}
-`
-
-const fgStarPoints = `
-varying vec3 vNormal;
-varying vec3 vViewPosition;
-
-void main() {
-    // Расчет угла между нормалью и направлением на камеру
-    float intensity = dot(normalize(vViewPosition), vNormal);
-    float edgeFactor = smoothstep(0.0, 1.0, intensity);
-
-    // Цвет и прозрачность сферы
-    vec4 color = vec4(1.0, 1.0, 0.0, edgeFactor); // Белый цвет с учетом прозрачности
-
-    gl_FragColor = color;
-}`
+  return new THREE.ShaderMaterial({
+    uniforms: uniforms,
+    vertexShader: planetVertexShader,
+    fragmentShader: planetFragmentShader,
+  });
+};
 
 let isCamMoving = false;
+let planet: THREE.Mesh;
+let bigStar: BigStar2;
+let labe: THREE.Mesh
 
 const loader = new GLTFLoader();
 const scene = new THREE.Scene();
 const defaultMaterials = new Map<string, THREE.Material>();
 
 const pointMaterial = new THREE.ShaderMaterial({
-  vertexShader: vsStarPoints,
-  fragmentShader: fgStarPoints,
+  vertexShader: starVertex,
+  fragmentShader: starFragment,
   transparent: true,
-  side: THREE.DoubleSide
+  side: THREE.DoubleSide,
 });
 
 const camera = new THREE.PerspectiveCamera(
@@ -81,12 +81,12 @@ if (config.SetAmbientLight) {
 }
 
 ld.forEach((li) => {
-    const light = new THREE.DirectionalLight(
-      config.baseLightIntense,
-      config.lightStrength
-    );
-    light.position.set(li.x, li.y, li.z);
-    scene.add(light);
+  const light = new THREE.DirectionalLight(
+    config.baseLightIntense,
+    config.lightStrength
+  );
+  light.position.set(li.x, li.y, li.z);
+  scene.add(light);
 });
 
 lf.forEach((li) => {
@@ -101,17 +101,26 @@ const interactionManager = new InteractionManager(
   renderer.domElement
 );
 
+const stars = new StarSky(9000, 90, 1600);
 
-const stars = new FarStars({
-  starsCount: 6000
-})
+let framesCount = 0;
 
 function animate() {
   requestAnimationFrame(animate);
   renderer.render(scene, camera);
   interactionManager.update();
-  stars.update(1 / 60);
+  framesCount++;
+  // stars.update(1 / 60);
+  if (bigStar) {
+    bigStar.update(1 / 60);
+    bigStar.lookAt(camera.position);
+    //bigStar.quaternion.copy(camera.quaternion);
+  }
 }
+
+setInterval(() => {
+  framesCount = 0;
+}, 1000);
 
 animate();
 
@@ -163,12 +172,8 @@ requestAnimationFrame(updateFPS);
 controls.addEventListener("change", function () {
   // This function will be called when the controls change (e.g., when the user interacts with them)
   // You can put your custom code here to react to the changes
-  console.log("Position: ")
-  console.log(camera.position);
-  console.log("Rotation: ")
-  console.log(camera.rotation);
   var cameraTarget = new THREE.Vector3();
-  console.log("Target: ")
+  console.log("Target: ");
   console.log(camera.getWorldDirection(cameraTarget));
 });
 
@@ -235,8 +240,11 @@ export function ShowElements() {
   });
 }
 
-function animateModel(child: THREE.Mesh) {
-  child.rotation.y += 0.001;
+function rotateModel(child: THREE.Mesh) {
+  const timer = setInterval(() => {
+    child.rotation.y += 0.003;
+  }, 10);
+  return timer;
 }
 
 camera.position.set(
@@ -252,14 +260,14 @@ camera.rotation.set(
 
 controls.target.set(0, 0, 0);
 let rotatable: THREE.Group;
-let childs : any = [];
+let childs: any = [];
 
-function ScaleItem (name: string) {
+function ScaleItem(name: string) {
   const item = scene.getObjectByName(name);
   if (item) {
     const scrW = window.innerWidth;
     if (scrW < 1200) {
-      item.scale.set(0.012, 0.012, 0.012)
+      item.scale.set(0.012, 0.012, 0.012);
     }
   }
 }
@@ -278,113 +286,63 @@ const labelMaterial2 = new THREE.SpriteMaterial({
 const root = new THREE.Object3D();
 root.position.x = 1;
 const label = new THREE.Sprite(labelMaterial);
-const label2 = new THREE.Sprite(labelMaterial2);
+let label2: THREE.Sprite;
 label.position.x = 1;
-label2.position.x = 1;
-label2.position.z = -1;
-let bigStar: BigStar2;
 
 const ModelSetup = (gltf: any) => {
-  console.log(gltf)
+  console.log(gltf);
   const model = gltf.scene;
   rotatable = new THREE.Group();
-  rotatable.name="PlanetGroup";
+  rotatable.name = "PlanetGroup";
   const container = document.querySelector(".render--zone");
   const clicker = document.querySelector(".planetClicker");
-  const ev = new Event('click');
+  const ev = new Event("click");
   container?.dispatchEvent(ev);
   let counter = 0;
 
   model.traverse((child: any) => {
     if (child.children.length === 0) {
-      /* if (isFirstLoad) {
-        defaultMaterials.set(child.name, child.material);
-      } */
-      childs.push(child);
-      console.log(child.name);
-      console.log(child.scale);
+      if (child.name === "Planet") {
+        // child.material.color.set(0x141414); // 0x007fff
+        planet = child.clone();
+        planet.material = planetMaterial(dayVector);
+        planet.rotateZ(Math.PI);
+        setInterval(() => {
+          planet.rotateY(0.005);
+        }, 10);
+        rotatable.add(planet);
+      }
 
       if (child.name === "Sun") {
-        // child.material.color.set(0xFFFB18);
-        console.log("Position sun")
-        console.log(child.position)
-        // child.material = material;
-        const material = new THREE.MeshStandardMaterial({
-          color: 0xffff00, // основной цвет объекта
-          emissive: 0xffff00 // цвет самосветящегося эффекта
-      });
-      const textureLoader = new THREE.TextureLoader();
-      const sunTexture = textureLoader.load('model/textures/sun_detailed.jpg');
-        const sunMaterial = new THREE.MeshPhongMaterial({
-            map: sunTexture,
-            lightMap: sunTexture,
-            transparent: true,
-            opacity: 0.85, // 0.8
-            // shading: THREE.SmoothShading
-          });
-        child.material = sunMaterial;
-        // child.material = pointMaterial;
+        bigStar = new BigStar2(child.position, camera, 1, {
+          starSize: 1,
+          galaxyColor: { r: 0, g: 0, b: 0 },
+        });
+        let geometry = new THREE.PlaneGeometry( 2.5, 2.5 );
+        let material = bigStar.getStarMaterial()
+        labe = new THREE.Mesh(geometry, material)
+        labe.position.set(
+          child.position.x,
+          child.position.y,
+          child.position.z
+        );
+        labe.lookAt(camera.position);
+        rotatable.add(labe);
       }
 
-      if (child.name === "Planet") {
-        child.material.color.set(0x141414); // 0x007fff
-        const textureLoader = new THREE.TextureLoader();
-        const nightTexture = textureLoader.load('model/textures/enight.jpg');
-        const materialClouds = new THREE.MeshLambertMaterial( {
-
-					map: textureLoader.load( 'model/textures/enight.jpg' ),
-					transparent: true
-
-				} );
-
-        const material = new THREE.MeshPhongMaterial({
-          map: nightTexture,
-          emissiveMap: nightTexture,
-          emissive: new THREE.Color(0x010101) });
-        
-        child.material = material;
-      }
-
-      if (child.name === "StarSky") {
-        const textureLoader = new THREE.TextureLoader();
-        // const texture = textureLoader.load('model/stars-hero.jpg'); // map: texture
-        // const material = new THREE.MeshPhongMaterial({ color: 'transparent', side: THREE.DoubleSide  });
-        child.rotateY(-0.3);
-        // child.material = material;
-        child.visible = false;
-      }
-      // rotatable.add(child.clone());
-      if (child.name !== "Sun") {
-        rotatable.add(child.clone());
-      } else {
-        bigStar = new BigStar2(child.position, camera, 3, {starSize: 1, galaxyColor: {r: 0, g: 0, b: 0}});
-        // bigStar.rotateX(camera.rotation.x);
-        bigStar.rotateY(camera.rotation.y);
-        // bigStar.rotateZ(camera.rotation.z);
-        console.log(bigStar.rotation);
-        rotatable.add(bigStar);
-      }
       child.visible = false;
     }
     counter++;
   });
-  
-  rotatable.add(stars)
-  // rotatable.add(label)
-  // rotatable.add(label2)
+
+  rotatable.add(stars);
 
   scene.add(rotatable);
-
-  stars.update(1);
-  // ScaleItem("Sun");
-  // ScaleItem("Planet");
 
   window.addEventListener("resize", () => {
     // ScaleItem("Sun");
     // ScaleItem("Planet");
-  })
-
-  // interactionManager.update();
+  });
 
   if (container) {
     container.appendChild(renderer.domElement);
@@ -395,72 +353,74 @@ const ModelSetup = (gltf: any) => {
   return true;
 };
 
-
 const SelectVRP = () => {
   const target1 = bigStar;
+  const planetMAterial = planetMaterial(dayVector);
+  let isSwitched = false;
   if (rotatable) {
-    gsap.to(rotatable.rotation, {
-      duration: 1,  // Animation duration in seconds
-      y: 0,  // Rotate 360 degrees around the y-axis
-      repeat: 0,  // Repeat indefinitely
-      ease: 'power1.inOut',  // Linear easing
+    const porgress = gsap.to(rotatable.rotation, {
+      duration: 1, // Animation duration in seconds
+      y: 0, // Rotate 360 degrees around the y-axis
+      repeat: 0, // Repeat indefinitely
+      ease: "power1.inOut", // Linear easing
       onUpdate: () => {
-        frameCount++
-        const delAngle = Math.PI - target1?.rotation.y || 0;
-        // console.log(delAngle)
-        stars.azimutAngle = delAngle;
-        console.log(camera.quaternion)
-        // console.log(delAngle);
-        stars.update(1 / 140);
-        if (bigStar) {
-          bigStar.lookAt(camera.position);
-          // bigStar.update(1/60);
+        frameCount++;
+        if (porgress.progress() > 0.9 && !isSwitched) {
+          planet.material = planetMAterial;
+          isSwitched = true;
         }
-        // stars.polarAngle = delAngle;
+        if (labe) {
+          labe.lookAt(camera.position)
+        }
       },
-      onComplete: () => {
-        if (bigStar) {
-          bigStar.lookAt(camera.position);
-          // bigStar.update(1/60);
-        }
-      }
-    })
+      onComplete: () => {},
+    });
   }
-}
+};
 
 const SelectVAO = () => {
   // rotatable.rotation.y = Math.PI / 2
+  const planetMAterial = planetMaterial(nightVector);
+  let startVector = { x: dayVector.x, y: dayVector.y, z: dayVector.z };
+  let endVector = { x: nightVector.x, y: nightVector.y, z: nightVector.z };
+  let isSwitched = false;
   const target1 = bigStar;
-    let frameCount = 0;
-    if (rotatable) {
-      gsap.to(rotatable.rotation, {
-        duration: 1,  // Animation duration in seconds
-        y: Math.PI,  // Rotate 360 degrees around the y-axis
-        repeat: 0,  // Repeat indefinitely
-        ease: 'power1.inOut',  // Linear easing
+  let frameCount = 0;
+  if (rotatable) {
+    const porgress = gsap.to(rotatable.rotation, {
+      duration: 1, // Animation duration in seconds
+      y: Math.PI, // Rotate 360 degrees around the y-axis
+      repeat: 0, // Repeat indefinitely
+      ease: "power1.inOut", // Linear easing
+      onUpdate: () => {
+        if (porgress.progress() > 0.1 && !isSwitched) {
+          planet.material = planetMAterial;
+          isSwitched = true;
+        }
+        if (labe) {
+          labe.lookAt(camera.position)
+        }
+      },
+      onComplete: () => {},
+    });
+    /* gsap.to(startVector, {
+        x: endVector.x,
+        y: endVector.y,
+        z: endVector.z,
+        duration: 1,
+        ease: 'power1.inOut',
         onUpdate: () => {
-          frameCount++
-          const delAngle = Math.PI - target1?.rotation.y || 0;
-          // console.log(rotatable.rotation.x)
-          console.log(camera.quaternion)
-          stars.azimutAngle = delAngle;
-          if (bigStar) {
-            bigStar.lookAt(camera.position);
-            // bigStar.update(1/60);
+          const currentVector = new THREE.Vector3(startVector.x, startVector.y, startVector.z);
+          const newMaterial = planetMaterial(currentVector)
+          if (planet) {
+            planet.material = newMaterial
           }
         },
-        onComplete: () => {
-          if (bigStar) {
-            bigStar.lookAt(camera.position);
-            // bigStar.update(1/60);
-          }
-        }
-      })
-    }
+      }) */
   }
+};
 
-loader.load(config.url, ModelSetup); 
-
+loader.load(config.url, ModelSetup);
 
 const Model3D = () => {
   const [clickable, setClickable] = useState(false);
@@ -468,33 +428,36 @@ const Model3D = () => {
   const [menuHidden, HideMenu] = useState(true);
   const [menuHeading, SetHeading] = useState("");
   const [rightText, RTSetup] = useState(config.BorderContent[0]);
-  const [choose, Choose] = useState('VRP');
+  const [choose, Choose] = useState("VRP");
 
   useEffect(() => {
-    // loader.load(config.url, ModelSetup); 
+    // loader.load(config.url, ModelSetup);
     const vrpBtn = document.getElementById("selectVRP");
     const vaoBtn = document.getElementById("selectVAO");
     if (vrpBtn && vaoBtn) {
-      vrpBtn.addEventListener('click', () => {
+      vrpBtn.addEventListener("click", () => {
         vrpBtn.classList.add("selected");
         vaoBtn.classList.remove("selected");
         // MoveCamera(config.defaultCam);
-        Choose('VRP')
+        Choose("VRP");
         SelectVRP();
-      })
-      vaoBtn.addEventListener('click', () => {
+      });
+      vaoBtn.addEventListener("click", () => {
         vrpBtn.classList.remove("selected");
         vaoBtn.classList.add("selected");
         // MoveCamera(config.finalCam);
-        Choose('VAO')
-       SelectVAO();
-      })
+        Choose("VAO");
+        SelectVAO();
+      });
     }
   }, []);
 
   return (
     <>
-      <div className="renderBkg" style={{transform: `translateX(${choose === 'VRP' ? 0 : -100}vw)`}} />
+      <div
+        className="renderBkg"
+        style={{ transform: `translateX(${choose === "VRP" ? 0 : -100}vw)` }}
+      />
       <div className="render--zone" />
     </>
   );
