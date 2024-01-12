@@ -39,7 +39,7 @@ const ConnectWalletBtn = () => {
     }
 
     const ConnectWallet  = async () => {
-      
+      console.log("Connecting...")
       try {
         const wallet = await RequestWallet()
         if (wallet) {
@@ -48,6 +48,7 @@ const ConnectWalletBtn = () => {
         }
         dispatch(loadAccount(wallet))
       } catch (e) {
+        console.log(e.message);
         // dispatch(selectWindow("nowallet"))
         dispatch(loadAccount(null))
       }

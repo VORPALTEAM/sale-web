@@ -11,8 +11,9 @@ let getterWeb3 = new Web3(config.rpcUrl, config.connectOptions)
 
 let isFirstRequestAccount = false
 
-export function IsTrueNetwork () {
-    return env.chainId === config.chainHexID
+export async function IsTrueNetwork () {
+    const networkHex = await env.request({ method: 'eth_chainId'});
+    return config.chainHexID === networkHex
 }
 
 export async function AddReferral ( linkParam  = document.location.search, account ) {
@@ -44,7 +45,6 @@ export async function AddReferral ( linkParam  = document.location.search, accou
 }
 
 export async function RequestWallet () {
-
     if (!env) {
         // Checking mobile device
         if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
@@ -54,8 +54,8 @@ export async function RequestWallet () {
         return null;
     } else {
         const accs = await env.request({ method: "eth_requestAccounts" }, config.connectOptions)
-        const network = env.chainId
-    
+        const network = await env.request({ method: 'eth_chainId'})
+
         if (network !== config.chainHexID) {
           await env.request({
             method: 'wallet_addEthereumChain',
@@ -71,7 +71,7 @@ export async function RequestWallet () {
             }]
           })
         }
-        if (!IsTrueNetwork ()) {
+        if (!await IsTrueNetwork ()) {
             store.dispatch(loadAccount(null))
             return null
         }
@@ -128,7 +128,7 @@ export async function RequestLockedFunds (contracts = [], user) {
 
     let numberOf = 0
 
-    if (!user || !IsTrueNetwork ()) return numberOf
+    if (!user || !await IsTrueNetwork ()) return numberOf
 
     try {
         const ctrct = new getterWeb3.eth.Contract(ABI.saleABI, contracts[0])
@@ -296,9 +296,9 @@ export async function ApproveTokens ( spendingToken, spendingContract, user, amo
     const usingAmount = amount * config.decimal
     console.log("spendingToken : ")
     console.log(spendingToken)
-    if (!user || !IsTrueNetwork ()) user = await RequestWallet ()
+    if (!user || !await IsTrueNetwork ()) user = await RequestWallet ()
 
-    if (!user || !IsTrueNetwork ()) {
+    if (!user || !await IsTrueNetwork ()) {
         Promise.reject(0)
         return 0
     }
@@ -348,9 +348,9 @@ export async function Buy ( spendingContract, user, amount ) {
     if (!env) {
         return false
     }
-    if (!user || !IsTrueNetwork ()) user = await RequestWallet ()
+    if (!user || !await IsTrueNetwork ()) user = await RequestWallet ()
 
-    if (!user || !IsTrueNetwork ()) {
+    if (!user || !await IsTrueNetwork ()) {
         return false
     }
 
