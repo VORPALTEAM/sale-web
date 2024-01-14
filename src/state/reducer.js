@@ -34,7 +34,9 @@ export const actionNames = {
     selectStage: "SELECT_STAGE",
     openInvest: "OPEN_INVEST",
     amountLeftVRP: "AMOUNT_LEFT_VRP",
-    amountLeftVDAO: "AMOUNT_LEFT_VDAO"
+    amountLeftVDAO: "AMOUNT_LEFT_VDAO",
+    saveBalanceUSDT: "SAVE_BALANCE_USDT",
+    saveBalanceBUSD: "SAVE_BALANCE_BUSD"
 }
 
 export const switchToken = createAction(actionNames.switchToken)
@@ -58,6 +60,8 @@ export const selectStage = createAction(actionNames.selectStage)
 export const openInvest = createAction(actionNames.openInvest)
 export const updateLeftVRP = createAction(actionNames.amountLeftVRP)
 export const updateLeftVDAO = createAction(actionNames.amountLeftVDAO)
+export const updateWalletUSDT = createAction(actionNames.saveBalanceUSDT)
+export const updateWalletBUSD = createAction(actionNames.saveBalanceBUSD)
 
 const SwitchToken = (state = config.defaultToken, action) => {
 
@@ -236,6 +240,27 @@ const UpdateUnLockedVDAO = (state = investAmountUSDVDAO, action) => {
   }
 }
 
+const UpdateWalletUSDT = (state = 0, action) => {
+
+  switch(action.type) {
+    case actionNames.saveBalanceUSDT: 
+      return (action.payload || action.payload === 0) ? action.payload : state
+    default :
+      return state
+  }
+}
+
+const UpdateWalletBUSD = (state = 0, action) => {
+
+  switch(action.type) {
+    case actionNames.saveBalanceBUSD: 
+      return (action.payload || action.payload === 0) ? action.payload : state
+    default :
+      return state
+  }
+}
+
+
 const SelectStage = (state = buyingStage, action) => {
 
   switch(action.type) {
@@ -278,5 +303,7 @@ export const RootReducer = combineReducers ({
     stage: SelectStage,
     isOpened: IsInvestOpened,
     leftVRP: UpdateLeftVRP,
-    leftVDAO: UpdateLeftVDAO
+    leftVDAO: UpdateLeftVDAO,
+    walletUSDT: UpdateWalletUSDT,
+    walletBUSD: UpdateWalletBUSD
 })

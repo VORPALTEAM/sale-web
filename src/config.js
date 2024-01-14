@@ -48,6 +48,7 @@ export const windowNames = {
 	nowallet: "nowallet",
 	selectToken: "selectToken",
 	selectCurrency: "selectCurrency",
+	nobalance: "nobalance",
     mobile: "mobile"
 }
 

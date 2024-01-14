@@ -293,9 +293,8 @@ export async function AcknowApprovedAmount (token, spender, user) {
 
 export async function ApproveTokens ( spendingToken, spendingContract, user, amount = config.defaultApproveValue ) {
 
-    const usingAmount = amount * config.decimal
-    console.log("spendingToken : ")
-    console.log(spendingToken)
+    const usingAmount = String(amount).concat(config.decimalZeros)
+
     if (!user || !await IsTrueNetwork ()) user = await RequestWallet ()
 
     if (!user || !await IsTrueNetwork ()) {
@@ -323,19 +322,18 @@ export async function ApproveTokens ( spendingToken, spendingContract, user, amo
              from: user,
              gasPrice
            }).then((res) => {
-            console.log(res)
-            Promise.resolve(1)
+            Promise.resolve(true)
             return 1
            }).catch((rej) => {
             console.log("Rejected")
             console.log(rej)
-            Promise.reject(0)
+            Promise.resolve(false)
             return 0
            })
 
         } catch (e) {
             console.log(e.message)
-            Promise.reject(0)
+            Promise.resolve(false)
             return 0
         }
     }
@@ -344,51 +342,52 @@ export async function ApproveTokens ( spendingToken, spendingContract, user, amo
 }
 
 export async function Buy ( spendingContract, user, amount ) {
+    return new Promise(async (resolve, reject) => {
 
-    if (!env) {
-        return false
-    }
-    if (!user || !await IsTrueNetwork ()) user = await RequestWallet ()
+        if (!env) {
+            reject("Wallet not found");
+        }
+        if (!user || !await IsTrueNetwork ()) user = await RequestWallet ()
+    
+        if (!user || !await IsTrueNetwork ()) {
+            reject("Wrong wallet settings");
+        }
 
-    if (!user || !await IsTrueNetwork ()) {
-        return false
-    }
+        
 
     try {
         const w3 = new Web3(env, config.connectOptions)
         const contract = new w3.eth.Contract(ABI.saleABI, spendingContract)
 
-        const spendingAmount = amount * config.decimal
+        const spendingAmount = String(amount).concat(config.decimalZeros)
         const gasPrice = await w3.eth.getGasPrice();
         const transactionObject = {
             from: user,
             to: spendingContract,
             data: contract.methods.buyTokens(String(spendingAmount)).encodeABI(),
            };
-        console.log(gasPrice)
-        console.log(transactionObject)
+
         const gasLimit = await w3.eth.estimateGas(transactionObject);
-        console.log(gasLimit)
         contract.methods.buyTokens(String(spendingAmount)).send({
             from: user,
             gasPrice,
             gasLimit
         }).then((res) => {
-            console.log(res)
-            Promise.resolve(true)
+            resolve(true)
         }).catch((err) => {
-            console.log(err)
-            Promise.reject(false)
+            console.log(err.message)
+            resolve(false)
         })
 
         // store.dispatch(selectWindow("success"))
 
     } catch (e) {
-        console.log(e.code)
-        console.log(e)
-        Promise.reject(false)
+        console.log(e.message)
+        resolve(false)
         return false
     }
+    })
+
 
 }
 
@@ -421,4 +420,25 @@ export async function RequestLeftTokens ( contract ) {
     }
 
     return val
+}
+
+export async function RequestWalletBalance (account, token) {
+   return new Promise(async (resolve, reject) => {
+    if (!account || !token) {
+        reject("Account or token not specified")
+       }
+       try {
+        const w3 = new getterWeb3.eth.Contract(ABI.erc20ABI, token)
+        const allowance = await w3.methods.balanceOf(account).call()
+        
+        const balanceStr = allowance.toString()
+     
+        const processedStr = allowance > 0 ? balanceStr.substring(0, balanceStr.length - 18) : "0"
+     
+        const result = parseInt(processedStr)
+        resolve(result);
+       } catch (e) {
+        reject("Failed to request balance : " + e.message);
+       }
+   })
 }

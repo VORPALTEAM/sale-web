@@ -5,6 +5,7 @@ import SuccessNotify from './Success'
 import SelectToken from './SelectToken'
 import { selectWindow } from '../../state/reducer'
 import { windowNames } from '../../config'
+import NoFundsWindow from './NoFunds'
  
 const ModalContainer = () => {
 
@@ -27,6 +28,8 @@ const ModalContainer = () => {
           return <SelectToken pair="token" />
         case windowNames.selectCurrency :
           return <SelectToken pair="currency" />
+        case windowNames.nobalance : 
+          return <NoFundsWindow />
         default: 
           return null;
       }

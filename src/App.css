@@ -960,6 +960,24 @@ input:checked + .checker:before {
 }
 /* Mobile version */
 
+.walletBalanceWindow {
+  background: #352F44;
+  color: #FFF;
+  text-align: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.walletBalanceWindow div {
+  padding: 20px 0;
+}
+
+.balanceWindowHeading {
+  text-transform: uppercase;
+  font-size: 24px;
+  color: #ACF800;
+}
+
 @media screen and (max-width : 768px) {
 
   body {
