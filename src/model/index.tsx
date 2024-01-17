@@ -22,7 +22,7 @@ const nightVector = new THREE.Vector3(0.05, 0, -0.1);
 const dayVector = new THREE.Vector3(0.9, 0, 0.6);
 const textureLoader = new THREE.TextureLoader();
 
-const planetMaterial = (vector: THREE.Vector3) => {
+const planetShaderMaterial = (vector: THREE.Vector3) => {
   const uniforms = {
     sunDirection: { value: vector },
     dayTexture: { value: textureLoader.load("/model/textures/globusday.jpg") },
@@ -38,21 +38,33 @@ const planetMaterial = (vector: THREE.Vector3) => {
   });
 };
 
+const lightsMap = new THREE.TextureLoader().load(
+  "/model/textures/globusnight.jpg"
+);
+const atmMap = new THREE.TextureLoader().load("/model/textures/atm.png");
+const textureMap = new THREE.TextureLoader().load(
+  "/model/textures/globusday.jpg"
+);
+
+const earthMaterial = (intensity: number) => {
+  return new THREE.MeshStandardMaterial({
+    map: textureMap,
+    emissive: 0xffffff,
+    emissiveIntensity: intensity,
+    emissiveMap: lightsMap,
+    side: THREE.DoubleSide,
+  });
+};
+
 let isCamMoving = false;
 let planet: THREE.Mesh;
+let atm: THREE.Mesh;
 let bigStar: BigStar2;
-let labe: THREE.Mesh
+let labe: THREE.Mesh;
 
 const loader = new GLTFLoader();
 const scene = new THREE.Scene();
 const defaultMaterials = new Map<string, THREE.Material>();
-
-const pointMaterial = new THREE.ShaderMaterial({
-  vertexShader: starVertex,
-  fragmentShader: starFragment,
-  transparent: true,
-  side: THREE.DoubleSide,
-});
 
 const camera = new THREE.PerspectiveCamera(
   45,
@@ -152,6 +164,8 @@ controls.listenToKeyEvents(window);
 controls.update();
 
 let framesNum = config.animFps;
+const dayIntensity = 0.001;
+const nightIntensity = 1;
 
 let lastFrameTime = 0;
 let frameCount = 0;
@@ -289,6 +303,8 @@ const label = new THREE.Sprite(labelMaterial);
 let label2: THREE.Sprite;
 label.position.x = 1;
 
+const atmos = new THREE.MeshPhongMaterial({ map: atmMap, opacity: 0.8, transparent: true });
+
 const ModelSetup = (gltf: any) => {
   console.log(gltf);
   const model = gltf.scene;
@@ -305,12 +321,19 @@ const ModelSetup = (gltf: any) => {
       if (child.name === "Planet") {
         // child.material.color.set(0x141414); // 0x007fff
         planet = child.clone();
-        planet.material = planetMaterial(dayVector);
+        atm = child.clone();
+        atm.scale.x = child.scale.x * 1.05;
+        atm.scale.y = child.scale.y * 1.05;
+        atm.scale.z = child.scale.z * 1.05;
+        atm.material = atmos;
+        planet.material = earthMaterial(dayIntensity); // planetShaderMaterial(dayVector);
         planet.rotateZ(Math.PI);
         setInterval(() => {
-          planet.rotateY(0.005);
+          atm.rotateY(0.005);
+          planet.rotateY(0.001);
         }, 10);
         rotatable.add(planet);
+        rotatable.add(atm);
       }
 
       if (child.name === "Sun") {
@@ -318,16 +341,22 @@ const ModelSetup = (gltf: any) => {
           starSize: 1,
           galaxyColor: { r: 0, g: 0, b: 0 },
         });
-        let geometry = new THREE.PlaneGeometry( 2.5, 2.5 );
-        let material = bigStar.getStarMaterial()
-        labe = new THREE.Mesh(geometry, material)
-        labe.position.set(
+        let geometry = new THREE.PlaneGeometry(2.5, 2.5);
+        let material = bigStar.getStarMaterial();
+        labe = new THREE.Mesh(geometry, material);
+        labe.position.set(child.position.x, child.position.y, child.position.z);
+        labe.lookAt(camera.position);
+        rotatable.add(labe);
+
+        const light = new THREE.PointLight(0xffffff, 16.0);
+        light.position.set(
           child.position.x,
           child.position.y,
           child.position.z
         );
-        labe.lookAt(camera.position);
-        rotatable.add(labe);
+        const helper = new THREE.PointLightHelper(light, 1);
+        rotatable.add(light);
+        rotatable.add(helper);
       }
 
       child.visible = false;
@@ -355,7 +384,7 @@ const ModelSetup = (gltf: any) => {
 
 const SelectVRP = () => {
   const target1 = bigStar;
-  const planetMAterial = planetMaterial(dayVector);
+  const planetMAterial = earthMaterial(dayIntensity); // planetShaderMaterial(dayVector);
   let isSwitched = false;
   if (rotatable) {
     const porgress = gsap.to(rotatable.rotation, {
@@ -370,7 +399,7 @@ const SelectVRP = () => {
           isSwitched = true;
         }
         if (labe) {
-          labe.lookAt(camera.position)
+          labe.lookAt(camera.position);
         }
       },
       onComplete: () => {},
@@ -380,7 +409,7 @@ const SelectVRP = () => {
 
 const SelectVAO = () => {
   // rotatable.rotation.y = Math.PI / 2
-  const planetMAterial = planetMaterial(nightVector);
+  const planetMAterial = earthMaterial(nightIntensity); // planetShaderMaterial(nightVector);
   let startVector = { x: dayVector.x, y: dayVector.y, z: dayVector.z };
   let endVector = { x: nightVector.x, y: nightVector.y, z: nightVector.z };
   let isSwitched = false;
@@ -398,7 +427,7 @@ const SelectVAO = () => {
           isSwitched = true;
         }
         if (labe) {
-          labe.lookAt(camera.position)
+          labe.lookAt(camera.position);
         }
       },
       onComplete: () => {},
