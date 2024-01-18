@@ -301,6 +301,8 @@ const root = new THREE.Object3D();
 root.position.x = 1;
 const label = new THREE.Sprite(labelMaterial);
 let label2: THREE.Sprite;
+let sunLight: THREE.PointLight;
+let sunLHelper: THREE.PointLightHelper;
 label.position.x = 1;
 
 const atmos = new THREE.MeshPhongMaterial({ map: atmMap, opacity: 0.8, transparent: true });
@@ -348,15 +350,15 @@ const ModelSetup = (gltf: any) => {
         labe.lookAt(camera.position);
         rotatable.add(labe);
 
-        const light = new THREE.PointLight(0xffffff, 16.0);
-        light.position.set(
-          child.position.x,
-          child.position.y,
-          child.position.z
+        sunLight = new THREE.PointLight(0xffffff, 256.0, 10);
+        sunLight.position.set(
+          0.5,
+          0,
+          0
         );
-        const helper = new THREE.PointLightHelper(light, 1);
-        rotatable.add(light);
-        rotatable.add(helper);
+        sunLHelper = new THREE.PointLightHelper(sunLight, 1);
+        scene.add(sunLight);
+        // scene.add(sunLHelper);
       }
 
       child.visible = false;
@@ -398,6 +400,9 @@ const SelectVRP = () => {
           planet.material = planetMAterial;
           isSwitched = true;
         }
+        sunLight.position.set(0.5,
+          0,
+          0)
         if (labe) {
           labe.lookAt(camera.position);
         }
@@ -410,6 +415,7 @@ const SelectVRP = () => {
 const SelectVAO = () => {
   // rotatable.rotation.y = Math.PI / 2
   const planetMAterial = earthMaterial(nightIntensity); // planetShaderMaterial(nightVector);
+  const sun = scene.getObjectByName("Sun")
   let startVector = { x: dayVector.x, y: dayVector.y, z: dayVector.z };
   let endVector = { x: nightVector.x, y: nightVector.y, z: nightVector.z };
   let isSwitched = false;
@@ -426,6 +432,11 @@ const SelectVAO = () => {
           planet.material = planetMAterial;
           isSwitched = true;
         }
+        sunLight.position.set(0.5,
+          0,
+          0)
+        console.log(sunLight.position)
+        console.log(target1.position)
         if (labe) {
           labe.lookAt(camera.position);
         }
