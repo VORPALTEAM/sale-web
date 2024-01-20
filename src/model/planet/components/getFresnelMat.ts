@@ -1,12 +1,12 @@
 import * as THREE from "three";
 
-function getFresnelMat({ rimHex = 0x0088ff, facingHex = 0x000000 } = {}) {
+function getFresnelMat({ rimHex = 0x74c8fc, facingHex = 0x000000 } = {}) {
   const uniforms = {
     color1: { value: new THREE.Color(rimHex) },
     color2: { value: new THREE.Color(facingHex) },
-    fresnelBias: { value: 0.1 },
-    fresnelScale: { value: 1.0 },
-    fresnelPower: { value: 4.0 },
+    fresnelBias: { value: 0.04 },
+    fresnelScale: { value: 0.7 },
+    fresnelPower: { value: 0.5 },
   };
   const vs = `
   uniform float fresnelBias;
@@ -36,7 +36,7 @@ function getFresnelMat({ rimHex = 0x0088ff, facingHex = 0x000000 } = {}) {
   varying float vReflectionFactor;
   
   void main() {
-    float f = clamp( vReflectionFactor, 0.0, 1.0 );
+    float f = clamp( vReflectionFactor, 0.0, 0.7 );
     gl_FragColor = vec4(mix(color2, color1, vec3(f)), f);
   }
   `;

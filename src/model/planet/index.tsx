@@ -12,7 +12,7 @@ const material = new THREE.MeshPhongMaterial({
   map: loader.load("/model/textures/earth/00_earthmap1k.jpg"),
   specularMap: loader.load("/model/textures/earth/02_earthspec1k.jpg"),
   bumpMap: loader.load("/model/textures/earth/01_earthbump1k.jpg"),
-  bumpScale: 0.2,
+  bumpScale: 30.2,
 });
 const earthMesh = new THREE.Mesh(geometry, material);
 earthGroup.add(earthMesh);
