@@ -1,12 +1,12 @@
 import * as THREE from "three";
 
-function getFresnelMat({ rimHex = 0x74c8fc, facingHex = 0x000000 } = {}) {
+function getFresnelMat({ rimHex = 0x00a5f3, facingHex = 0x000000 } = {}) {
   const uniforms = {
     color1: { value: new THREE.Color(rimHex) },
     color2: { value: new THREE.Color(facingHex) },
     fresnelBias: { value: 0.04 },
     fresnelScale: { value: 0.7 },
-    fresnelPower: { value: 0.5 },
+    fresnelPower: { value: 2.5 },
   };
   const vs = `
   uniform float fresnelBias;

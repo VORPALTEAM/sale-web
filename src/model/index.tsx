@@ -125,11 +125,11 @@ let framesCount = 0;
 function animate() {
   requestAnimationFrame(animate);
 
-  earthMesh.rotation.y += 0.002;
-  lightsMesh.rotation.y += 0.002;
-  cloudsMesh.rotation.y += 0.0023;
-  glowMesh.rotation.y += 0.002;
-  stars.rotation.y -= 0.0002;
+  earthMesh.rotation.y += 0.001;
+  lightsMesh.rotation.y += 0.001;
+  cloudsMesh.rotation.y += 0.0009;
+  glowMesh.rotation.y += 0.001;
+  stars.rotation.y -= 0.0001;
   renderer.render(scene, camera);
 
   if (bigStar) {
