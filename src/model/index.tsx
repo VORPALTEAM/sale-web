@@ -20,9 +20,9 @@ import {
 import { earthGroup, cloudsMesh, earthMesh, glowMesh, lightsMesh } from "./planet";
 import { MetaPlanet } from "./metaplanet/planet";
 
-const lightPos = new THREE.Vector3(1.5,
+const lightPos = new THREE.Vector3(9,
 0,
--0.5)
+-3)
 
 const nightVector = new THREE.Vector3(0.05, 0, -0.1);
 const dayVector = new THREE.Vector3(0.9, 0, 0.6);
@@ -215,14 +215,14 @@ const ModelSetup = (gltf: any) => {
     planet = new MetaPlanet({
       textureDay: textureLoader.load('/model/textures/Earth_Diffuse_6K_final.webp'),
       textureNight: textureLoader.load('/model/textures/Earth_Illumination_6K_final.webp'),
-      radius: 0.8,
+      radius: 4,
       textureClouds: textureLoader.load('/model/textures/2k_earth_clouds.webp'),
       sun: labe,
       camera: camera,
       rotationSpeed: 0.1
     });
     rotatable.add(planet)
-    planet.position.set(position.x, position.y, position.z)
+    planet.position.set(position.x * 5.9, position.y * 5.9, position.z * 5.9)
   }
   
   function CreateSun(position: THREE.Vector3) {
@@ -230,12 +230,12 @@ const ModelSetup = (gltf: any) => {
       starSize: 1,
       galaxyColor: { r: 0, g: 0, b: 0 },
     });
-    let geometry = new THREE.PlaneGeometry(2.5, 2.5);
+    let geometry = new THREE.PlaneGeometry(15, 15);
     let material = bigStar.getStarMaterial();
     labe = new THREE.Mesh(geometry, material);
     labe.lookAt(camera.position);
     rotatable.add(labe);
-    labe.position.set(position.x, position.y, position.z)
+    labe.position.set(position.x * 5.9, position.y * 5.9, position.z * 5.9)
     sunLight = new THREE.PointLight(0xffffff, 20.0, 10);
     sunLight.position.set(lightPos.x, lightPos.y, lightPos.z);
     sunLHelper = new THREE.PointLightHelper(sunLight, 1);
