@@ -210,14 +210,17 @@ const ModelSetup = (gltf: any) => {
   const ev = new Event("click");
   container?.dispatchEvent(ev);
   let counter = 0;
+  const abstLightPosition = { x: -9.318414180852855, y: 7.32360750469132, z: 31.77509357745408 }
 
   function CreatePlanet(position: THREE.Vector3) {
+    const abstLight = new THREE.Mesh(new THREE.SphereGeometry(4), new THREE.MeshBasicMaterial({ color: 0xffffff}));
+    abstLight.position.set(abstLightPosition.x, abstLightPosition.y, abstLightPosition.z )
     planet = new MetaPlanet({
       textureDay: textureLoader.load('/model/textures/Earth_Diffuse_6K_final.webp'),
       textureNight: textureLoader.load('/model/textures/Earth_Illumination_6K_final.webp'),
       radius: 4,
       textureClouds: textureLoader.load('/model/textures/2k_earth_clouds.webp'),
-      sun: labe,
+      sun: abstLight,// labe,
       camera: camera,
       rotationSpeed: 0.1
     });
