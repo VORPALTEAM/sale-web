@@ -3,13 +3,17 @@ import * as THREE from "three";
 import {surfVertShader, surfFragShader, atmoVertShader, atmoFragShader } from './shaders';
 
 export type MetaPlanetParams = {
+    sun: THREE.Object3D,
+    camera: THREE.Object3D,
     radius: number,
     textureDay: THREE.Texture,
     textureNight: THREE.Texture,
-    textureClouds: THREE.Texture,
-    sun: THREE.Object3D,
-    camera: THREE.Object3D,
-    rotationSpeed: number, // rad in sec
+    textureClouds?: THREE.Texture,
+    normalMap?: THREE.Texture,
+    normalMapScale?: number,
+    specularMap?: THREE.Texture,
+    rotationSpeed?: number, // rad in sec
+    debugGui?: any // dat.GUI object
 }
 
 export class MetaPlanet extends THREE.Group {

@@ -48,7 +48,10 @@ let cameraTarget = new THREE.Vector3();
 
 const renderer = new THREE.WebGLRenderer({
   alpha: true,
+  antialias: true
 });
+
+// renderer.toneMapping = THREE.ReinhardToneMapping;
 
 scene.add(camera);
 
@@ -88,24 +91,21 @@ const stars = new StarSky(9000, 90, 1600);
 
 let framesCount = 0;
 
+const clock = new THREE.Clock();
+
 function animate() {
+  framesCount++
   requestAnimationFrame(animate);
-
-  earthMesh.rotation.y += 0.001;
-  lightsMesh.rotation.y += 0.001;
-  cloudsMesh.rotation.y += 0.0009;
-  glowMesh.rotation.y += 0.001;
-  stars.rotation.y -= 0.0001;
-  renderer.render(scene, camera);
-
+  const dlt = clock.getDelta()
   if (bigStar) {
-    bigStar.update(1 / 60);
+    bigStar.update(dlt / 2);
     bigStar.lookAt(camera.position);
   }
 
   if (planet) {
-    planet.update(1/60);
+    planet.update(dlt);
   }
+  renderer.render(scene, camera);
 }
 
 animate();
@@ -210,11 +210,12 @@ const ModelSetup = (gltf: any) => {
   const ev = new Event("click");
   container?.dispatchEvent(ev);
   let counter = 0;
-  const abstLightPosition = { x: -9.318414180852855, y: 7.32360750469132, z: 31.77509357745408 }
+  const abstLightPosition = { x: -9.318414180852855, y: 3.5, z: 31.77509357745408 }
 
   function CreatePlanet(position: THREE.Vector3) {
     const abstLight = new THREE.Mesh(new THREE.SphereGeometry(4), new THREE.MeshBasicMaterial({ color: 0xffffff}));
     abstLight.position.set(abstLightPosition.x, abstLightPosition.y, abstLightPosition.z )
+    rotatable.add(abstLight)
     planet = new MetaPlanet({
       textureDay: textureLoader.load('/model/textures/Earth_Diffuse_6K_final.webp'),
       textureNight: textureLoader.load('/model/textures/Earth_Illumination_6K_final.webp'),
@@ -275,8 +276,6 @@ const ModelSetup = (gltf: any) => {
 };
 
 const SelectVRP = () => {
-  const target1 = bigStar;
-  let isSwitched = false;
   if (rotatable) {
     const porgress = gsap.to(rotatable.rotation, {
       duration: 1, // Animation duration in seconds
@@ -284,28 +283,16 @@ const SelectVRP = () => {
       repeat: 0, // Repeat indefinitely
       ease: "power1.inOut", // Linear easing
       onUpdate: () => {
-        frameCount++;
-        if (porgress.progress() > 0.0 && !isSwitched) {
-          isSwitched = true;
-        }
-        sunLight.position.set(lightPos.x, lightPos.y, lightPos.z)
         if (labe) {
           labe.lookAt(camera.position);
         }
       },
-      onComplete: () => {},
     });
   }
 };
 
 const SelectVAO = () => {
   // rotatable.rotation.y = Math.PI / 2
-  const sun = scene.getObjectByName("Sun")
-  let startVector = { x: dayVector.x, y: dayVector.y, z: dayVector.z };
-  let endVector = { x: nightVector.x, y: nightVector.y, z: nightVector.z };
-  let isSwitched = false;
-  const target1 = bigStar;
-  let frameCount = 0;
   if (rotatable) {
     const porgress = gsap.to(rotatable.rotation, {
       duration: 1, // Animation duration in seconds
@@ -313,10 +300,6 @@ const SelectVAO = () => {
       repeat: 0, // Repeat indefinitely
       ease: "power1.inOut", // Linear easing
       onUpdate: () => {
-        if (porgress.progress() > 0.0 && !isSwitched) {
-          isSwitched = true;
-        }
-        sunLight.position.set(lightPos.x, lightPos.y, lightPos.z)
         if (labe) {
           labe.lookAt(camera.position);
         }
@@ -335,6 +318,8 @@ function handleWindowResize () {
 }
 
 window.addEventListener('resize', handleWindowResize, false);
+
+camera.updateProjectionMatrix();
 
 const Model3D = () => {
   const [choose, Choose] = useState("VRP");

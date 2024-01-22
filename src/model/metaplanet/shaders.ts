@@ -1,6 +1,4 @@
 export const surfVertShader = `
-uniform float rotation;
-
 varying vec2 vUv;
 varying vec3 vNormal;
 
@@ -16,32 +14,62 @@ uniform float uTime;
 uniform sampler2D dayTexture;
 uniform sampler2D nightTexture;
 uniform sampler2D cloudsTexture;
+uniform sampler2D specularMap;
 uniform vec3 sunDirection;
 uniform vec3 cameraDirection;
-uniform float rotation;
+uniform sampler2D normalMap;
+uniform float normalMapScale;
  
 varying vec2 vUv;
 varying vec3 vNormal;
 
 #define PI 3.141592
+#define shininess 1.
+
+vec3 applyNormalMap(vec2 uv, vec3 aNormal) {
+    vec3 normalMapValue = texture2D(normalMap, uv).xyz * 2.0 - 1.0;
+    normalMapValue *= normalMapScale;
+    // mix input normal with normal map
+    return normalize(aNormal + normalMapValue);
+}
+
+float spec(vec2 uv, vec3 normal) {
+    // Получаем значение из карты отраженного света в текущих текстурных координатах
+    float specularIntensity = texture2D(specularMap, uv).r;
+
+    float cosAnSunToNormal = dot(normal, sunDirection);
+    float deriveCosAn = clamp((cosAnSunToNormal + 1.) / 2. * 80. - 79., 0., 1.0);
+    // deriveCosAn *= .5;
+
+    // Расчет направления бликов (например, использование модели Фонга)
+    // vec3 reflectionDirection = reflect(-sunDirection, normal);
+
+    // Расчет угла между направлением взгляда и направлением отраженного света
+    // float specularAngle = max(dot(cameraDirection, reflectionDirection), 0.0);
+
+    // Применяем карту спекулярности в зависимости от угла блика
+    float finalSpecular = specularIntensity * deriveCosAn;
+
+    return finalSpecular;
+}
 
 void main( void ) {
 
     vec2 uv = vUv;
+    vec3 finalNormal = vNormal;
 
     vec3 dayColor = texture2D(dayTexture, uv).rgb;
     vec3 nightColor = texture2D(nightTexture, uv).rgb;
     vec3 cloudColor = texture2D(cloudsTexture, uv).rgb;
 
-    // vec3 bumpedNormal = perturbNormal2Arb(cameraDirection, vNormal, uv);
-    vec3 bumpedNormal = vNormal;
+    // normal map
+    finalNormal = applyNormalMap(uv, finalNormal);
 
     // compute cosine sun to normal so -1 is away from sun and +1 is toward sun.
-    float cosineAngleSunToNormal = dot(bumpedNormal, sunDirection);
+    float cosAnSunToNormal = dot(finalNormal, sunDirection);
  
     // sharpen the edge beween the transition
-    // cosineAngleSunToNormal = clamp(cosineAngleSunToNormal * .5, -1.0, 1.0);
-    float deriveCosineAngleSun = clamp(cosineAngleSunToNormal * 10., -1.0, 1.0);
+    float deriveCosineAngleSun = clamp(cosAnSunToNormal * 10., -1.0, 1.0);
 
     // float nightLightIntensity = clamp(dot(-normal, sunDirection) + .1, smoothstep(1., 0., pow((uSunIntensity + uAmbientLight), .3)), 1.);
     float nightLightIntensity = .8;
@@ -53,10 +81,12 @@ void main( void ) {
     vec3 color = mix(nightColor * nightLightIntensity, dayColor, mixAmount);
 
     // clouds
-    float deriveCosineAngleSunClouds = clamp(cosineAngleSunToNormal * 2., -1.0, 1.0);
+    float deriveCosineAngleSunClouds = clamp(cosAnSunToNormal * 2., -1.0, 1.0);
     float mixClouds = deriveCosineAngleSunClouds * 0.5 + 0.5;
     cloudColor *= mixClouds;
     color += cloudColor;
+
+    // color += spec(uv, finalNormal);
 
     gl_FragColor = vec4(color, 1.);
  
@@ -90,6 +120,7 @@ void main() {
 
 export const atmoFragShader = `
 uniform vec3 sunDirection;
+uniform vec3 uCameraDirection;
 uniform vec3 color1;
 uniform vec3 color2;
 uniform float opacity;
@@ -112,19 +143,22 @@ void main( void ) {
     float cosineAngleSunToNormal = dot(normalize(vNormal), sunDirection);
  
     // // sharpen the edge beween the transition
-    cosineAngleSunToNormal = clamp(cosineAngleSunToNormal * 5.0, -1.0, 1.0);
+    float deriveCosAnSunToNormal = clamp(cosineAngleSunToNormal * 5.0, -1.0, 1.0);
  
     // // convert to 0 to 1 for mixing
-    float mixAmount = cosineAngleSunToNormal * 0.5 + 0.5;
+    float mixAmount = deriveCosAnSunToNormal * 0.5 + 0.5;
     
     // // comment in the next line to see the mixAmount
     // gl_FragColor = vec4(mixAmount, mixAmount, mixAmount, .5);
     
-    
     float f = clamp(vReflectionFactor, 0.0, 1.0);
     vec3 clr = mix(color2, color1, f);
 
-    // vec3 tm = simpleReinhardToneMapping(clr);
+    // float cosAngleCamSun = dot(uCameraDirection, sunDirection);
+    // vec3 redColor = vec3(1., .0, .0);
+    // float redMix = cosineAngleSunToNormal * 0.5 + 0.5;
+    // clr = mix(clr, redColor, redMix);
+
     clr = simpleReinhardToneMapping(clr);
 
     float a = opacity * .9 * mixAmount * (clr.x + clr.y + clr.z) / 3.;
