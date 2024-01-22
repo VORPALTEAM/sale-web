@@ -54,3 +54,13 @@
         background: #00ffff;
     }
 }
+
+.centralDiagram {
+  position: fixed;
+  top: calc(50% - 200px);
+  left: calc(50% - 200px);
+  background: transparent;
+  width: 400px;
+  height: 400px;
+  z-index: 901;
+}

@@ -18,6 +18,7 @@ import {
   starVertex,
 } from "./stars/strshaders";
 import { earthGroup, cloudsMesh, earthMesh, glowMesh, lightsMesh } from "./planet";
+import { MetaPlanet } from "./metaplanet/planet";
 
 const lightPos = new THREE.Vector3(1.5,
 0,
@@ -27,49 +28,14 @@ const nightVector = new THREE.Vector3(0.05, 0, -0.1);
 const dayVector = new THREE.Vector3(0.9, 0, 0.6);
 const textureLoader = new THREE.TextureLoader();
 
-const planetShaderMaterial = (vector: THREE.Vector3) => {
-  const uniforms = {
-    sunDirection: { value: vector },
-    dayTexture: { value: textureLoader.load("/model/textures/globusday.jpg") },
-    nightTexture: {
-      value: textureLoader.load("/model/textures/globusnight.jpg"),
-    },
-  };
-
-  return new THREE.ShaderMaterial({
-    uniforms: uniforms,
-    vertexShader: planetVertexShader,
-    fragmentShader: planetFragmentShader,
-  });
-};
-
-const lightsMap = new THREE.TextureLoader().load(
-  "/model/textures/enight.jpg" // globusnight.jpg
-);
-const atmMap = new THREE.TextureLoader().load("/model/textures/atm.png");
-const textureMap = new THREE.TextureLoader().load(
-  "/model/textures/globusday.jpg"
-);
-
-const earthMaterial = (intensity: number) => {
-  return new THREE.MeshStandardMaterial({
-    map: textureMap,
-    emissive: 0xffffff,
-    emissiveIntensity: intensity,
-    emissiveMap: lightsMap,
-    side: THREE.DoubleSide,
-  });
-};
 
 let isCamMoving = false;
-let planet: THREE.Mesh;
-let atm: THREE.Mesh;
+let planet: MetaPlanet;
 let bigStar: BigStar2;
 let labe: THREE.Mesh;
 
 const loader = new GLTFLoader();
 const scene = new THREE.Scene();
-const defaultMaterials = new Map<string, THREE.Material>();
 
 const camera = new THREE.PerspectiveCamera(
   45,
@@ -136,6 +102,10 @@ function animate() {
     bigStar.update(1 / 60);
     bigStar.lookAt(camera.position);
   }
+
+  if (planet) {
+    planet.update(1/60);
+  }
 }
 
 animate();
@@ -194,63 +164,14 @@ function updateFPS(currentTime: number) {
 requestAnimationFrame(updateFPS);
 
 controls.addEventListener("change", function () {
-  // This function will be called when the controls change (e.g., when the user interacts with them)
-  // You can put your custom code here to react to the changes
   var cameraTarget = new THREE.Vector3();
+  console.log("Position:")
+  console.log(camera.position)
+  console.log("Rotation:")
+  console.log(camera.rotation)
   console.log("Target: ");
   console.log(camera.getWorldDirection(cameraTarget));
 });
-
-function initCameraPosition(aDefaultConfig: camObject) {
-  let c = aDefaultConfig;
-  camera?.position.set(c.position.x, c.position.y, c.position.z);
-  // camera?.rotation.set(c.rotation._x, c.rotation._y, c.rotation._z);
-  cameraTarget?.copy(c.target as any);
-  camera?.lookAt(cameraTarget);
-}
-
-export async function MoveCamera(aConfig: camObject) {
-  // controls.target.set(point.x, point.y, point.z);
-  // debugger;
-
-  const DUR = config.animDuration / 1000;
-
-  if (isCamMoving) return;
-  isCamMoving = true;
-
-  // move camera
-  gsap.to(camera.position, {
-    x: aConfig.position.x,
-    y: aConfig.position.y,
-    z: aConfig.position.z,
-    duration: DUR,
-    ease: "power1.out",
-  });
-
-  // move camera target
-  if (!aConfig.target) {
-    console.warn(`!aConfig.target`, aConfig);
-    return;
-  }
-  gsap.to(cameraTarget, {
-    x: aConfig.target.x,
-    y: aConfig.target.y,
-    z: aConfig.target.z,
-    duration: DUR,
-    ease: "power1.out",
-    onUpdate: () => {
-      camera.lookAt(cameraTarget);
-    },
-  });
-
-  // TODO: так нельзя, с этим надо что-то делать
-  setTimeout(() => {
-    // controls.target.set(point.x, point.y, point.z); //Точка, вокруг которой идёт вращение мышкой
-    isCamMoving = false;
-  }, config.animDuration * 1 + 11);
-
-  // controls.update()
-}
 
 export function ShowElements() {
   scene.children.forEach((subScene) => {
@@ -262,13 +183,6 @@ export function ShowElements() {
       });
     }
   });
-}
-
-function rotateModel(child: THREE.Mesh) {
-  const timer = setInterval(() => {
-    child.rotation.y += 0.003;
-  }, 10);
-  return timer;
 }
 
 camera.position.set(
@@ -284,91 +198,60 @@ camera.rotation.set(
 
 controls.target.set(0, 0, 0);
 let rotatable: THREE.Group;
-let childs: any = [];
 
-function ScaleItem(name: string) {
-  const item = scene.getObjectByName(name);
-  if (item) {
-    const scrW = window.innerWidth;
-    if (scrW < 1200) {
-      item.scale.set(0.012, 0.012, 0.012);
-    }
-  }
-}
-
-const labelMaterial = new THREE.SpriteMaterial({
-  color: 0xff00000,
-  side: THREE.DoubleSide,
-  transparent: true,
-});
-const labelMaterial2 = new THREE.SpriteMaterial({
-  color: 0x00000ff,
-  side: THREE.DoubleSide,
-  transparent: true,
-});
-
-const root = new THREE.Object3D();
-root.position.x = 1;
-const label = new THREE.Sprite(labelMaterial);
-let label2: THREE.Sprite;
 let sunLight: THREE.PointLight;
 let sunLHelper: THREE.PointLightHelper;
-label.position.x = 1;
-
-const atmos = new THREE.MeshPhongMaterial({ map: atmMap, opacity: 0.8, transparent: true });
 
 const ModelSetup = (gltf: any) => {
-  console.log(gltf);
   const model = gltf.scene;
   rotatable = new THREE.Group();
   rotatable.name = "PlanetGroup";
   const container = document.querySelector(".render--zone");
-  const clicker = document.querySelector(".planetClicker");
   const ev = new Event("click");
   container?.dispatchEvent(ev);
   let counter = 0;
 
+  function CreatePlanet(position: THREE.Vector3) {
+    planet = new MetaPlanet({
+      textureDay: textureLoader.load('/model/textures/Earth_Diffuse_6K_final.webp'),
+      textureNight: textureLoader.load('/model/textures/Earth_Illumination_6K_final.webp'),
+      radius: 0.8,
+      textureClouds: textureLoader.load('/model/textures/2k_earth_clouds.webp'),
+      sun: labe,
+      camera: camera,
+      rotationSpeed: 0.1
+    });
+    rotatable.add(planet)
+    planet.position.set(position.x, position.y, position.z)
+  }
+  
+  function CreateSun(position: THREE.Vector3) {
+    bigStar = new BigStar2(position, camera, 1, {
+      starSize: 1,
+      galaxyColor: { r: 0, g: 0, b: 0 },
+    });
+    let geometry = new THREE.PlaneGeometry(2.5, 2.5);
+    let material = bigStar.getStarMaterial();
+    labe = new THREE.Mesh(geometry, material);
+    labe.lookAt(camera.position);
+    rotatable.add(labe);
+    labe.position.set(position.x, position.y, position.z)
+    sunLight = new THREE.PointLight(0xffffff, 20.0, 10);
+    sunLight.position.set(lightPos.x, lightPos.y, lightPos.z);
+    sunLHelper = new THREE.PointLightHelper(sunLight, 1);
+    scene.add(sunLight);
+  }  
+
+  const sunElement = model.getObjectByName("Sun");
+  const planetElement = model.getObjectByName("Planet");
+
+  if (sunElement && planetElement) {
+    CreateSun(sunElement.position);
+    CreatePlanet(planetElement.position);
+  }
+
   model.traverse((child: any) => {
     if (child.children.length === 0) {
-      if (child.name === "Planet") {
-        // child.material.color.set(0x141414); // 0x007fff
-        planet = child.clone();
-        /* atm = child.clone();
-        atm.scale.x = child.scale.x * 1.05;
-        atm.scale.y = child.scale.y * 1.05;
-        atm.scale.z = child.scale.z * 1.05;
-        atm.material = atmos;
-        planet.material = earthMaterial(dayIntensity); // planetShaderMaterial(dayVector);
-        planet.rotateZ(Math.PI);
-        setInterval(() => {
-          atm.rotateY(0.005);
-          planet.rotateY(0.001);
-        }, 10);
-        rotatable.add(planet);
-        rotatable.add(atm); */
-        const pos = child.position
-        earthGroup.position.set(pos.x, pos.y, pos.z)
-        rotatable.add(earthGroup);
-      }
-
-      if (child.name === "Sun") {
-        bigStar = new BigStar2(child.position, camera, 1, {
-          starSize: 1,
-          galaxyColor: { r: 0, g: 0, b: 0 },
-        });
-        let geometry = new THREE.PlaneGeometry(2.5, 2.5);
-        let material = bigStar.getStarMaterial();
-        labe = new THREE.Mesh(geometry, material);
-        labe.position.set(child.position.x, child.position.y, child.position.z);
-        labe.lookAt(camera.position);
-        rotatable.add(labe);
-
-        sunLight = new THREE.PointLight(0xffffff, 1.0, 10);
-        sunLight.position.set(lightPos.x, lightPos.y, lightPos.z);
-        sunLHelper = new THREE.PointLightHelper(sunLight, 1);
-        scene.add(sunLight);
-        // scene.add(sunLHelper);
-      }
 
       child.visible = false;
     }
@@ -378,11 +261,6 @@ const ModelSetup = (gltf: any) => {
   rotatable.add(stars);
 
   scene.add(rotatable);
-
-  window.addEventListener("resize", () => {
-    // ScaleItem("Sun");
-    // ScaleItem("Planet");
-  });
 
   if (container) {
     container.appendChild(renderer.domElement);
@@ -395,7 +273,6 @@ const ModelSetup = (gltf: any) => {
 
 const SelectVRP = () => {
   const target1 = bigStar;
-  const planetMAterial = earthMaterial(dayIntensity); // planetShaderMaterial(dayVector);
   let isSwitched = false;
   if (rotatable) {
     const porgress = gsap.to(rotatable.rotation, {
@@ -406,7 +283,6 @@ const SelectVRP = () => {
       onUpdate: () => {
         frameCount++;
         if (porgress.progress() > 0.0 && !isSwitched) {
-          planet.material = planetMAterial;
           isSwitched = true;
         }
         sunLight.position.set(lightPos.x, lightPos.y, lightPos.z)
@@ -421,7 +297,6 @@ const SelectVRP = () => {
 
 const SelectVAO = () => {
   // rotatable.rotation.y = Math.PI / 2
-  const planetMAterial = earthMaterial(nightIntensity); // planetShaderMaterial(nightVector);
   const sun = scene.getObjectByName("Sun")
   let startVector = { x: dayVector.x, y: dayVector.y, z: dayVector.z };
   let endVector = { x: nightVector.x, y: nightVector.y, z: nightVector.z };
@@ -436,12 +311,9 @@ const SelectVAO = () => {
       ease: "power1.inOut", // Linear easing
       onUpdate: () => {
         if (porgress.progress() > 0.0 && !isSwitched) {
-          planet.material = planetMAterial;
           isSwitched = true;
         }
         sunLight.position.set(lightPos.x, lightPos.y, lightPos.z)
-        console.log(sunLight.position)
-        console.log(target1.position)
         if (labe) {
           labe.lookAt(camera.position);
         }
@@ -462,11 +334,6 @@ function handleWindowResize () {
 window.addEventListener('resize', handleWindowResize, false);
 
 const Model3D = () => {
-  const [clickable, setClickable] = useState(false);
-  const [isFirstLoad, noteFirstLoad] = useState(true);
-  const [menuHidden, HideMenu] = useState(true);
-  const [menuHeading, SetHeading] = useState("");
-  const [rightText, RTSetup] = useState(config.BorderContent[0]);
   const [choose, Choose] = useState("VRP");
 
   useEffect(() => {

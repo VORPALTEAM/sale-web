@@ -13,8 +13,18 @@ export const animDuration = 300;
 export const animFrames = 20;
 export const animFps = 120;
 
-export const defaultCam: camObject = {
-  position: {
+/* 
+Position: index.tsx:131:11
+Object { x: 3.9017520963843686, y: 0.30514418644864605, z: 4.269604085709361 }
+index.tsx:132:11
+Rotation: index.tsx:133:11
+Object { isEuler: true, _x: -0.104798314773686, _y: 0.8038921910189447, _z: 0.07559447215292867, _order: "XYZ", _onChangeCallback: onRotationChange()
+ }
+index.tsx:134:11
+Target: index.tsx:135:11
+Object { x: -0.720062365988804, y: -0.07258749265903412, z: -0.690102343856388 }
+
+position: {
     x: 4.162671473134066, y: 0.4196273812798987, z: 3.9894729623442213 
   },
   rotation: {
@@ -22,6 +32,24 @@ export const defaultCam: camObject = {
   },
   target: {
     x: -0.7920205133080184, y: -0.09200967311074568, z: -0.6035211069659095
+  },
+*/
+
+export const defaultCam: camObject = {
+  position: {
+    x: 3.9017520963843686,
+    y: 0.30514418644864605,
+    z: 4.269604085709361,
+  },
+  rotation: {
+    _x: -0.104798314773686,
+    _y: 0.8038921910189447,
+    _z: 0.07559447215292867,
+  },
+  target: {
+    x: -0.720062365988804,
+    y: -0.07258749265903412,
+    z: -0.690102343856388,
   },
 };
 
@@ -45,24 +73,9 @@ export const finalCam: camObject = {
 
 export const EnableMove = false;
 
-export const MovePath: pointVector[] = [
-  { x: 0.4889499843120575, y: 0, z: 0.7810499668121338 }, // Sun
-  { x: 1.708150029182434, y: 0, z: 0.5905500054359436 }, // PlaceSun1
-  { x: 2.5971500873565674, y: 0, z: -0.044449999928474426 }, // PlaceSun2
-  { x: 1.3906500339508057, y: 0, z: -0.6667500138282776 }, // PlaceSun3
-  { x: -0.5146437883377075, y: 0, z: -0.7454371452331543 }, // Planet
-  { x: -1.885949969291687, y: 0, z: -0.5651500225067139 }, // PlacePlanet1
-  { x: -2.6098499298095703, y: 0, z: -0.019050000235438347 }, // PlacePlanet2
-  { x: -1.2636499404907227, y: 0, z: 0.6667500138282776 }, // PlacePlanet3
-];
+export const MovePath: pointVector[] = [];
 
 export const CAMERA_POS: camObject[] = [];
-
-export const MenuBorders = [
-  1486.7547046835043, 846.7547046835043, 586.7547046835043, 326.7547046835043,
-];
-
-export const BorderContent = ["Shape 1", "Shape 2", "Shape 3", "Shape 4"];
 
 export const camStep = 20;
 
@@ -86,13 +99,7 @@ export const FreeLights: pointVector[] = [
   },
 ];
 
-export const defaultPoint: pointVector = {
-  x: 0,
-  y: 0,
-  z: 0,
-};
-
-export const SetAmbientLight = true;
+export const SetAmbientLight = false;
 
 export const scenesize = {
   x: window.innerWidth * 0.98,
