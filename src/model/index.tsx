@@ -215,7 +215,7 @@ const ModelSetup = (gltf: any) => {
   function CreatePlanet(position: THREE.Vector3) {
     const abstLight = new THREE.Mesh(new THREE.SphereGeometry(4), new THREE.MeshBasicMaterial({ color: 0xffffff}));
     abstLight.position.set(abstLightPosition.x, abstLightPosition.y, abstLightPosition.z )
-    rotatable.add(abstLight)
+    // rotatable.add(abstLight)
     planet = new MetaPlanet({
       textureDay: textureLoader.load('/model/textures/Earth_Diffuse_6K_final.webp'),
       textureNight: textureLoader.load('/model/textures/Earth_Illumination_6K_final.webp'),

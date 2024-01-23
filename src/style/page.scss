@@ -57,10 +57,11 @@
 
 .centralDiagram {
   position: fixed;
-  top: calc(50% - 200px);
-  left: calc(50% - 200px);
+  top: calc(50% - 20vw);
+  left: calc(50% - 20vw);
   background: transparent;
-  width: 400px;
-  height: 400px;
+  border: 2px solid #00ffff;
+  width: 40vw;
+  height: 40vw;
   z-index: 901;
 }
