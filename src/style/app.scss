@@ -7,6 +7,8 @@
 body {
     font-family: 'Inter';
     font-weight: 400;
+    max-width: 100vw !important;
+    min-height: 120vh;
 }
 
 a, div {

@@ -56,12 +56,23 @@
 }
 
 .centralDiagram {
-  position: fixed;
-  top: calc(50% - 20vw);
+  position: absolute;
+  top: 300px;
   left: calc(50% - 20vw);
   background: transparent;
-  border: 2px solid #00ffff;
   width: 40vw;
   height: 40vw;
   z-index: 901;
+}
+
+.switchSection {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  min-height: 40px;
+
+  .switchItem {
+    display: flex;
+    padding: 12px;
+  }
 }

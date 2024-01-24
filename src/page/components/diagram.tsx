@@ -5,19 +5,19 @@ const MainDiagram = () => {
   const radius = 197;
   const data = [
     {
-      value: 50,
+      value: (50000 / 100000) * 100,
       color: "transparent",
     },
     {
-      value: 10,
+      value: Math.round((8072 / 100000) * 100),
       color: "#FF7A00",
     },
     {
-      value: 15,
+      value: Math.round((10059 / 100000) * 100),
       color: "#CC00FF",
     },
     {
-      value: 25,
+      value: Math.round((31869 / 100000) * 100),
       color: "#00C2FF",
     },
   ];
