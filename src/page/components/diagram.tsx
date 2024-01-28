@@ -1,5 +1,6 @@
 import React from "react";
 import TokenTopSection from "./tokenTopSection";
+import InfoContainer from "./infoContainer";
 
 const MainDiagram = () => {
   const lineWidth = 2;
@@ -108,27 +109,18 @@ const MainDiagram = () => {
           strokeWidth={1}
         />
       </svg>
-      <div className="infoContainer totalInvestAmount diagramValue" style={{
+      <InfoContainer h={"AVAILABLE:"} d={"30 589 200"} addClass={" totalInvestAmount diagramValue"}  style={{
         marginTop: -700,
         marginLeft: -50
-      }}>
-          <div className="infoRow heading">AVAILABLE:</div>
-          <div className="infoRow amount">30 589 200</div>
-      </div>
-      <div className="infoContainer totalInvestAmount diagramValue" style={{
+      }} />
+      <InfoContainer h={"YOU GET:"} d={"400 000"} addClass={" totalInvestAmount diagramValue"}  style={{
         marginTop: -160,
         marginLeft: -40
-      }}>
-          <div className="infoRow heading">YOU GET:</div>
-          <div className="infoRow amount">400 000</div>
-      </div>
-      <div className="infoContainer totalInvestAmount diagramValue" style={{
+      }} />
+      <InfoContainer h={"SOLD:"} d={"11 410 800"} addClass={" totalInvestAmount diagramValue"}  style={{
         marginTop: -60,
         marginLeft: 150
-      }}>
-          <div className="infoRow heading">SOLD:</div>
-          <div className="infoRow amount">11 410 800</div>
-      </div>
+      }} />
     </div>
   );
 };

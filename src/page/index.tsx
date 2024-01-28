@@ -3,6 +3,7 @@ import Header from "./components/header";
 import MainDiagram from "./components/diagram";
 import SwitchSection from "./components/switchSection";
 import TokenTopSection from "./components/tokenTopSection";
+import DataOffice from "./components/cabinet";
 
 const Page = () => {
 
@@ -13,6 +14,7 @@ const Page = () => {
                 <SwitchSection />
                 <TokenTopSection />
                 <MainDiagram />
+                <DataOffice />
             </div>
         </div>
     )

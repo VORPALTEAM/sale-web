@@ -1,7 +1,14 @@
 import React from "react";
 import InfoIcon from "./icons/InfoIcon";
+import HintRow from "./hint";
 
 const TokenTopSection = () => {
+
+    
+    const HintAction = () => {
+        console.log("Top hint triggered");
+    }
+
   return (
     <div className="switchSection totalAmount">
       <div className="switchItem topAmount">
@@ -18,10 +25,7 @@ const TokenTopSection = () => {
             ecosystem and receives 30% of its total profits. Required for the
             generation of Plasma, from which Stars are created.
           </div>
-          <div className="hintRow">
-            <InfoIcon width={20} height={20} />
-            <p>Why is the Star needed?</p>
-          </div>
+          <HintRow text={"Why is the Star needed?"} action={HintAction} />
         </div>
       </div>
     </div>
