@@ -1,4 +1,5 @@
 import React from "react";
+import TokenTopSection from "./tokenTopSection";
 
 const MainDiagram = () => {
   const lineWidth = 2;
@@ -58,6 +59,7 @@ const MainDiagram = () => {
     const circle = (sector: (typeof sectors)[0]) => {
       return (
         <circle
+          key={`cr_1${Math.random() * 1000000}`}
           cx={radius + lineWidth / 2}
           cy={radius + lineWidth / 2}
           r={radius}
@@ -85,7 +87,7 @@ const MainDiagram = () => {
         style={{
           width: "20vw",
           height: "40vw",
-          marginLeft: 60,
+          marginLeft: '9%',
         }}
       >
         {generateDiagram()}
@@ -95,6 +97,7 @@ const MainDiagram = () => {
           x2={radius + 1}
           y2="14"
           stroke="#00FFFF"
+          strokeWidth={1}
         />
         <line
           x1={radius + 1}
@@ -102,8 +105,30 @@ const MainDiagram = () => {
           x2={radius + 1}
           y2="407"
           stroke="#00FFFF"
+          strokeWidth={1}
         />
       </svg>
+      <div className="infoContainer totalInvestAmount diagramValue" style={{
+        marginTop: -700,
+        marginLeft: -50
+      }}>
+          <div className="infoRow heading">AVAILABLE:</div>
+          <div className="infoRow amount">30 589 200</div>
+      </div>
+      <div className="infoContainer totalInvestAmount diagramValue" style={{
+        marginTop: -160,
+        marginLeft: -40
+      }}>
+          <div className="infoRow heading">YOU GET:</div>
+          <div className="infoRow amount">400 000</div>
+      </div>
+      <div className="infoContainer totalInvestAmount diagramValue" style={{
+        marginTop: -60,
+        marginLeft: 150
+      }}>
+          <div className="infoRow heading">SOLD:</div>
+          <div className="infoRow amount">11 410 800</div>
+      </div>
     </div>
   );
 };

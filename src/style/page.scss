@@ -71,8 +71,109 @@
   justify-content: center;
   min-height: 40px;
 
+  &.totalAmount {
+    margin-top: 30px;
+  }
+
   .switchItem {
     display: flex;
-    padding: 12px;
+  }
+
+  .topAmount {
+    margin-left: 186px;
+    display:grid;
+    place-items:center;
   }
 }
+
+.stageHeading {
+  margin-left: 25px;
+}
+
+.ctnrBorder {
+  border-right: 1px solid #00ffff;
+  padding-left: 10px;
+  margin-right: 10px;
+}
+
+.infoContainer {
+  min-width: 160px;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  
+  .amount {
+    font-size: 24px;
+    color: #FFF;
+  }
+
+  .heading {
+    font-size: 14px;
+  }
+
+}
+
+.stageName {
+  font-size: 24px;
+  color: #FFF;
+  font-weight: 400;
+  text-transform: uppercase;
+  margin-right: 20px;
+  padding-top: 3px;
+
+  span {
+    color: #00ffff;
+  }
+}
+
+.stageCurrent {
+  display: flex;
+  border: 1px solid #00ffff;
+  border-radius: 50px;
+  margin: 20px 0 25px 25px;
+
+  .tokenName {
+    padding: 10px;
+    width: 50%;
+    min-width: 150px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 700;
+    color: #00ffff;
+    user-select: none;
+    cursor: pointer;
+    padding-top: 13px;
+
+    &.active {
+      border: 3px solid #00ffff;
+      border-radius: 50px;
+      padding-top: 10px;
+    }
+  }
+}
+
+.descriptionContainer {
+  max-width: 369px;
+
+  .descriptionText {
+    font-size: 14px;
+  }
+
+  .hintRow {
+    display: flex;
+    margin-top: 10px;
+    text-decoration: underline;
+    color: #FFF;
+
+    p {
+      margin-left: 10px;
+      margin-top: -0px;
+    }
+  }
+}
+
+.diagramValue {
+  position: absolute;
+}
+
+

@@ -13,7 +13,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <Model3D />
+      {/* <Model3D /> */}
       <Page />
     </Provider>
   </React.StrictMode>

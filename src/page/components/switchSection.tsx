@@ -5,15 +5,15 @@ const SwitchSection = () => {
     return(
         <div className="switchSection">
             <div className="switchItem stageHeading">
-                <h2 className="stageName">
-                    Stage: seed round
-                </h2>
+                <h3 className="stageName">
+                    <span>Stage:</span> pre-seed round
+                </h3>
             </div>
             <div className="switchItem stageCurrent">
-                <div className="stageName active">
+                <div className="tokenName active">
                     VAO
                 </div>
-                <div className="stageName">
+                <div className="tokenName">
                     VRP
                 </div>
             </div>

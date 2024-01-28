@@ -2,6 +2,7 @@ import React from "react";
 import Header from "./components/header";
 import MainDiagram from "./components/diagram";
 import SwitchSection from "./components/switchSection";
+import TokenTopSection from "./components/tokenTopSection";
 
 const Page = () => {
 
@@ -10,6 +11,7 @@ const Page = () => {
             <div className="vorpalPage">
                 <Header />
                 <SwitchSection />
+                <TokenTopSection />
                 <MainDiagram />
             </div>
         </div>
