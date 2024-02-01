@@ -7,9 +7,22 @@
   color: #00ffff;
 }
 
+.vorpalPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .header {
   display: flex;
   justify-content: space-between;
+  position: absolute;
+  width: 100%;
+}
+
+.pageContainer {
+  width: 100%;
+  max-width: 1600px;
 }
 
 .mainMenu {
@@ -225,10 +238,9 @@
   margin-top: 20px;
   border: 1px solid #00ffff; 
   border-radius: 20px;
-  padding: 2px;
+  padding: 3px;
 
   .calculationFormInner {
-    border: 2px solid #00ffff; 
     border-radius: 20px;
     padding: 20px;
     width: 83%;
@@ -236,4 +248,18 @@
     min-height: 398px;
   }
 }
+/*
+.calculationForm::before {
+  content: '';
+  position: absolute;
+  top: 3px; 
+  left: 3px; 
+  right: 3px;
+  bottom: 3px; 
+  border: 2px solid #00ffff;
+} */
 
+.calculationForm {
+  outline: 1px solid #00ffff;
+  outline-offset: 4px;
+}

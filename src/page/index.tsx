@@ -6,18 +6,19 @@ import TokenTopSection from "./components/tokenTopSection";
 import DataOffice from "./components/cabinet";
 
 const Page = () => {
-
-    return(
-        <div className="pageCtnr">
-            <div className="vorpalPage">
-                <Header />
-                <SwitchSection />
-                <TokenTopSection />
-                <MainDiagram />
-                <DataOffice />
-            </div>
+  return (
+    <div className="pageCtnr">
+      <div className="vorpalPage">
+        <Header />
+        <div className="pageContainer">
+          <SwitchSection />
+          <TokenTopSection />
+          <MainDiagram />
+          <DataOffice />
         </div>
-    )
-}
+      </div>
+    </div>
+  );
+};
 
 export default Page;
