@@ -120,6 +120,11 @@
     margin-top: 16px;
   }
 
+  &.infoFt {
+    min-width: 50px;
+    width: 49%;
+  }
+
   .amount {
     font-size: 24px;
     color: #FFF;
@@ -248,18 +253,57 @@
     min-height: 398px;
   }
 }
-/*
-.calculationForm::before {
-  content: '';
-  position: absolute;
-  top: 3px; 
-  left: 3px; 
-  right: 3px;
-  bottom: 3px; 
-  border: 2px solid #00ffff;
-} */
 
 .calculationForm {
   outline: 1px solid #00ffff;
   outline-offset: 4px;
+}
+
+.calculationField {
+  margin-top: 15px;
+}
+
+.calcInputRow {
+  margin-top: 5px;
+  display: flex;
+}
+
+.calcIcon {
+  display: flex;
+
+  svg {
+    margin-top: 6px;
+    margin-left: 6px;
+  }
+
+  .calcIconText {
+    margin-top: 9px;
+    margin-left: 9px;
+  }
+}
+
+.calcInputField {
+  width: 120px;
+  margin: 4px 0 4px 4px;
+  border-radius: 4px;
+  border: 1px solid #CC00FF;
+  background: rgba(204, 0, 255, 0.2);
+  color: #FFF;
+  font-size: 24px;
+}
+
+.calcInputHint {
+  margin: 10px 0 0 40px;
+  font-size: 12px;
+  color: #FFF;
+  opacity: 0.3;
+}
+
+.partInfo {
+  margin-top: 40px;
+}
+
+.partInfoRow {
+  display: flex;
+  justify-content: space-between;
 }

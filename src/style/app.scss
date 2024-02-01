@@ -9,7 +9,7 @@ body {
     font-weight: 400;
     max-width: 100vw !important;
     overflow-x: hidden;
-    min-height: 120vh;
+    height: 130vh;
 }
 
 a, div {
@@ -18,4 +18,14 @@ a, div {
 
 ._hidden {
     display: none !important;
+}
+
+input[type=number]{
+    -moz-appearance: textfield;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0; 
 }
