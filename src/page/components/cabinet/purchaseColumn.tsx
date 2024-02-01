@@ -1,6 +1,7 @@
 import React from "react";
 import DataHeading from "./dataHeading";
 import CalculationForm from "./calcForm";
+import TermsAgreeAction from "./termsAction";
 
 const PurchaseColumn = () => {
 
@@ -8,6 +9,7 @@ const PurchaseColumn = () => {
         <div className="officeColumn balanceColumn">
             <DataHeading h="GET YOUR TOKEN" />
             <CalculationForm />
+            <TermsAgreeAction />
             </div>
     )
 }
