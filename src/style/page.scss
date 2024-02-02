@@ -23,6 +23,7 @@
 .pageContainer {
   width: 100%;
   max-width: 1600px;
+  margin-top: 80px;
 }
 
 .mainMenu {
@@ -330,4 +331,37 @@
     text-decoration: underline;
   }
 
+}
+
+.actionStageBar {
+  margin-top: 12px;
+  display: flex;
+  width: 100%;
+
+  .stageLine {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+    background: transparent;
+    width: 49%;
+    height: 1px;
+
+    &.passed {
+      border-bottom: 4px solid #00ffff;
+    }
+  }
+
+  .stageBorder {
+    height: 30px;
+    margin-top: -12px;
+    width: 1px;
+    border-left: 1px solid rgba(255, 255, 255, 0.5);
+
+    &.passed {
+      border-left: 1px solid #00ffff;
+    }
+  }
+}
+
+.stageNameCtnr {
+  position: absolute;
+  width: 100%;
 }

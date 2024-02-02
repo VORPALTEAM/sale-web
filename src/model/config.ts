@@ -93,5 +93,5 @@ export const SetAmbientLight = false;
 
 export const scenesize = {
   x: window.innerWidth * 0.98,
-  y: window.innerHeight * 0.98,
+  y: window.innerHeight * 1.49,
 };

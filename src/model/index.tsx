@@ -28,6 +28,8 @@ const nightVector = new THREE.Vector3(0.05, 0, -0.1);
 const dayVector = new THREE.Vector3(0.9, 0, 0.6);
 const textureLoader = new THREE.TextureLoader();
 
+let defaultSceneSize = {...config.scenesize}
+
 
 let isCamMoving = false;
 let planet: MetaPlanet;
@@ -39,7 +41,7 @@ const scene = new THREE.Scene();
 
 const camera = new THREE.PerspectiveCamera(
   45,
-  config.scenesize.x / config.scenesize.y,
+  defaultSceneSize.x /  defaultSceneSize.y,
   1,
   config.baseCamDistance
 );
@@ -117,14 +119,18 @@ setInterval(() => {
 animate();
 
 function onWindowResize() {
-  camera.aspect = ((window.innerWidth * 0.98) / window.innerHeight) * 0.98;
+  defaultSceneSize = {
+    x: window.innerWidth * 0.99,
+    y: window.innerHeight * 1.49
+  }
+  camera.aspect = ( defaultSceneSize.x / defaultSceneSize.y);
   camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth * 0.98, window.innerHeight * 0.98);
+  renderer.setSize( defaultSceneSize.x ,  defaultSceneSize.y);
 }
 
 window.addEventListener("resize", onWindowResize, false);
 
-renderer.setSize(config.scenesize.x, config.scenesize.y);
+renderer.setSize( defaultSceneSize.x,  defaultSceneSize.y);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.shadowMap.enabled = true;
 
@@ -312,9 +318,9 @@ const SelectVAO = () => {
 loader.load(config.url, ModelSetup);
 
 function handleWindowResize () {
-  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.aspect =  defaultSceneSize.x /  defaultSceneSize.y;
   camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setSize( defaultSceneSize.x,  defaultSceneSize.y);
 }
 
 window.addEventListener('resize', handleWindowResize, false);

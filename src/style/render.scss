@@ -8,9 +8,7 @@ body {
   .render--zone,
   .renderBkg,
   .content {
-    position: fixed;
-    top: 0;
-    left: 0;
+    position: absolute;
     z-index: 2;
     width: 98vw;
     height: 98vh;
