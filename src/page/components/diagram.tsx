@@ -64,7 +64,7 @@ const MainDiagram = () => {
         <circle
           key={`cr_1${Math.random() * 1000000}`}
           cx={(radius + lineWidth / 2) + 40}
-          cy={radius + lineWidth / 2}
+          cy={(radius + lineWidth / 2) + 15}
           r={radius}
           strokeDasharray={`${sector.width} ${length - sector.width}`}
           strokeDashoffset={sector.offset}
@@ -137,17 +137,17 @@ const MainDiagram = () => {
         {generateDiagram()}
         <line
           x1={radius + linePrecession}
-          y1="-11"
+          y1="4"
           x2={radius + linePrecession}
-          y2="14"
+          y2="29"
           stroke="#00FFFF"
           strokeWidth={1}
         />
         <line
           x1={radius + linePrecession}
-          y1="309"
+          y1="324"
           x2={radius + linePrecession}
-          y2="334"
+          y2="349"
           stroke="#00FFFF"
           strokeWidth={1}
         />

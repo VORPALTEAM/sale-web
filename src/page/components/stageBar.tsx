@@ -12,8 +12,8 @@ const StageBar = () => {
       </div>
       <div className="stageNameCtnr">
         <div className="barStageName">Connect</div>
-        <div className="barStageName">Approve</div>
-        <div className="barStageName">Invest</div>
+        <div className="barStageName snd">Approve</div>
+        <div className="barStageName snd">Invest</div>
       </div>
     </div>
   );

@@ -373,6 +373,13 @@
 }
 
 .stageNameCtnr {
-  position: absolute;
   width: 100%;
+  width: 100%;
+  display: flex;
+  margin-left: -30px;
+  color: #FFF;
+
+  .snd {
+    margin-left: 80px;
+  }
 }
