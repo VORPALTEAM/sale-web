@@ -344,10 +344,16 @@
 
 }
 
+.actionStageCtnr {
+  margin-left: -20px;
+  margin-top: 20px;
+}
+
 .actionStageBar {
   margin-top: 12px;
   display: flex;
   width: 100%;
+  max-width: 300px;
 
   .stageLine {
     border-bottom: 1px solid rgba(255, 255, 255, 0.5);
@@ -374,12 +380,16 @@
 
 .stageNameCtnr {
   width: 100%;
-  width: 100%;
+  min-width: 360px;
   display: flex;
   margin-left: -30px;
   color: #FFF;
 
   .snd {
-    margin-left: 80px;
+    margin-left: 90px;
+  }
+
+  .thrd {
+    margin-left: 90px;
   }
 }

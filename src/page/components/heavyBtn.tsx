@@ -8,6 +8,9 @@ const HeavyActionBtn = (props: btnProps) => {
         viewBox="0 0 410 136"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
+        style={{
+          marginLeft: -60
+        }}
       >
         <path
           opacity="0.6"
