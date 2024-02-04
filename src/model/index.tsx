@@ -281,11 +281,11 @@ const ModelSetup = (gltf: any) => {
   return true;
 };
 
-const SelectVRP = () => {
+export const SelectVRP = () => {
   if (rotatable) {
     const porgress = gsap.to(rotatable.rotation, {
       duration: 1, // Animation duration in seconds
-      y: 0, // Rotate 360 degrees around the y-axis
+      y: Math.PI, // Rotate 360 degrees around the y-axis
       repeat: 0, // Repeat indefinitely
       ease: "power1.inOut", // Linear easing
       onUpdate: () => {
@@ -297,12 +297,12 @@ const SelectVRP = () => {
   }
 };
 
-const SelectVAO = () => {
+export const SelectVAO = () => {
   // rotatable.rotation.y = Math.PI / 2
   if (rotatable) {
     const porgress = gsap.to(rotatable.rotation, {
       duration: 1, // Animation duration in seconds
-      y: Math.PI, // Rotate 360 degrees around the y-axis
+      y: 0, // Rotate 360 degrees around the y-axis
       repeat: 0, // Repeat indefinitely
       ease: "power1.inOut", // Linear easing
       onUpdate: () => {

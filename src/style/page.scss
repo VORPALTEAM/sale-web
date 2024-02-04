@@ -1,6 +1,6 @@
 .pageCtnr {
   position: absolute;
-  width: 100vw;
+  width: 100%;
   top: 0;
   left: 0;
   z-index: 5;
@@ -77,6 +77,15 @@
   width: 40vw;
   height: 40vw;
   z-index: 901;
+  margin-top: 60px;
+  max-width: 640px;
+}
+
+@media (min-width: 3100px) {
+  .centralDiagram {
+    left: calc(50% - 640px);
+    width: 640px;
+  }
 }
 
 .switchSection {
@@ -201,12 +210,14 @@
 }
 
 .diagramValue {
-  position: absolute;
+  position: relative;
+  transform: scale(0.5);
 }
 
 .dataOffice {
   display: flex;
   justify-content: space-between;
+  margin-top: -150px;
 }
 
 

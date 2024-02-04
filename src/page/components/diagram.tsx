@@ -1,10 +1,12 @@
 import React from "react";
+import ReactDOMServer from "react-dom/server";
 import TokenTopSection from "./tokenTopSection";
 import InfoContainer from "./infoContainer";
 
 const MainDiagram = () => {
   const lineWidth = 2;
-  const radius = 197;
+  const radius = 160;
+  const linePrecession = 42;
   const data = [
     {
       value: (50000 / 100000) * 100,
@@ -61,7 +63,7 @@ const MainDiagram = () => {
       return (
         <circle
           key={`cr_1${Math.random() * 1000000}`}
-          cx={radius + lineWidth / 2}
+          cx={(radius + lineWidth / 2) + 40}
           cy={radius + lineWidth / 2}
           r={radius}
           strokeDasharray={`${sector.width} ${length - sector.width}`}
@@ -79,48 +81,78 @@ const MainDiagram = () => {
     return circles;
   };
 
+  const generateNotes = () => {
+    const infoContainers: any[] = [];
+    infoContainers.push(
+      ReactDOMServer.renderToString(
+        <InfoContainer
+          h={"AVAILABLE:"}
+          d={"30 589 200"}
+          addClass={" totalInvestAmount diagramValue"}
+        />
+      )
+    );
+    infoContainers.push(
+      ReactDOMServer.renderToString(
+        <InfoContainer
+        h={"YOU GET:"}
+        d={"400 000"}
+        addClass={" totalInvestAmount diagramValue"}
+      />
+      )
+    );
+    infoContainers.push(
+      ReactDOMServer.renderToString(
+        <InfoContainer
+        h={"SOLD:"}
+        d={"11 410 800"}
+        addClass={" totalInvestAmount diagramValue"}
+      />
+      )
+    );
+    return(`
+    <foreignObject x=${-60} y=${20} width="160" height="80">
+      ${infoContainers[0]}
+    </foreignObject>
+    <foreignObject x=${-60} y=${280} width="160" height="80">
+      ${infoContainers[1]}
+    </foreignObject>
+    <foreignObject x=${40} y=${330} width="160" height="80">
+      ${infoContainers[2]}
+    </foreignObject>`)
+  };
+
   return (
     <div className="centralDiagram">
       <svg
-        viewBox="0 0 250 400"
+        viewBox="-40 0 250 440"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         style={{
           width: "20vw",
           height: "40vw",
-          marginLeft: '9%',
+          maxWidth: 640
         }}
       >
         {generateDiagram()}
         <line
-          x1={radius + 1}
+          x1={radius + linePrecession}
           y1="-11"
-          x2={radius + 1}
+          x2={radius + linePrecession}
           y2="14"
           stroke="#00FFFF"
           strokeWidth={1}
         />
         <line
-          x1={radius + 1}
-          y1="382"
-          x2={radius + 1}
-          y2="407"
+          x1={radius + linePrecession}
+          y1="309"
+          x2={radius + linePrecession}
+          y2="334"
           stroke="#00FFFF"
           strokeWidth={1}
         />
+        <g dangerouslySetInnerHTML={{ __html: generateNotes() }} />
       </svg>
-      <InfoContainer h={"AVAILABLE:"} d={"30 589 200"} addClass={" totalInvestAmount diagramValue"}  style={{
-        marginTop: -700,
-        marginLeft: -50
-      }} />
-      <InfoContainer h={"YOU GET:"} d={"400 000"} addClass={" totalInvestAmount diagramValue"}  style={{
-        marginTop: -160,
-        marginLeft: -40
-      }} />
-      <InfoContainer h={"SOLD:"} d={"11 410 800"} addClass={" totalInvestAmount diagramValue"}  style={{
-        marginTop: -60,
-        marginLeft: 150
-      }} />
     </div>
   );
 };
