@@ -15,6 +15,15 @@ body {
     background: transparent;
   }
   
+  .render--planet--zone {
+    position: absolute;
+    z-index: 3;
+    width: 600px;
+    height: 600px;
+    top: calc(50% - 300px);
+    left: calc(50% - 300px);
+  }
+
   .renderBkg {
     z-index: 2;
     /* background-image: url('../public/model/stars-hero.jpg'); */

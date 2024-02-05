@@ -203,7 +203,7 @@ camera.rotation.set(
 );
 
 controls.target.set(0, 0, 0);
-let rotatable: THREE.Group;
+export let rotatable: THREE.Group;
 
 let sunLight: THREE.PointLight;
 let sunLHelper: THREE.PointLightHelper;
@@ -359,6 +359,7 @@ const Model3D = () => {
         style={{ transform: `translateX(${choose === "VRP" ? 0 : -100}vw)` }}
       />
       <div className="render--zone" />
+      <div className="render--planet--zone" />
     </>
   );
 };
