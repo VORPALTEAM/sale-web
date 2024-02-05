@@ -33,11 +33,14 @@ let defaultSceneSize = {...config.scenesize}
 
 let isCamMoving = false;
 let planet: MetaPlanet;
+let planet2: MetaPlanet;
 let bigStar: BigStar2;
 let labe: THREE.Mesh;
+let labe2: THREE.Mesh;
 
 const loader = new GLTFLoader();
 const scene = new THREE.Scene();
+const planetScene = new THREE.Scene();
 
 const camera = new THREE.PerspectiveCamera(
   45,
@@ -46,12 +49,24 @@ const camera = new THREE.PerspectiveCamera(
   config.baseCamDistance
 );
 
-let cameraTarget = new THREE.Vector3();
-
 const renderer = new THREE.WebGLRenderer({
   alpha: true,
   antialias: true
 });
+
+const planetRenderer = new THREE.WebGLRenderer({
+  alpha: true,
+  antialias: true
+});
+
+const planetCamera = new THREE.PerspectiveCamera(
+  45,
+  600 /  600,
+  1,
+  config.baseCamDistance
+);
+
+planetScene.add(planetCamera);
 
 // renderer.toneMapping = THREE.ReinhardToneMapping;
 
@@ -66,6 +81,7 @@ if (config.SetAmbientLight) {
     config.lightStrength
   );
   scene.add(light);
+  planetScene.add(light.clone());
 }
 
 ld.forEach((li) => {
@@ -82,12 +98,6 @@ lf.forEach((li) => {
   light.position.set(li.x, li.y, li.z);
   scene.add(light);
 });
-
-const interactionManager = new InteractionManager(
-  renderer,
-  camera,
-  renderer.domElement
-);
 
 const stars = new StarSky(9000, 90, 1600);
 
@@ -107,7 +117,12 @@ function animate() {
   if (planet) {
     planet.update(dlt);
   }
+
+  if (planet2) {
+    planet2.update(dlt);
+  }
   renderer.render(scene, camera);
+  planetRenderer.render(planetScene, planetCamera);
 }
 
 animate();
@@ -126,15 +141,20 @@ function onWindowResize() {
   camera.aspect = ( defaultSceneSize.x / defaultSceneSize.y);
   camera.updateProjectionMatrix();
   renderer.setSize( defaultSceneSize.x ,  defaultSceneSize.y);
+  planetRenderer.setSize( 600, 600);
 }
 
 window.addEventListener("resize", onWindowResize, false);
 
 renderer.setSize( defaultSceneSize.x,  defaultSceneSize.y);
+planetRenderer.setSize( 600, 600);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.shadowMap.enabled = true;
 
-const controls = new OrbitControls(camera, renderer.domElement);
+planetRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+planetRenderer.shadowMap.enabled = true;
+
+const controls = new OrbitControls(planetCamera, planetRenderer.domElement);
 
 if (config.EnableMove) {
   controls.enableZoom = true;
@@ -149,10 +169,6 @@ if (config.EnableMove) {
 controls.listenToKeyEvents(window);
 controls.update();
 
-let framesNum = config.animFps;
-const dayIntensity = 1; //0.001
-const nightIntensity = 1; // 1
-
 let lastFrameTime = 0;
 let frameCount = 0;
 
@@ -160,7 +176,7 @@ function updateFPS(currentTime: number) {
   frameCount++;
   if (currentTime >= lastFrameTime + 1000) {
     let fps = frameCount;
-    framesNum = fps;
+    // framesNum = fps;
     frameCount = 0;
     lastFrameTime = currentTime;
   }
@@ -202,17 +218,33 @@ camera.rotation.set(
   config.defaultCam.rotation._z
 );
 
-controls.target.set(0, 0, 0);
-export let rotatable: THREE.Group;
+planetCamera.position.set(
+  config.defaultCam.position.x,
+  config.defaultCam.position.y,
+  config.defaultCam.position.z,
+);
 
+planetCamera.rotation.set(
+  config.defaultCam.rotation._x,
+  config.defaultCam.rotation._y,
+  config.defaultCam.rotation._z,
+);
+
+controls.target.set(0, 0, 0);
+let rotatable: THREE.Group;
+let rotatablePlanet: THREE.Group;
 let sunLight: THREE.PointLight;
+let sunLight2: THREE.PointLight;
 let sunLHelper: THREE.PointLightHelper;
 
 const ModelSetup = (gltf: any) => {
   const model = gltf.scene;
   rotatable = new THREE.Group();
+  rotatablePlanet = new THREE.Group();
   rotatable.name = "PlanetGroup";
+  rotatablePlanet.name="CentralPlanetGroup";
   const container = document.querySelector(".render--zone");
+  const planetContainer = document.querySelector(".render--planet--zone");
   const ev = new Event("click");
   container?.dispatchEvent(ev);
   let counter = 0;
@@ -231,7 +263,17 @@ const ModelSetup = (gltf: any) => {
       camera: camera,
       rotationSpeed: 0.1
     });
-    rotatable.add(planet)
+    planet2 = new MetaPlanet({
+      textureDay: textureLoader.load('/model/textures/Earth_Diffuse_6K_final.webp'),
+      textureNight: textureLoader.load('/model/textures/Earth_Illumination_6K_final.webp'),
+      radius: 4,
+      textureClouds: textureLoader.load('/model/textures/2k_earth_clouds.webp'),
+      sun: abstLight,// labe,
+      camera: camera,
+      rotationSpeed: 0.1
+    });
+    // rotatable.add(planet)
+    rotatablePlanet.add(planet2)
     planet.position.set(position.x * 5.9, position.y * 5.9, position.z * 5.9)
   }
   
@@ -241,15 +283,23 @@ const ModelSetup = (gltf: any) => {
       galaxyColor: { r: 0, g: 0, b: 0 },
     });
     let geometry = new THREE.PlaneGeometry(15, 15);
+    let geometry2 = new THREE.PlaneGeometry(15, 15);
     let material = bigStar.getStarMaterial();
     labe = new THREE.Mesh(geometry, material);
+    labe2 = new THREE.Mesh(geometry2, material);
     labe.lookAt(camera.position);
-    rotatable.add(labe);
+    labe2.lookAt(planetCamera.position);
+    // rotatable.add(labe);
+    rotatablePlanet.add(labe2)
     labe.position.set(position.x * 5.9, position.y * 5.9, position.z * 5.9)
+    labe2.position.set(position.x * 5.9, position.y * 5.9, position.z * 5.9)
     sunLight = new THREE.PointLight(0xffffff, 20.0, 10);
+    sunLight2 = new THREE.PointLight(0xffffff, 20.0, 10);
     sunLight.position.set(lightPos.x, lightPos.y, lightPos.z);
+    sunLight2.position.set(lightPos.x, lightPos.y, lightPos.z);
     sunLHelper = new THREE.PointLightHelper(sunLight, 1);
     scene.add(sunLight);
+    planetScene.add(sunLight2);
   }  
 
   const sunElement = model.getObjectByName("Sun");
@@ -271,11 +321,18 @@ const ModelSetup = (gltf: any) => {
   rotatable.add(stars);
 
   scene.add(rotatable);
+  planetScene.add(rotatablePlanet);
 
   if (container) {
     container.appendChild(renderer.domElement);
   } else {
     console.log("Not found container!");
+  }
+
+  if (planetContainer) {
+    planetContainer.appendChild(planetRenderer.domElement);
+  } else {
+    console.log("Not found planet container!");
   }
 
   return true;
@@ -294,6 +351,17 @@ export const SelectVRP = () => {
         }
       },
     });
+    const porgress2 = gsap.to(rotatablePlanet.rotation, {
+      duration: 1, // Animation duration in seconds
+      y: Math.PI, // Rotate 360 degrees around the y-axis
+      repeat: 0, // Repeat indefinitely
+      ease: "power1.inOut", // Linear easing
+      onUpdate: () => {
+        if (labe2) {
+          labe2.lookAt(camera.position);
+        }
+      },
+    });
   }
 };
 
@@ -307,7 +375,19 @@ export const SelectVAO = () => {
       ease: "power1.inOut", // Linear easing
       onUpdate: () => {
         if (labe) {
-          labe.lookAt(camera.position);
+          labe.lookAt(planetCamera.position);
+        }
+      },
+      onComplete: () => {},
+    });
+    const porgress2 = gsap.to(rotatablePlanet.rotation, {
+      duration: 1, // Animation duration in seconds
+      y: 0, // Rotate 360 degrees around the y-axis
+      repeat: 0, // Repeat indefinitely
+      ease: "power1.inOut", // Linear easing
+      onUpdate: () => {
+        if (labe2) {
+          labe2.lookAt(planetCamera.position);
         }
       },
       onComplete: () => {},
